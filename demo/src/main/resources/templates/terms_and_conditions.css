@@ -1,0 +1,83 @@
+@font-face {
+    font-family: 'SF Pro Display'; /* Provide a name for your font */
+    src: url('SF-Pro-Display-Bold.ttf') format('opentype'); /* Path to your font file */
+    /* You can also provide additional font formats for better browser support */
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'SF Pro Display', sans-serif;
+}
+
+header{
+    position: fixed;
+    font-size: 72px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99;
+}
+
+/*Logo*/
+.logo a{
+    font-size: 40px;
+    color: rgb(104, 18, 18);
+    user-select: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'SF Pro Display', sans-serif;
+    font-weight: 700;
+}
+
+body {
+    background: url('background.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    backdrop-filter: blur(20px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-box {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    padding-top: 120px;
+}
+
+h1, h2 {
+    color: rgb(104, 18, 18);
+}
+
+h1 {
+    position: sticky;
+    background-color: white;
+    top: 0px;
+    padding: 20px;
+    z-index: 100; 
+}
+
+h2 {
+
+    margin-left: 40px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+p {
+    margin-left: 50px;
+    text-align: justify;
+    margin-right: 30px;
+}
+
+a{
+    color: brown;
+}
