@@ -73,7 +73,7 @@ body {
 
 select {
     width: 90%;
-    padding: 10px 10px;
+    padding: 13px;
     border: 1.5px solid black;
     border-radius: 5px;
     background-color: rgb(252, 248, 248);
@@ -81,7 +81,7 @@ select {
     font-weight: bold;
     margin-left: 20px;
     margin-top: 20px;
-    text-align: center;
+    text-align: left;
     cursor: pointer;
     align-items: center;
 }

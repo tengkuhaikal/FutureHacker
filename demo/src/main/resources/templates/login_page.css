@@ -108,14 +108,14 @@ body {
     top: -5px;
 }
 
-/*Icon*/  /*Tak siap lagi cari ikon tu nanti
+/*Icon*/
 .input-box .icon {
     position: absolute;
     right: 8px;
     font-size: 1.2em;
     color: #161312;
     line-height: 57px;
-}*/
+}
 
 /*checkbox style*/
 input[type="checkbox"] {
@@ -131,6 +131,7 @@ input[type="checkbox"] {
     font-weight: 500;
     margin: -15px 0 20px;
     display: flex;
+    justify-content: space-between;
 }
 
 .show-password label {
@@ -160,7 +161,7 @@ input[type="checkbox"] {
     font-weight: 500;
     margin: -15px 0 15px;
     display: flex;
-    justify-content: space-between;
+    justify-content: right;
 }
 
 /*Tick box color*/
