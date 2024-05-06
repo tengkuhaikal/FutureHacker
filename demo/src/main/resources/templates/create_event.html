@@ -23,36 +23,42 @@
         </div>
 
         <nav class="navigation">
-            <a href="events.html" class="active">Event</a>
+            <a href="events.html" class="non-active">Event</a>
             <a href="#" class="non-active">About</a>
             <a href="#" class="non-active">Service</a>
             <a href="#" class="non-active">Contact</a>
-            <a href="user_setting.html" class="non-active">Settings</a>
+            <a href="user_setting.html" class="active">Settings</a>
         </nav>
     </header>
 
     <!-- Create Event -->
     <div class="create-event">
-        <form action="#" method="#">
-            <h2>Create Event</h2>
+        <form action="insert.php" method="post">
+            <div class="title">
+                Create Event
+            </div>
+
             <!-- Event Name -->
             <div class="input-box">
                 <span class="icon"><ion-icon name="copy-outline"></ion-icon></span>
-                <input type="text" required>
                 <label>Event Name</label>
+                <input type="text" name="eventname" required>
             </div>
 
             <!-- Description -->
             <div class="input-box">
                 <span class="icon"><ion-icon name="folder-outline"></ion-icon></ion-icon></span>
-                <input type="text" required>
                 <label>Description</label>
+                <input type="text" required name="description" class="description">
+
             </div>
 
             <!-- Date -->
-            <div class="calendar">
+            <div class="input-box">
                 <span class="icon"><ion-icon name="calendar-outline"></ion-icon></span>
-                <label><input type="date">Date</label>
+                <label>Date</label>
+                <input type="date" name="date" required>
+
             </div>
 
             <!-- back button  -->

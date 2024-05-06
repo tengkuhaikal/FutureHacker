@@ -13,12 +13,12 @@
     font-family: 'SF Pro Display', sans-serif;
 }
 
-body {
+/* body {
     display: flex;
     flex-direction: column;
     background-size: cover;
     background-position: center;
-}
+} */
 
 header {
     position: fixed;
@@ -87,178 +87,53 @@ body {
     background-position: center;
 }
 
-.wrapper {
+.create-event {
     position: relative;
-    width: 350px;
-    height: 440px;
+    width: 90%;
+    height: 500px;
     background: transparent;
-    border: 2px solid rgba(255,255,255,.5);
-    border-radius: 20px;
-    backdrop-filter: blur(30px);
-    box-shadow: 0 0 30px rgba(0,0,0,.5);
+    backdrop-filter: blur(0);
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-/*Login label*/
-.form-box h2 {
-    font-size: 2em;
-    color: #1d0e08;
-    text-align: center;
+.title {
+    position: fixed;
+    font-size: 36px;
+    left: 5%;
+    top: 5%;
 }
 
-/*Input box style*/
+input {
+    width: 350px;
+    height: 30px;
+    border: 1px solid #2f1b12;
+    border-radius: 4px;
+    margin: 6px;
+
+    background: rgb(244, 244, 244);
+}
+
+.description {
+    height: 90px;
+}
+
 .input-box {
     position: relative;
     width: 100%;
     height: 50px;
-    border-bottom: 2px solid #1d0e08;
     margin: 30px 0;
     font-size: 15px;
 }
 
-.input-box input {
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    border: none;
-    outline: none;
-    font-size: 1em;
-    color: #000;
-    font-weight: 600;
-    padding: 0 35px 0 5px
-}
-
-
-/*Input box label*/
 .input-box label {
     position: absolute;
-    top: 50%;
-    left: 5px;
+    left: 25px;
     transform: translateY(-50%);
     font-size: 1em;
     color: #000;
     font-weight: 700;
     pointer-events: none;
     transition: .5s;
-}
-
-/*Input box after click on it*/
-.input-box input:focus~label, 
-.input-box input:valid~label {
-    top: -5px;
-}
-
-/*Icon*/
-.input-box .icon {
-    position: absolute;
-    right: 8px;
-    font-size: 1.2em;
-    color: #161312;
-    line-height: 57px;
-}
-
-.calendar {
-    position: relative;
-    width: 100%;
-    height: 50px;
-    border-bottom: 2px solid #1d0e08;
-    margin: 30px 0;
-    font-size: 15px;
-}
-
-.calendar .icon {
-    position: absolute;
-    right: 8px;
-    font-size: 1.2em;
-    color: #161312;
-    line-height: 57px;
-}
-
-/* CSS for the date input */
-.input-box input[type="date"] {
-    width: 100%;
-    height: 100%;
-    top: 50%;
-    background: transparent;
-    border: none;
-    outline: none;
-    font-size: 1em;
-    color: #000;
-    font-weight: 600;
-    padding: 0 35px 0 5px;
-    position: relative;
-    z-index: 1;
-}
-
-/* Ensure the label is visible above the date input */
-.input-box input[type="date"]:focus~label, 
-.input-box input[type="date"]:valid~label {
-    top: -5px;
-    font-size: 0.85em;
-    color: #555;
-}
-
-
-/*Login Button*/
-/* Styles for both buttons */
-.btn {
-    background: #1d0e08;
-    color: #fff;
-    width: 110px;
-    padding: 12px;
-    margin: 12px;
-    height: 45px;
-    border: none;
-    outline: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1em;
-    font-weight: 500;
-    transition: .2s;
-    z-index: 9999;
-    transition: all 0.3s ease;
-}
-
-.btn:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transform: translateY(-2px);
-}
-
-.btn:active{
-    transform: translateY(1px);
-}
-
-.base{
-    width: 100%;
-    height: 100vh;
-    background: url(background\ copy.jpeg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.card {
-    text-align: left;
-    margin: 20px;
-}
-
-.card h1 {
-    font-weight: 700;
-}
-
-.card h2 {
-    font-weight: 200;
-}
-
-.card img {
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    margin-top: 40px;
-    margin-bottom: 30px;
-}
-
-.card input {
-    display: none;
 }
