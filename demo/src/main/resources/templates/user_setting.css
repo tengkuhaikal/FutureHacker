@@ -43,6 +43,14 @@ header {
     font-weight: 700;
 }
 
+.logo a:hover {
+    color: #765341;
+}
+
+.logo a:active{
+    color: #deaf84;
+}
+
 .navigation a {
     position: relative;
     font-size: 1.1em;
@@ -190,6 +198,11 @@ h2 {
 
 .events h3 {
     font-size: 20px;
+}
+
+.events img {
+    width: 100%;
+    border-radius: 5px;
 }
 
 .add-events a{

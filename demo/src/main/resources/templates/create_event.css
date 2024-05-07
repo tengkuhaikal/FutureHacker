@@ -1,9 +1,6 @@
 @font-face {
     font-family: 'SF Pro Display';
-    /* Provide a name for your font */
     src: url('SF-Pro-Display-Bold.ttf') format('opentype');
-    /* Path to your font file */
-    /* You can also provide additional font formats for better browser support */
 }
 
 * {
@@ -12,13 +9,6 @@
     box-sizing: border-box;
     font-family: 'SF Pro Display', sans-serif;
 }
-
-/* body {
-    display: flex;
-    flex-direction: column;
-    background-size: cover;
-    background-position: center;
-} */
 
 header {
     position: fixed;
@@ -41,6 +31,14 @@ header {
     text-decoration: none;
     font-family: 'SF Pro Display', sans-serif;
     font-weight: 700;
+}
+
+.logo a:hover {
+    color: #765341;
+}
+
+.logo a:active{
+    color: #deaf84;
 }
 
 .navigation a {
@@ -82,7 +80,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url('images/wallpaper.jpeg') no-repeat;
+    background: #faf9f9;
     background-size: cover;
     background-position: center;
 }
@@ -105,18 +103,15 @@ body {
     top: 5%;
 }
 
-input {
-    width: 350px;
-    height: 30px;
-    border: 1px solid #2f1b12;
-    border-radius: 4px;
-    margin: 6px;
-
-    background: rgb(244, 244, 244);
-}
-
-.description {
-    height: 90px;
+input, textarea {
+    width: 100%;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
 .input-box {
@@ -129,6 +124,7 @@ input {
 
 .input-box label {
     position: absolute;
+    margin: -5px;
     left: 25px;
     transform: translateY(-50%);
     font-size: 1em;
@@ -136,4 +132,66 @@ input {
     font-weight: 700;
     pointer-events: none;
     transition: .5s;
+}
+
+.input-box img {
+    position: inherit;
+    width: 90%;
+    max-height: 30vh;
+    border-radius: 9px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
+.column {
+    float: left;
+    width: 50%;
+    margin-top: 6px;
+    padding: 20px;
+}
+
+.column img {
+    width: 100%;
+}
+
+.button {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.btn {
+    /* cursor: pointer;
+    position: absolute;
+    padding: 15px;
+    text-decoration: none;
+    color: black;
+    font-size: 15px;
+    border-radius: 10px;
+    background-color: #deaf84;
+    top: 803px;
+    right: 171px; */
+    text-decoration: none;
+    margin: 10px;
+    padding: 15px;
+    background:#1d0e08;
+    color: #fff;
+    width: 400px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    z-index: 9999;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background: rgb(209, 194, 194);
+    color: black;
+    transform: translateY(-2px);
+}
+
+.btn:active {
+    transform: translateY(1px);
 }
