@@ -47,43 +47,24 @@
 
             <div class="column">
                 <!-- Event Name -->
-                <div class="input-box">
-                    <input type="text" name="eventname" placeholder="Event Name">
-                </div>
+                <input type="text" name="eventname" placeholder="Event Name">
 
                 <!-- Date -->
-                <div class="input-box">
-                    <label>Date</label>
-                    <input type="date" name="date" placeholder="Enter date">
-
-                </div>
+                <label>Date</label>
+                <input type="date" name="date" placeholder="Enter date">
 
                 <!-- Description -->
-                <div class="input-box">
-                    <textarea name="description" id="description" rows="10" cols="30"
-                        placeholder="Event Description"></textarea>
-                </div>
+                <textarea name="description" id="description" rows="10" cols="30"
+                    placeholder="Event Description"></textarea>
 
+            </div>
+
+            <div class="button">
                 <!-- back button  -->
-                <button type="submit" class="btn">Back</button>
+                <a href="user_setting.html" class="btn">Back</a>
 
                 <!-- Done button -->
-                <button type="submit" id="doneButton" class="btn">Done</button>
-
-                <script>
-                    // Function to handle Done button click
-                    function onDoneButtonClick() {
-                        // Trigger SweetAlert2 dialog when Done button is clicked
-                        Swal.fire({
-                            title: "Event Created Successfully",
-                            icon: "success"
-                        });
-                    }
-
-                    // Attach the event listener to the Done button
-                    const doneButton = document.getElementById("doneButton");
-                    doneButton.addEventListener("click", onDoneButtonClick);
-                </script>
+                <a href="#" class="btn">Save</a>
             </div>
         </form>
     </div>
@@ -97,6 +78,7 @@
             profilePic.src = URL.createObjectURL(inputFile.files[0]);
         }
     </script>
+
 </body>
 
 </html>
