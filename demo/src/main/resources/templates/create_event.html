@@ -38,54 +38,65 @@
                 Create Event
             </div>
 
-            <!-- Event Name -->
-            <div class="input-box">
-                <span class="icon"><ion-icon name="copy-outline"></ion-icon></span>
-                <label>Event Name</label>
-                <input type="text" name="eventname" required>
+            <div class="column">
+                <div class="input-box">
+                    <img src="images/events.png" id="profile-pic">
+                    <input type="file" accept="image/jpeg, image/jpg, image/png" id="input-pic">
+                </div>
             </div>
 
-            <!-- Description -->
-            <div class="input-box">
-                <span class="icon"><ion-icon name="folder-outline"></ion-icon></ion-icon></span>
-                <label>Description</label>
-                <input type="text" required name="description" class="description">
+            <div class="column">
+                <!-- Event Name -->
+                <div class="input-box">
+                    <input type="text" name="eventname" placeholder="Event Name">
+                </div>
 
+                <!-- Date -->
+                <div class="input-box">
+                    <label>Date</label>
+                    <input type="date" name="date" placeholder="Enter date">
+
+                </div>
+
+                <!-- Description -->
+                <div class="input-box">
+                    <textarea name="description" id="description" rows="10" cols="30"
+                        placeholder="Event Description"></textarea>
+                </div>
+
+                <!-- back button  -->
+                <button type="submit" class="btn">Back</button>
+
+                <!-- Done button -->
+                <button type="submit" id="doneButton" class="btn">Done</button>
+
+                <script>
+                    // Function to handle Done button click
+                    function onDoneButtonClick() {
+                        // Trigger SweetAlert2 dialog when Done button is clicked
+                        Swal.fire({
+                            title: "Event Created Successfully",
+                            icon: "success"
+                        });
+                    }
+
+                    // Attach the event listener to the Done button
+                    const doneButton = document.getElementById("doneButton");
+                    doneButton.addEventListener("click", onDoneButtonClick);
+                </script>
             </div>
-
-            <!-- Date -->
-            <div class="input-box">
-                <span class="icon"><ion-icon name="calendar-outline"></ion-icon></span>
-                <label>Date</label>
-                <input type="date" name="date" required>
-
-            </div>
-
-            <!-- back button  -->
-            <button type="submit" class="btn">Back</button>
-
-            <!-- Done button -->
-            <button type="submit" id="doneButton" class="btn">Done</button>
-
-            <script>
-                // Function to handle Done button click
-                function onDoneButtonClick() {
-                    // Trigger SweetAlert2 dialog when Done button is clicked
-                    Swal.fire({
-                        title: "Event Created Successfully",
-                        icon: "success"
-                    });
-                }
-
-                // Attach the event listener to the Done button
-                const doneButton = document.getElementById("doneButton");
-                doneButton.addEventListener("click", onDoneButtonClick);
-            </script>
-
         </form>
     </div>
-    </div>
 
+    <script>
+
+        let profilePic = document.getElementById('profile-pic');
+        let inputFile = document.getElementById('input-pic');
+
+        inputFile.onchange = function () {
+            profilePic.src = URL.createObjectURL(inputFile.files[0]);
+        }
+    </script>
 </body>
 
 </html>

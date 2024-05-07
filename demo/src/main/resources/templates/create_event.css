@@ -1,9 +1,6 @@
 @font-face {
     font-family: 'SF Pro Display';
-    /* Provide a name for your font */
     src: url('SF-Pro-Display-Bold.ttf') format('opentype');
-    /* Path to your font file */
-    /* You can also provide additional font formats for better browser support */
 }
 
 * {
@@ -12,13 +9,6 @@
     box-sizing: border-box;
     font-family: 'SF Pro Display', sans-serif;
 }
-
-/* body {
-    display: flex;
-    flex-direction: column;
-    background-size: cover;
-    background-position: center;
-} */
 
 header {
     position: fixed;
@@ -82,7 +72,6 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url('images/wallpaper.jpeg') no-repeat;
     background-size: cover;
     background-position: center;
 }
@@ -105,19 +94,34 @@ body {
     top: 5%;
 }
 
-input {
-    width: 350px;
+/* input {
+    width: 90%;
     height: 30px;
     border: 1px solid #2f1b12;
     border-radius: 4px;
     margin: 6px;
-
+    padding: 10px;
     background: rgb(244, 244, 244);
+} */
+
+input, textarea {
+    width: 100%;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
 }
 
-.description {
-    height: 90px;
-}
+/* textarea {
+    padding: 10px;
+    width: 90%;
+    height: 100px;
+    border: 1px solid #2f1b12;
+    border-radius: 4px;
+    margin: 6px;
+    padding: 10px;
+    background: rgb(244, 244, 244);
+    resize: none;
+} */
 
 .input-box {
     position: relative;
@@ -129,6 +133,7 @@ input {
 
 .input-box label {
     position: absolute;
+    margin: -5px;
     left: 25px;
     transform: translateY(-50%);
     font-size: 1em;
@@ -136,4 +141,24 @@ input {
     font-weight: 700;
     pointer-events: none;
     transition: .5s;
+}
+
+.input-box img {
+    position: inherit;
+    width: 90%;
+    max-height: 30vh;
+    border-radius: 9px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
+.column {
+    float: left;
+    width: 50%;
+    margin-top: 6px;
+    padding: 20px;
+}
+
+.column img {
+    width: 100%;
 }
