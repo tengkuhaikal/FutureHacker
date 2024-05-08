@@ -35,6 +35,14 @@ header{
     font-weight: 700;
 }
 
+.logo a:hover {
+    color: #765341;
+}
+
+.logo a:active{
+    color: #deaf84;
+}
+
 body {
     display: flex;
     justify-content: center;
