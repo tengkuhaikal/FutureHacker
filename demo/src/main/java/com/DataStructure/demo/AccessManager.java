@@ -53,6 +53,6 @@ public class AccessManager {
     @GetMapping("/add-friends")
     public boolean canAccessAddFriendsPage(User user) {
         return user.getRole().equals(YOUNG_STUDENT_ROLE);
-    }
+    } 
 }
 
