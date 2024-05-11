@@ -4,10 +4,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
-
+    
     private UserRepository userRepository;
+    
+   
 
-    public User registeredUser(String email, String password, String username, String role) {
+    public User registeredUser(String email, String username, String password, String role) {
         if (email == null || email.isEmpty() || password == null || password.isEmpty() || username == null || username.isEmpty() || role == null || role.isEmpty()) {
             throw new IllegalArgumentException("All fields are required.");
         }
@@ -19,5 +21,9 @@ public class UserService {
             user.setRole(role);
 
             return userRepository.save(user);
+    }
+    
+    public User login(String email, String password){
+        return userRepository.findByUsernameAndPassword(email, password).orElse(null);
     }
 }
