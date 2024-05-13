@@ -17,7 +17,6 @@ import java.util.Objects;
 // import org.springframework.data.annotation.Id;
 
 @Entity
-@Table(name="user")
 public class User {
     @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,28 +24,27 @@ public class User {
     
     
 
-    @Column(name="email")
+    
     private String email;
     
-    @Column(name="username")
     private String username;
     
-    @Column(name="password")
+   
     private String password;
     
-    @Column(name="Role")
+    
     private String role;
     
     private User parent;
     private List<User> children;
     
-    @Column(name="Location")
+    
     private Double[] locationCoordinate;
     
     private Integer currentPoints;
 
     public User(){
-        
+     
     }
 
     // Constructor for Teacher
