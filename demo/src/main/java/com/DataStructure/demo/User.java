@@ -8,6 +8,10 @@ import jakarta.persistence.Table;
 
 
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import java.util.ArrayList;
 
 
 import java.util.List;
@@ -35,8 +39,12 @@ public class User {
     
     private String role;
     
+    @ManyToOne
+    @JoinColumn(name = "parent_id")
     private User parent;
-    private List<User> children;
+    
+    @OneToMany(mappedBy = "parent")
+    private List<User> children = new ArrayList<>();
     
     
     private Double[] locationCoordinate;
