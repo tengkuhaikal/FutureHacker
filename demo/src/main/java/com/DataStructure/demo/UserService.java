@@ -56,7 +56,7 @@ public class UserService {
     }
     
     public void populateFromFile(String filename) {
-        try (BufferedReader reader = new BufferedReader(new FileReader("ParentChild.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",\\s*");
