@@ -36,7 +36,7 @@ public class AccountSettings {
           switch(user.getRole()){
               case "Young_Students":{
                                     System.out.println("Current points: "+user.getCurrentPoints());
-                                    if(user.getParent().toString().equals( "AccountUser" )) {
+                                    if(user.getParent()!=null ) {
                                         System.out.println("Parents: "+user.getParent());
             } else {
                                         System.out.println("Parents: "+"null");
@@ -70,6 +70,7 @@ public class AccountSettings {
                 System.out.println("2.Parents");
                 System.out.print(" Change Option no. : ");
                 input = scan.nextInt();
+                scan.nextLine();
                 switch (input) {
                     case 1: {
                         System.out.print("Enter new password: ");
@@ -85,9 +86,14 @@ public class AccountSettings {
                     case 2:{
                         System.out.print("Enter your Parents Username: ");
                         newparent=scan.nextLine();
+                        java.util.ArrayList<String> c = new ArrayList<String>();
+                        c.add(user.getUsername());
+                       
+                        updateChildren(newparent,c,getChildren(newparent));
                         success=updateParent(user.getUsername(),newparent);
                         if (success) {
                             System.out.println("Parents detail has been updated");
+                           
                             user.setParent(newparent);
                         } else {
                             System.out.println("Your detail failed to be updated");
@@ -131,9 +137,10 @@ public class AccountSettings {
                         
                         ArrayList <String> real = user.getChildren();
                         java.util.ArrayList <String> temp = new ArrayList <String>();
+                        java.util.ArrayList<String> temp2 = new ArrayList<String>();
                         if(!real.isEmpty()){
                             for (int i = 0; i < real.size(); i++) {
-                                temp.add(real.get(i));
+                                temp2.add(real.get(i));
                             }
                         }
                         System.out.println("Type your children usernames below: ");
@@ -146,9 +153,12 @@ public class AccountSettings {
                             temp.add(studentname);
                         }
                         
-                        success=updateChildren(user.getUsername(),temp);
+                        success=updateChildren(user.getUsername(),temp,temp2);
                         if(success){
                             System.out.println("Your Children list has been updated" );
+                            for (int i = 0; i < temp.size(); i++) {
+                                updateParent(temp.get(i),user.getUsername());
+                            }
                         }
                         else{
                             System.out.println("Your detail failed to be updated");
@@ -214,8 +224,8 @@ public class AccountSettings {
     
     
     public static boolean updateParent(String username, String parentUsername) {
-        String checkParentQuery = "SELECT COUNT(*) FROM user WHERE username = ? AND role = 'Parents'";
-        String updateQuery = "UPDATE user SET parent_username = ? WHERE username = ?";
+        String checkParentQuery = "SELECT COUNT(*) FROM user WHERE username = ? AND role = 'Parents' ;";
+        String updateQuery = "UPDATE user SET parents = ? WHERE username = ?";
 
         try (Connection connect = DriverManager.getConnection(url, "root", pass)) {
             // Check if the parent username exists
@@ -223,7 +233,7 @@ public class AccountSettings {
                 checkStatement.setString(1, parentUsername);
                 try (ResultSet result = checkStatement.executeQuery()) {
                     if (result.next()) {
-                        int count = result.getInt(3);
+                        int count = result.getInt(1);
                         if (count == 0) {
                             System.out.println("Parent username does not exist.");
                             return false;
@@ -231,7 +241,7 @@ public class AccountSettings {
                     }
                 }
             }
-
+            
             // Proceed with the update if the parent username exists
             try (PreparedStatement updateStatement = connect.prepareStatement(updateQuery)) {
                 updateStatement.setString(1, parentUsername);
@@ -247,8 +257,8 @@ public class AccountSettings {
         }
     }
     
-    public static boolean updateChildren(String username, ArrayList<String> childrenUsernames) {
-        String checkChildQuery = "SELECT COUNT(*) FROM user WHERE username = ? AND role = 'Young_Students'";
+    public static boolean updateChildren(String username, ArrayList<String> childrenUsernames, ArrayList<String> childrenusernames2) {
+        String checkChildQuery = "SELECT COUNT(*) FROM user WHERE username = ? AND role = 'Young_Students' AND parents IS NULL";
         String updateQuery = "UPDATE user SET children = ? WHERE username = ?";
 
         try (Connection connect = DriverManager.getConnection(url, "root", pass)) {
@@ -269,15 +279,18 @@ public class AccountSettings {
                 }
             }
             if(!invalidChildren.isEmpty()){
-                System.out.println("Your children who are/is not registerd yet : "+ invalidChildren );
+                System.out.println(" Children who are/is invalid  : "+ invalidChildren );
             }
             if(validChildren.isEmpty()){
                 System.out.println("The Children you want to add are already in your children list");
                 return false;
             }
+            for (int i = 0; i <childrenusernames2.size(); i++) {
+                validChildren.add(childrenusernames2.get(i));
+            }
             // Construct the string for existing children
             String childrenString = String.join(" ", validChildren);
-
+            
             // Proceed with the update if there are valid children
             try (PreparedStatement updateStatement = connect.prepareStatement(updateQuery)) {
                 updateStatement.setString(1, childrenString);
@@ -292,5 +305,38 @@ public class AccountSettings {
             return false;
         }
     }
+    
+    public static ArrayList<String> getChildren(String parentUsername) {
+        String query = "SELECT children FROM user WHERE username = ? AND role = 'Parents'";
+        ArrayList<String> childrenList = new ArrayList<>();
+
+        try (Connection connect = DriverManager.getConnection(url, "root", pass);
+             PreparedStatement preparedStatement = connect.prepareStatement(query)) {
+
+            // Set the parent username parameter
+            preparedStatement.setString(1, parentUsername);
+
+            // Execute the query
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                // If a result is found
+                if (resultSet.next()) {
+                    String childrenString = resultSet.getString("children");
+
+                    // Check if the children string is not null or empty
+                    if (childrenString != null && !childrenString.trim().isEmpty()) {
+                        // Split the string by spaces to get individual usernames
+                        String[] childrenArray = childrenString.trim().split(" ");
+
+                        // Convert the array to an ArrayList
+                        childrenList = new ArrayList<>(Arrays.asList(childrenArray));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return childrenList;
+    }
+
 
 }
