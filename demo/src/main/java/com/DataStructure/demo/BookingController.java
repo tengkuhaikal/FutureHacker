@@ -23,9 +23,9 @@ public class BookingController {
         this.bookingService = bookingService;
     }
 
-    @GetMapping
-    public List<BookingDestination> getBookingDestinations(@RequestParam double userX, @RequestParam double userY) {
-        return bookingService.getSortedBookingDestinations(userX,userY);
+    @GetMapping("/sorted-booking-destinations")
+    public void getBookingDestinations(@RequestParam double userX, @RequestParam double userY) {
+        bookingService.displaySortedBookingDestination(userX,userY);
     }
 }
     

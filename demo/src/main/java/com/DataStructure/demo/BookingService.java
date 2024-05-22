@@ -46,10 +46,27 @@ public class BookingService {
         return destinations;
     }
 
-    public List<BookingDestination> getSortedBookingDestinations(double userX, double userY) {
+    private List<BookingDestination> getSortedBookingDestinations(double userX, double userY) {
         return bookingDestinations.stream()
                 .sorted(Comparator.comparingDouble(dest -> calculateEuclideanDistance(userX, userY, dest.getX(), dest.getY())))
                 .toList();
+    }
+    
+    public void displaySortedBookingDestination(double userX, double userY) {
+        List<BookingDestination> sortedBooking = getSortedBookingDestinations(userX, userY);
+
+        System.out.println("Booking Page \n=========================================================================");
+        int number = 1;
+        for (BookingDestination destination : sortedBooking) {
+            System.out.println();
+            double distance = calculateEuclideanDistance(userX, userY, destination.getX(), destination.getY());
+            double distanceInKm = distance / 1000; // Assuming the distance is in meters, convert to kilometers
+
+            System.out.printf("[%d] %-30s%n", number, destination.getName());
+            System.out.printf("%.2f km away%n", distanceInKm);
+
+            number++;
+        }
     }
 
     private double calculateEuclideanDistance(double x1, double y1, double x2, double y2) {
