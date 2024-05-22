@@ -9,17 +9,22 @@ package Account;
  * @author Afiq Zafry
  */
 import java.util.List;
+import java.util.*;
 
 public class User {
     private String email;
     private String username;
     private String password;
     private String role;
-    private User parent;
-    private List<User> children;
+    private String parent;
+    private java.util.ArrayList<String> children;
     private Double [] locationCoordinate;
     private Integer currentPoints;
-
+    
+    
+    public User (){
+        
+    }
     public User(String email, String username, String password, String role, Double[] locationCoordinate) { // Constructor for Teacher
         this.email = email;
         this.username = username;
@@ -28,7 +33,7 @@ public class User {
         this.locationCoordinate = locationCoordinate;
     }
 
-    public User(String email, String username, String password, String role, List<User> children, Double[] locationCoordinate) { // Constructor for Parent
+    public User(String email, String username, String password, String role, ArrayList<String> children, Double[] locationCoordinate) { // Constructor for Parent
         this.email = email;
         this.username = username;
         this.password = password;
@@ -37,7 +42,7 @@ public class User {
         this.locationCoordinate = locationCoordinate;
     }
 
-    public User(String email, String username, String password, String role, User parent, Double[] locationCoordinate, Integer currentPoints) { // Constructor for student
+    public User(String email, String username, String password, String role, String parent, Double[] locationCoordinate, Integer currentPoints) { // Constructor for student
         this.email = email;
         this.username = username;
         this.password = password;
@@ -88,16 +93,16 @@ public class User {
     }
     
 
-    public void setParent(User parent) {
-        if ("Young Student".equals(role)) {
+    public void setParent(String parent) {
+        if ("Young_Students".equals(role)) {
             this.parent=parent;
         } else {
             throw new IllegalStateException("Access denied. Parent only accessible for Young Students.");
         }
     }
 
-    public void setChildren(List<User> children) {
-        if ("Parent".equals(role)) {
+    public void setChildren(ArrayList<String> children) {
+        if ("Parents".equals(role)) {
             this.children=children;
         } else {
             throw new IllegalStateException("Access denied. Children only accessible for Parents.");
@@ -105,7 +110,7 @@ public class User {
     }
 
     public void setCurrentPoints(Integer currentPoints) {
-        if ("Young Student".equals(role)) {
+        if ("Young_Students".equals(role)) {
             this.currentPoints=currentPoints;
         } else {
             throw new IllegalStateException("Access denied. Current points only accessible for Young Students.");
@@ -116,28 +121,34 @@ public class User {
     
 
     public Integer getCurrentPoints() {
-        if ("Young Student".equals(role)) {
+        if ("Young_Students".equals(role)) {
             return currentPoints;
         } else {
             throw new IllegalStateException("Access denied. Current points only accessible for Young Students.");
         }
     }
 
-    public List<User> getChildren() {
-        if ("Parent".equals(role)) {
+    public ArrayList<String> getChildren() {
+        if ("Parents".equals(role)) {
             return children;
         } else {
             throw new IllegalStateException("Access denied. Children only accessible for Parents.");
         }
     }
 
-    public User getParent() {
-        if ("Young Student".equals(role)) {
+    public String getParent() {
+        if ("Young_Students".equals(role)) {
             return parent;
         } else {
             throw new IllegalStateException("Access denied. Parent only accessible for Young Students.");
         }
     }
+
+     @Override
+    public String toString() {
+        return "Account.User";
+    }
+   
 
     
 }

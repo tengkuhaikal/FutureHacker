@@ -1,0 +1,69 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package Account;
+
+import java.util.Scanner;
+
+/**
+ *
+ * @author Afiq Zafry
+ */
+public class FirstPage {
+    Scanner scan = new Scanner(System.in);
+    public int ui(){
+        System.out.println("\n\n----------------------------------------------");
+        System.out.println("Welcome to Hacking The Future !");
+        
+        System.out.println("1.Register an account");
+        System.out.println("2.Login to your account");
+        System.out.println("3.Exit");
+        System.out.print("Please select on what you want to do: ");
+        int userInput = scan.nextInt();
+        
+        return userInput;
+    }
+    
+    public User acc(int i){
+        boolean success=false;
+        switch(i){
+            case 1 -> {
+                
+                       return   Register.registernewuser();
+                         
+            }
+            case 2 -> {
+                Login l = new Login();
+                return   l.userlogin();
+            }
+            case 3 -> {
+                
+                System.out.println("Bye");
+                 System.exit(0);
+            }
+        }
+        return null;
+    }
+    
+    public  User welcome(){
+        User user = new User();
+        user = acc(ui());
+        while(user!=null){
+          return user;  
+        }
+        return null;
+       
+    }
+    
+    public static void main(String[] args) {
+      FirstPage fp = new FirstPage();
+     Login l = new Login();
+      AccountSettings as = new AccountSettings();
+    
+      //l.viewprofile(fp.welcome());
+      as.Settings(fp.welcome());
+     
+      
+    }
+}
