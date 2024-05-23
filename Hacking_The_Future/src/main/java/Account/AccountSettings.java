@@ -17,6 +17,7 @@ import java.sql.SQLException; // Handles SQL exceptions
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.*;
+import UI.Ui;
 public class AccountSettings {
     
     static String url = "jdbc:mysql://localhost:3306/datastructure";
@@ -113,6 +114,7 @@ public class AccountSettings {
                 System.out.println("2.Children");
                 System.out.print(" Change Option no. : ");
                 input = scan.nextInt();
+                scan.nextLine();
                 switch(input){
                     case 1:{
                         System.out.print("Enter new password: ");
@@ -123,6 +125,7 @@ public class AccountSettings {
                         } else {
                             System.out.println("Your detail failed to be updated");
                         }
+                        break;
                     }
                     case 2:{
                         System.out.println("How many children you do you want to add");
@@ -184,6 +187,7 @@ public class AccountSettings {
             }
             else
                             System.out.println("Your detail failed to be updated");
+            break;
                     }
                     
                 }
@@ -191,6 +195,8 @@ public class AccountSettings {
             }
     
         }
+        Ui u = new Ui();
+        u.mainmenu(user);
         return user;
     }
         
@@ -337,6 +343,8 @@ public class AccountSettings {
         }
         return childrenList;
     }
+
+  
 
 
 }

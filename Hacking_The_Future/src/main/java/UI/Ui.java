@@ -19,7 +19,7 @@ public class Ui {
     Scanner scan = new Scanner(System.in);
     FirstPage fp = new FirstPage();
     public void mainmenu(User user){
-        System.out.println("-----------Main Menu-------------");
+        System.out.println("\n\n-----------Main Menu-------------");
         
         int choice;
         //Access Manager

@@ -47,12 +47,12 @@ public class FirstPage {
     }
     
     public  User welcome(){
-        User user = new User();
-        user = acc(ui());
-        while(user!=null){
-          return user;  
+        
+        User user = acc(ui());
+        if(user==null){
+             user = acc(ui());
         }
-        return null;
+        return user;
        
     }
     
