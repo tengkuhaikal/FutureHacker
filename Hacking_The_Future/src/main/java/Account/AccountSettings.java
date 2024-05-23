@@ -162,6 +162,9 @@ public class AccountSettings {
                             for (int i = 0; i < temp.size(); i++) {
                                 updateParent(temp.get(i),user.getUsername());
                             }
+                            ArrayList<String> combinedList = new ArrayList<>(temp2);
+                           combinedList.addAll(temp);
+                           user.setChildren(combinedList);
                         }
                         else{
                             System.out.println("Your detail failed to be updated");
