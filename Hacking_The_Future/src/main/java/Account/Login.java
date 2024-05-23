@@ -8,6 +8,7 @@ package Account;
  *
  * @author Afiq Zafry
  */
+import UI.Ui;
 import java.sql.Connection; // Represents a connection to the database
 import java.sql.DriverManager; // Helps in obtaining a connection to the database
 import java.sql.PreparedStatement; // Used for prepared statements
@@ -98,7 +99,10 @@ public class  Login {
                                     break;
                                 }
           }
-          
+          System.out.println("                               ");
+          System.out.println("You'll be redirected to main menu\n\n");
+          Ui u = new Ui();
+          u.mainmenu(user);
     }
     
     public User lgin(String role){

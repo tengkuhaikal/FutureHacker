@@ -199,17 +199,20 @@ public class AccountSettings {
         
         System.out.println("Do you still want to edit your account details ? (Yes:1/No:0)");
         input=scan.nextInt();
-        scan.nextLine();
-        while(input!=0 || input!=1){
+       
+        while(input==0 || input==1){
+            if(input==1)
+            Settings(user);
+        else if(input==0)
+            u.mainmenu(user);
+        else{
             System.out.print("Please type 1 or 0 only: ");
              input=scan.nextInt();
         scan.nextLine();
         }
+        }
         
-        if(input==0)
-            Settings(user);
-        else
-            u.mainmenu(user);
+        
         return user;
     }
         

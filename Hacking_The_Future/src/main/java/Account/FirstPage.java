@@ -50,9 +50,11 @@ public class FirstPage {
         
         User user = acc(ui());
         if(user==null){
-             user = acc(ui());
+            return  welcome();
         }
+        
         return user;
+        
        
     }
     
@@ -60,7 +62,7 @@ public class FirstPage {
       FirstPage fp = new FirstPage();
      Login l = new Login();
       AccountSettings as = new AccountSettings();
-    
+    User user = fp.welcome();
       //l.viewprofile(fp.welcome());
       as.Settings(fp.welcome());
      
