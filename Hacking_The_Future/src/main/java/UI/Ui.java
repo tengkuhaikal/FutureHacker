@@ -8,6 +8,7 @@ import Account.AccountSettings;
 import Account.FirstPage;
 import Account.Login;
 import Account.User;
+import Activity.AccessManager;
 import java.util.Scanner;
 /**
  *
@@ -18,6 +19,7 @@ public class Ui {
     AccountSettings as = new AccountSettings();
     Scanner scan = new Scanner(System.in);
     FirstPage fp = new FirstPage();
+    
     public void mainmenu(User user){
         System.out.println("\n\n-----------Main Menu-------------");
         
@@ -68,5 +70,7 @@ public class Ui {
          FirstPage fp = new FirstPage();
          User user =fp.welcome();
         starter.mainmenu(user);
+        AccessManager am = new AccessManager();
+        am.accessPageChoice(user, am.getPageChoice());
     }
 }
