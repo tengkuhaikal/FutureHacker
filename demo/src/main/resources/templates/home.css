@@ -1,0 +1,131 @@
+@font-face {
+    font-family: 'SF Pro Display';
+    /* Provide a name for your font */
+    src: url('SF-Pro-Display-Bold.ttf') format('opentype');
+    /* Path to your font file */
+    /* You can also provide additional font formats for better browser support */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'SF Pro Display', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    background-size: cover;
+    background-position: center;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(5px);
+    z-index: 99;
+}
+
+.logo a {
+    font-size: 25px;
+    color: rgb(104, 18, 18);
+    user-select: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'SF Pro Display', sans-serif;
+    font-weight: 700;
+}
+
+.logo a:hover {
+    color: #765341;
+}
+
+.logo a:active{
+    color: #deaf84;
+}
+
+.navigation a {
+    position: relative;
+    font-size: 1.1em;
+    color: #2f1b12;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 40px;
+}
+
+.navigation a.active {
+    color: #765341;
+    font-weight: bold;
+    border-bottom: 3px solid #deaf84;
+}
+
+.navigation a.non-active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 3px;
+    background: #deaf84;
+    border-radius: 5px;
+    transform-origin: center;
+    transform: scaleX(0);
+    transition: transform .5s;
+}
+
+.navigation a:hover::after {
+    transform-origin: center;
+    transform: scaleX(1);
+}
+
+.top-page {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+
+.search {
+    margin: 20px;
+}
+
+.search input {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: #2f1b12 solid 2px;
+    width: 400px;
+    height: 50px;
+    font-size: 20px;
+}
+
+.links{
+    display: flex;
+    justify-content: space-between;
+}
+
+.links button {
+    border: #2f1b12 solid 2px;
+    margin: 10px;
+    width: 90px;
+    height: 30px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.links button:hover{
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.links button:active {
+    transform: translateY(1px);
+}

@@ -55,4 +55,3 @@ public class AccessManager {
         return user.getRole().equals(YOUNG_STUDENT_ROLE);
     } 
 }
-
