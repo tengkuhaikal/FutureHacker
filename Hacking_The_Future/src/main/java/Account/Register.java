@@ -74,10 +74,10 @@ public class Register extends User {
        data.add(input);
        
        System.out.print("Your Location: ");
-       int lat = rand.nextInt(-501,501);
-       int log = rand.nextInt(-501,501);
-       System.out.println("["+lat+","+log+"]");
-       data.add(lat+","+log);
+       int lat = rand.nextInt(1001) - 500; // Generates latitude in the range -500 to 500
+       int log = rand.nextInt(1001) - 500; // Generates longitude in the range -500 to 500
+       System.out.println("[" + lat + "," + log + "]");
+       data.add(lat + "," + log);
        
        
        
