@@ -18,6 +18,9 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.*;
 import UI.Ui;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 public class AccountSettings {
     
     static String url = "jdbc:mysql://localhost:3306/datastructure";
@@ -25,6 +28,7 @@ public class AccountSettings {
     
     public static String pass ="root";
     Scanner scan = new Scanner(System.in);
+    ParentChild pc;
     
     public User Settings (User user) {
         
@@ -61,14 +65,14 @@ public class AccountSettings {
      int input;
       boolean success=false;  
       String newpass;
-      String newparent;
+      //String newparent;
          
         switch(user.getRole()){
             
             case "Young_Students":{
                 System.out.println("Which Account detail you want to change/fill ? :");
                 System.out.println("1.Password");
-                System.out.println("2.Parents");
+                System.out.println("2.Add Parents");
                 System.out.print(" Change Option no. : ");
                 input = scan.nextInt();
                 scan.nextLine();
@@ -85,20 +89,22 @@ public class AccountSettings {
                         break;
                     }
                     case 2:{
-                        System.out.print("Enter your Parents Username: ");
-                        newparent=scan.nextLine();
-                        java.util.ArrayList<String> c = new ArrayList<String>();
-                        c.add(user.getUsername());
-                       
-                        updateChildren(newparent,c,getChildren(newparent));
-                        success=updateParent(user.getUsername(),newparent);
-                        if (success) {
-                            System.out.println("Parents detail has been updated");
-                           
-                            user.setParent(newparent);
-                        } else {
-                            System.out.println("Your detail failed to be updated");
-                        }
+//                        System.out.print("Enter your Parents Username: ");
+//                        newparent=scan.nextLine();
+//                        java.util.ArrayList<String> c = new ArrayList<String>();
+//                        c.add(user.getUsername());
+//                       
+//                        updateChildren(newparent,c,getChildren(newparent));
+//                        success=updateParent(user.getUsername(),newparent);
+//                        if (success) {
+//                            System.out.println("Parents detail has been updated");
+//                           
+//                            user.setParent(newparent);
+//                        } else {
+//                            System.out.println("Your detail failed to be updated");
+//                        }
+                        pc.updateParentForChild(user);
+                        
                         break;
                     }
                     default: break;
@@ -111,7 +117,7 @@ public class AccountSettings {
             case "Parents":{
                 System.out.println("Which Account detail you want to change/fill ? :");
                 System.out.println("1.Password");
-                System.out.println("2.Children");
+                System.out.println("2.Add Children");
                 System.out.print(" Change Option no. : ");
                 input = scan.nextInt();
                 scan.nextLine();
@@ -128,47 +134,48 @@ public class AccountSettings {
                         break;
                     }
                     case 2:{
-                        System.out.println("How many children you do you want to add");
-                        int quantity=scan.nextInt();
-                        scan.nextLine();
-                        if(quantity==0){
-                            System.out.println("You press zero, no children will be added");
-                            break;
-                        }
-                        
-                        String studentname;
-                        
-                        ArrayList <String> real = user.getChildren();
-                        java.util.ArrayList <String> temp = new ArrayList <String>();
-                        java.util.ArrayList<String> temp2 = new ArrayList<String>();
-                        if(!real.isEmpty()){
-                            for (int i = 0; i < real.size(); i++) {
-                                temp2.add(real.get(i));
-                            }
-                        }
-                        System.out.println("Type your children usernames below: ");
-                        int k;
-                        for (int i = 0; i < quantity; i++) {
-                            k=i+1;
-                            System.out.print(k+". ");
-                            studentname=scan.nextLine();
-                            
-                            temp.add(studentname);
-                        }
-                        
-                        success=updateChildren(user.getUsername(),temp,temp2);
-                        if(success){
-                            System.out.println("Your Children list has been updated" );
-                            for (int i = 0; i < temp.size(); i++) {
-                                updateParent(temp.get(i),user.getUsername());
-                            }
-                            ArrayList<String> combinedList = new ArrayList<>(temp2);
-                           combinedList.addAll(temp);
-                           user.setChildren(combinedList);
-                        }
-                        else{
-                            System.out.println("Your detail failed to be updated");
-                        }
+//                        System.out.println("How many children you do you want to add");
+//                        int quantity=scan.nextInt();
+//                        scan.nextLine();
+//                        if(quantity==0){
+//                            System.out.println("You press zero, no children will be added");
+//                            break;
+//                        }
+//                        
+//                        String studentname;
+//                        
+//                        ArrayList <String> real = user.getChildren();
+//                        java.util.ArrayList <String> temp = new ArrayList <String>();
+//                        java.util.ArrayList<String> temp2 = new ArrayList<String>();
+//                        if(!real.isEmpty()){
+//                            for (int i = 0; i < real.size(); i++) {
+//                                temp2.add(real.get(i));
+//                            }
+//                        }
+//                        System.out.println("Type your children usernames below: ");
+//                        int k;
+//                        for (int i = 0; i < quantity; i++) {
+//                            k=i+1;
+//                            System.out.print(k+". ");
+//                            studentname=scan.nextLine();
+//                            
+//                            temp.add(studentname);
+//                        }
+//                        
+//                        success=updateChildren(user.getUsername(),temp,temp2);
+//                        if(success){
+//                            System.out.println("Your Children list has been updated" );
+//                            for (int i = 0; i < temp.size(); i++) {
+//                                updateParent(temp.get(i),user.getUsername());
+//                            }
+//                            ArrayList<String> combinedList = new ArrayList<>(temp2);
+//                           combinedList.addAll(temp);
+//                           user.setChildren(combinedList);
+//                        }
+//                        else{
+//                            System.out.println("Your detail failed to be updated");
+//                        }
+                        pc.updateChildrenForParent(user);
                         break;
                     }
                     default:break;
@@ -362,8 +369,50 @@ public class AccountSettings {
         }
         return childrenList;
     }
+    
+    public static void populateParentChildFromFile(String filePath) {
+        String insertQuery = "INSERT INTO user (username, parents, role) VALUES (?, ?, ?), (?, ?, ?)";
+        String updateQuery = "UPDATE user SET children = CONCAT(IFNULL(children, ''), ?) WHERE username = ?";
 
-  
+        try (Connection connect = DriverManager.getConnection(url, "root", pass);
+             BufferedReader reader = new BufferedReader(new FileReader(filePath));
+             PreparedStatement insertStatement = connect.prepareStatement(insertQuery);
+             PreparedStatement updateStatement = connect.prepareStatement(updateQuery)) {
 
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] relationship = line.split(",");
+                if (relationship.length == 2) {
+                    String parentUsername = relationship[0].trim();
+                    String childUsername = relationship[1].trim();
 
+                    // Insert child user
+                    insertStatement.setString(1, childUsername);
+                    insertStatement.setString(2, parentUsername);
+                    insertStatement.setString(3, "Young_Students");
+
+                    // Insert parent user
+                    insertStatement.setString(4, parentUsername);
+                    insertStatement.setNull(5, java.sql.Types.VARCHAR);
+                    insertStatement.setString(6, "Parents");
+
+                    insertStatement.addBatch();
+
+                    // Update parent's children field
+                    updateStatement.setString(1, "," + childUsername); // Append child username
+                    updateStatement.setString(2, parentUsername);
+                    updateStatement.addBatch();
+                }
+            }
+
+            insertStatement.executeBatch();
+            updateStatement.executeBatch();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
 }
