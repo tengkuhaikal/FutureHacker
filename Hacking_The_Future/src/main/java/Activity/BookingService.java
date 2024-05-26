@@ -15,6 +15,8 @@ import java.util.List;
  * @author Hasna
  */
 public class BookingService {
+    static String url = "jdbc:mysql://localhost:3306/datastructure";
+    public static String pass = "root";
     private List<BookingDestination> bookingDestinations;
 
     public BookingService() {
