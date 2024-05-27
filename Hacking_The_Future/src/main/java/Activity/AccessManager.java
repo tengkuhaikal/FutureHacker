@@ -59,8 +59,7 @@ public class AccessManager {
                 } break;
             case 6:
                 if (user.getRole().equals("Parents")){
-                    accessBooking(user);
-                    
+                    book.createBooking(user);                    
                 } else {
                     System.out.println("Access denied! Parents only");
                 } break;
@@ -79,15 +78,6 @@ public class AccessManager {
         }
         getPageChoice();
         return false;
-    }
-    
-    private void accessBooking(User user){
-        Double[] userCoordinate = user.getLocationCoordinate();
-        if (userCoordinate != null && userCoordinate.length == 2) {
-            Double x = userCoordinate[0];
-            Double y = userCoordinate[1];
-            book.displaySortedBookingDestination(x, y);
-        }  
     }
     
     private void accessDiscussion(){ //some extras

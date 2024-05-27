@@ -3,12 +3,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Activity;
+import Account.User;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Time;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.sql.Date;
+import java.util.Scanner;
 
 /**
  *
@@ -54,7 +63,7 @@ public class BookingService {
                 .toList();
     }
     
-    public void displaySortedBookingDestination(double userX, double userY) { //still need to be updated based on event clashes
+    private void displaySortedBookingDestination(double userX, double userY) { //still need to be updated based on event clashes
         List<BookingDestination> sortedBooking = getSortedBookingDestinations(userX, userY);
 
         System.out.println("Booking Page \n=========================================================================");
@@ -73,6 +82,57 @@ public class BookingService {
 
     private double calculateEuclideanDistance(double x1, double y1, double x2, double y2) {
         return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+    }
+    
+    public boolean addBooking(BookingDestination book) {
+        String insertBookingQuery = "INSERT INTO booking (username, destination_name, booking_date, booking_time) VALUES (?, ?, ?, ?)";
+
+        try (Connection connect = DriverManager.getConnection(url, "root", pass);
+                PreparedStatement insertStatement = connect.prepareStatement(insertBookingQuery)) {
+
+            insertStatement.setString(1, book.getName());
+            insertStatement.setString(2, book.getDestination());
+            insertStatement.setDate(3, Date.valueOf(book.getDate()));
+            insertStatement.setTime(4, book.getTime());
+
+            int rowsAffected = insertStatement.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public void createBooking(User user) {
+        List<BookingDestination> sortedDestinations = null;
+        Double[] userCoordinate = user.getLocationCoordinate();
+
+        Double x = userCoordinate[0];
+        Double y = userCoordinate[1];
+        displaySortedBookingDestination(x, y);
+        sortedDestinations = getSortedBookingDestinations(x, y);
+        
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Select the destination number to book:");
+        int selectedNumber = sc.nextInt();
+        sc.nextLine();
+
+        if (selectedNumber > 0 && selectedNumber <= sortedDestinations.size()) {
+            BookingDestination selectedDestination = sortedDestinations.get(selectedNumber - 1);
+
+            BookingDestination booking = new BookingDestination(user.getUsername(), selectedDestination.getName(), selectedDestination.getDate(), selectedDestination.getTime());
+            boolean success = addBooking(booking);
+
+            if (success) {
+                System.out.println("Booking successfully added.");
+            } else {
+                System.out.println("Failed to add booking.");
+            }
+        } else {
+            System.out.println("Invalid selection.");
+        }
     }
 }
     
