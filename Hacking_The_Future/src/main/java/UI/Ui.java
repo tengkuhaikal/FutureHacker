@@ -86,9 +86,7 @@ public class Ui {
         
     }
 
-    private void attemptquiz(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
 
     
 
