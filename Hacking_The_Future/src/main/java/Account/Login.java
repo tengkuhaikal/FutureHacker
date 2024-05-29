@@ -10,6 +10,7 @@ package Account;
  */
 import static Account.MySQLConfiguration.pass;
 import static Account.MySQLConfiguration.url;
+import Leaderboard.FriendManager;
 import UI.Ui;
 import java.sql.Connection; // Represents a connection to the database
 import java.sql.DriverManager; // Helps in obtaining a connection to the database
@@ -28,7 +29,7 @@ public class  Login {
 //    public static String pass ="root";
     Scanner scan = new Scanner(System.in);
     
-
+   FriendManager fm = new FriendManager();
     
     public User userlogin(){
         
@@ -86,6 +87,7 @@ public class  Login {
             } else {
                                         System.out.println("Parents: "+"null");
             }
+                                    fm.FriendList(user);
                                     break;
                                 }
                                 case "Parents":{

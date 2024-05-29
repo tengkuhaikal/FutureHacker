@@ -59,6 +59,8 @@ public class FriendManager {
         for (String friend : friendUsernames) {
             System.out.println(friend);
         }
+        if(friendUsernames.isEmpty())
+            System.out.println("null");
     }
 
 public static void listRejectedByOthers(User user) {
