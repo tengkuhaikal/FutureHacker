@@ -8,6 +8,7 @@ import java.net.URI;
 import static Account.MySQLConfiguration.pass;
 import static Account.MySQLConfiguration.url;
 import Account.User;
+import UI.Ui;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -106,7 +107,15 @@ do {
 String quizContent = fetchQuizContent(selectedQuizTitle);
 attemptSelectedQuiz(quizContent,user);
 
-// Now you can proceed with attempting the quiz
+        System.out.println("Do you want to continue attempt other quiz? (Yes:1/Other:No");
+        int choice=scan.nextInt();
+        if(choice==1){
+            attemptquiz(user);
+        }else{
+            Ui starter = new Ui();     
+        starter.mainmenu(user);
+        }
+
 
     }
 
