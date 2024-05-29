@@ -8,6 +8,8 @@ package Account;
  *
  * @author Afiq Zafry
  */
+import static Account.MySQLConfiguration.pass;
+import static Account.MySQLConfiguration.url;
 import UI.Ui;
 import java.sql.Connection; // Represents a connection to the database
 import java.sql.DriverManager; // Helps in obtaining a connection to the database
@@ -21,9 +23,9 @@ import java.util.*;
 import java.util.List;
 
 public class  Login {
-     public static String url = "jdbc:mysql://localhost:3306/datastructure";
-    public static String user = "root";
-    public static String pass ="root";
+//     public static String url = "jdbc:mysql://localhost:3306/datastructure";
+//    public static String user = "root";
+//    public static String pass ="root";
     Scanner scan = new Scanner(System.in);
     
 
@@ -99,7 +101,7 @@ public class  Login {
                                     break;
                                 }
           }
-          System.out.println("                               ");
+          System.out.println("---------------------------------                               ");
           System.out.println("You'll be redirected to main menu\n\n");
           Ui u = new Ui();
           u.mainmenu(user);

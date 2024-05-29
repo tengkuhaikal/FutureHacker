@@ -21,7 +21,7 @@ public class FirstPage {
         System.out.println("3.Exit");
         System.out.print("Please select on what you want to do: ");
         int userInput = scan.nextInt();
-        
+        scan.nextLine();
         return userInput;
     }
     

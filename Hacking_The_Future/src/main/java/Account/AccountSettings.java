@@ -89,21 +89,21 @@ public class AccountSettings {
                         break;
                     }
                     case 2:{
-//                        System.out.print("Enter your Parents Username: ");
-//                        newparent=scan.nextLine();
-//                        java.util.ArrayList<String> c = new ArrayList<String>();
-//                        c.add(user.getUsername());
-//                       
-//                        updateChildren(newparent,c,getChildren(newparent));
-//                        success=updateParent(user.getUsername(),newparent);
-//                        if (success) {
-//                            System.out.println("Parents detail has been updated");
-//                           
-//                            user.setParent(newparent);
-//                        } else {
-//                            System.out.println("Your detail failed to be updated");
-//                        }
-                        pc.updateParentForChild(user);
+                        System.out.print("Enter your Parents Username: ");
+                        String newparent=scan.nextLine();
+                        java.util.ArrayList<String> c = new ArrayList<String>();
+                        c.add(user.getUsername());
+                       
+                        updateChildren(newparent,c,getChildren(newparent));
+                        success=updateParent(user.getUsername(),newparent);
+                        if (success) {
+                            System.out.println("Parents detail has been updated");
+                           
+                            user.setParent(newparent);
+                        } else {
+                            System.out.println("Your detail failed to be updated");
+                        }
+                       // pc.updateParentForChild(user);
                         
                         break;
                     }
@@ -134,48 +134,48 @@ public class AccountSettings {
                         break;
                     }
                     case 2:{
-//                        System.out.println("How many children you do you want to add");
-//                        int quantity=scan.nextInt();
-//                        scan.nextLine();
-//                        if(quantity==0){
-//                            System.out.println("You press zero, no children will be added");
-//                            break;
-//                        }
-//                        
-//                        String studentname;
-//                        
-//                        ArrayList <String> real = user.getChildren();
-//                        java.util.ArrayList <String> temp = new ArrayList <String>();
-//                        java.util.ArrayList<String> temp2 = new ArrayList<String>();
-//                        if(!real.isEmpty()){
-//                            for (int i = 0; i < real.size(); i++) {
-//                                temp2.add(real.get(i));
-//                            }
-//                        }
-//                        System.out.println("Type your children usernames below: ");
-//                        int k;
-//                        for (int i = 0; i < quantity; i++) {
-//                            k=i+1;
-//                            System.out.print(k+". ");
-//                            studentname=scan.nextLine();
-//                            
-//                            temp.add(studentname);
-//                        }
-//                        
-//                        success=updateChildren(user.getUsername(),temp,temp2);
-//                        if(success){
-//                            System.out.println("Your Children list has been updated" );
-//                            for (int i = 0; i < temp.size(); i++) {
-//                                updateParent(temp.get(i),user.getUsername());
-//                            }
-//                            ArrayList<String> combinedList = new ArrayList<>(temp2);
-//                           combinedList.addAll(temp);
-//                           user.setChildren(combinedList);
-//                        }
-//                        else{
-//                            System.out.println("Your detail failed to be updated");
-//                        }
-                        pc.updateChildrenForParent(user);
+                        System.out.println("How many children you do you want to add");
+                        int quantity=scan.nextInt();
+                        scan.nextLine();
+                        if(quantity==0){
+                            System.out.println("You press zero, no children will be added");
+                            break;
+                        }
+                        
+                        String studentname;
+                        
+                        ArrayList <String> real = user.getChildren();
+                        java.util.ArrayList <String> temp = new ArrayList <String>();
+                        java.util.ArrayList<String> temp2 = new ArrayList<String>();
+                        if(!real.isEmpty()){
+                            for (int i = 0; i < real.size(); i++) {
+                                temp2.add(real.get(i));
+                            }
+                        }
+                        System.out.println("Type your children usernames below: ");
+                        int k;
+                        for (int i = 0; i < quantity; i++) {
+                            k=i+1;
+                            System.out.print(k+". ");
+                            studentname=scan.nextLine();
+                            
+                            temp.add(studentname);
+                        }
+                        
+                        success=updateChildren(user.getUsername(),temp,temp2);
+                        if(success){
+                            System.out.println("Your Children list has been updated" );
+                            for (int i = 0; i < temp.size(); i++) {
+                                updateParent(temp.get(i),user.getUsername());
+                            }
+                            ArrayList<String> combinedList = new ArrayList<>(temp2);
+                           combinedList.addAll(temp);
+                           user.setChildren(combinedList);
+                        }
+                        else{
+                            System.out.println("Your detail failed to be updated");
+                        }
+                       // pc.updateChildrenForParent(user);
                         break;
                     }
                     default:break;
