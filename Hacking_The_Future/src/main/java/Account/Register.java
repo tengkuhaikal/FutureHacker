@@ -8,6 +8,7 @@ package Account;
  *
  * @author Afiq Zafry
  */
+import UI.Ui;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -151,7 +152,9 @@ public class Register extends User {
                 System.out.println("You have successfully registered \n");
                 
              Login l = new Login();
-       l.userlogin() ;
+             Ui starter = new Ui();
+             starter.mainmenu(l.userlogin());
+       
             } else {
                 System.out.println("Failed to register.");
                 return null;
