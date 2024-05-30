@@ -153,7 +153,7 @@ public class Register extends User {
                 
              Login l = new Login();
              Ui starter = new Ui();
-             starter.mainmenu(l.userlogin());
+             starter.mainmenu(l.lgin());
        
             } else {
                 System.out.println("Failed to register.");

@@ -31,46 +31,46 @@ public class  Login {
     
    FriendManager fm = new FriendManager();
     
-    public User userlogin(){
-        
-          boolean validChoice = false;
-        System.out.println("\n\nWelcome to Log in Page !! \n");
-        while (!validChoice) {
-            System.out.println("Role:");
-            System.out.println("1.Young_Student");
-            System.out.println("2.Parents");
-            System.out.println("3.Educator");
-            System.out.print("Choice: ");
-           
-
-            int choice = scan.nextInt();
-           
-            String role;
-            switch (choice) {
-                case 1:
-                    role="Young_Students";
-                    validChoice = true;
-                    return lgin(role);
-                    
-                case 2:
-                    role="Parents";
-                    validChoice = true;
-                    return lgin(role);
-                    
-                case 3:
-                    role="Educators";
-                    validChoice = true;
-                    return lgin(role);
-                    
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-                    // Set validChoice to false to repeat the loop
-                    break;
-                   
-            }
-        }
-        return null;
-    }
+//    public User userlogin(){
+//        
+//          boolean validChoice = false;
+//        System.out.println("\n\nWelcome to Log in Page !! \n");
+//        while (!validChoice) {
+//            System.out.println("Role:");
+//            System.out.println("1.Young_Student");
+//            System.out.println("2.Parents");
+//            System.out.println("3.Educator");
+//            System.out.print("Choice: ");
+//           
+//
+//            int choice = scan.nextInt();
+//           
+//            String role;
+//            switch (choice) {
+//                case 1:
+//                    role="Young_Students";
+//                    validChoice = true;
+//                    return lgin(role);
+//                    
+//                case 2:
+//                    role="Parents";
+//                    validChoice = true;
+//                    return lgin(role);
+//                    
+//                case 3:
+//                    role="Educators";
+//                    validChoice = true;
+//                    return lgin(role);
+//                    
+//                default:
+//                    System.out.println("Invalid choice. Please try again.");
+//                    // Set validChoice to false to repeat the loop
+//                    break;
+//                   
+//            }
+//        }
+//        return null;
+//    }
     public void viewprofile(User user){
       
         System.out.println("Your Profile Details : \n");
@@ -109,16 +109,16 @@ public class  Login {
           u.mainmenu(user);
     }
     
-    public User lgin(String role){
+    public User lgin(){
          String input;
-         input=scan.nextLine();
+         
          java.util.ArrayList <String> data = new ArrayList<>();
         System.out.print("Email: ");
         input=scan.nextLine();
         data.add(input);
-        System.out.print("Username: ");
-        input=scan.nextLine();
-        data.add(input);
+//        System.out.print("Username: ");
+//        input=scan.nextLine();
+//        data.add(input);
         System.out.print("Password: ");
         input=scan.nextLine();
         data.add(input);
@@ -139,23 +139,18 @@ public class  Login {
                 
                 if (check.getString(2).equals(data.get(0)) ) {
                     emailExist = true;
-                    if(check.getString(3).equals(data.get(1))){
-                            usernameExist=true;
-                               if(check.getString(4).equals(data.get(2))){
+                   
+                               if(check.getString(4).equals(data.get(1))){
                                 passwordExist = true;
                           
                             user.setEmail(data.get(0));
-                            user.setPassword(data.get(2));
-                            user.setUsername(data.get(1));
-                            if(check.getString(5).equals(role)){
-                            user.setRole(role);
-                            }
-                            else{
-                                System.out.println("Wrong selected role !!");
-                                return null;
-                            }
+                            user.setPassword(data.get(1));
+                            
+                            user.setUsername(check.getString(3));
+                            user.setRole(check.getString(5));
+                           
                                    
-                            switch(role){
+                            switch(user.getRole()){
                                 case "Young_Students" -> {
                                     
                                     
@@ -196,7 +191,7 @@ public class  Login {
                                   
                                }
   
-                    }
+                    
                 }
             }
 

@@ -35,7 +35,7 @@ public class FirstPage {
             }
             case 2 -> {
                 Login l = new Login();
-                return   l.userlogin();
+                return   l.lgin();
             }
             case 3 -> {
                 
