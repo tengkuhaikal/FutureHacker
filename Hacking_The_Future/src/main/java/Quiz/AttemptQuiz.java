@@ -105,7 +105,15 @@ do {
 
 // Fetch the content column for the selected quiz title
 String quizContent = fetchQuizContent(selectedQuizTitle);
+
+if(!hasAttemptedQuiz(user.getUsername(),selectedQuizTitle,quizContent)){
 attemptSelectedQuiz(quizContent,user);
+recordQuizAttempt(user,selectedQuizTitle,quizContent);
+addPoints(user.getUsername());
+}
+else{
+    attemptSelectedQuiz(quizContent,user);
+}
 
         System.out.println("Do you want to continue attempt other quiz? (Yes:1/Other:No");
         int choice=scan.nextInt();
@@ -165,7 +173,7 @@ private String fetchQuizContent(String title) {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        addPoints(user.getUsername());
+        
         
     }
     
@@ -183,6 +191,42 @@ private String fetchQuizContent(String title) {
             } else {
                 System.out.println("User not found or points not updated.");
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    // Method to check if the user has already attempted the quiz
+    private boolean hasAttemptedQuiz(String username, String title , String content) {
+        String query = "SELECT COUNT(*) FROM quizrecord WHERE username = ? AND title = ? AND content = ?";
+        try (Connection conn = DriverManager.getConnection(url, "root", pass);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, username);
+            pstmt.setString(2, title);
+            pstmt.setString(3, content);
+           
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    int count = rs.getInt(1);
+                    return count > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+     // Method to record the quiz attempt
+    private void recordQuizAttempt(User user, String quizTitle, String quizContent) {
+        String insertQuery = "INSERT INTO quizrecord (username, title, content) VALUES (?, ?, ?)";
+        try (Connection conn = DriverManager.getConnection(url, "root", pass);
+             PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
+            pstmt.setString(1, user.getUsername());
+            pstmt.setString(2, quizTitle);
+            pstmt.setString(3, quizContent);
+            pstmt.executeUpdate();
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }
