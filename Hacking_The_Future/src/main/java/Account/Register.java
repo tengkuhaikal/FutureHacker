@@ -8,12 +8,14 @@ package Account;
  *
  * @author Afiq Zafry
  */
+import static Account.MySQLConfiguration.pass;
 import UI.Ui;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+//import org.mindrot.jbcrypt.BCrypt;
 import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -23,7 +25,7 @@ public class Register extends User {
     static Scanner scan = new Scanner (System.in);
     static Random rand = new Random ();
     public static String user = "root";
-    public static String pass ="root";
+ 
     
    public static User registernewuser (){
        java.util.ArrayList <String> data = new ArrayList<>();

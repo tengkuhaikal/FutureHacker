@@ -103,7 +103,7 @@ public class  Login {
                                     break;
                                 }
           }
-          System.out.println("---------------------------------                               ");
+          System.out.println("---------------------------------------------");
           System.out.println("You'll be redirected to main menu\n\n");
           Ui u = new Ui();
           u.mainmenu(user);
