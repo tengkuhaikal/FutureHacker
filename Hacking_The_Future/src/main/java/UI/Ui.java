@@ -69,8 +69,8 @@ public class Ui {
                 }
             }
             case "Parents": {
-                System.out.println("1.View Profile");
-                System.out.println("2.Account Settings");
+                System.out.println("1.View Profile");    // Please create a method to let parents view their past bookings
+                System.out.println("2.Account Settings");   
                 System.out.println("3.View and Book Event"); //Not Completed yet
                 System.out.println("4.Log Out");
                 choice = scan.nextInt();
