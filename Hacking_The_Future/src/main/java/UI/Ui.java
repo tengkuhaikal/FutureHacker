@@ -71,7 +71,7 @@ public class Ui {
             case "Parents": {
                 System.out.println("1.View Profile");
                 System.out.println("2.Account Settings");
-                System.out.println("3.View and Book Event");
+                System.out.println("3.View and Book Event"); //Not Completed yet
                 System.out.println("4.Log Out");
                 choice = scan.nextInt();
                 scan.nextLine();
@@ -93,7 +93,7 @@ public class Ui {
                 System.out.println("2.Account Settings ");
                 System.out.println("3.Create Quiz");
                 System.out.println("4.Create Event");
-                System.out.println("5.View Parent Child Relationship"); //Not Completed Yet. This where we acn see the result of populate child and parent
+                System.out.println("5.View Parent Child Relationship"); //Not Completed Yet. This where we acn see the result of populate child and parent(from the txt file and others)
                 System.out.println("6.Log Out");
                 choice = scan.nextInt();
                 scan.nextLine();
