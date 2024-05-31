@@ -115,7 +115,7 @@ else{
     attemptSelectedQuiz(quizContent,user);
 }
 
-        System.out.println("Do you want to continue attempt other quiz? (Yes:1/Other:No");
+        System.out.println("Do you want to continue attempt other quiz? (Yes:1/Other:No)");
         int choice=scan.nextInt();
         if(choice==1){
             attemptquiz(user);

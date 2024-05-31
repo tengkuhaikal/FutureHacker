@@ -58,7 +58,7 @@ public class NewQuiz {
         } while (valid);
       scan.nextLine(); // Consume newline left by nextInt()
 
-        System.out.print("Quiz Content: ");
+        System.out.print("Quiz Linkt: ");
         content = scan.nextLine();
         
         Quiziz quiz= new Quiziz(title,desc,theme,content);

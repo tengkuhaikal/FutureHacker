@@ -9,6 +9,7 @@ import Account.FirstPage;
 import Account.Login;
 import Account.User;
 import Activity.AccessManager;
+import Event.CreateEvent;
 import static Leaderboard.FriendManager.managerequest;
 import static Leaderboard.rank.viewrank;
 import Quiz.NewQuiz;
@@ -28,6 +29,7 @@ public class Ui {
     FirstPage fp = new FirstPage();
     NewQuiz nq = new NewQuiz();
     AttemptQuiz at = new AttemptQuiz();
+    CreateEvent ce = new CreateEvent();
 
     public void mainmenu(User user) {
         System.out.println("\n\n-----------Main Menu-------------");
@@ -42,6 +44,8 @@ public class Ui {
                 System.out.println("3.View Leaderboard and Send Request Friend");
                 System.out.println("4.Manage Friend Request");
                 System.out.println("5.Attempt Quiz");
+                System.out.println("6.View and Book Events"); //Not completed Yet'
+                System.out.println("7.Log Out");
                 choice = scan.nextInt();
                 scan.nextLine();
                 switch (choice) {
@@ -55,12 +59,20 @@ public class Ui {
                         managerequest(user);
                     case 5:
                         at.attemptquiz(user);
+                    case 7:{
+                         FirstPage fp = new FirstPage();
+                        User u = fp.welcome();
+                        mainmenu(u);
+                    }
+                       
 
                 }
             }
             case "Parents": {
                 System.out.println("1.View Profile");
                 System.out.println("2.Account Settings");
+                System.out.println("3.View and Book Event");
+                System.out.println("4.Log Out");
                 choice = scan.nextInt();
                 scan.nextLine();
                 switch (choice) {
@@ -68,12 +80,21 @@ public class Ui {
                         l.viewprofile(user);
                     case 2:
                         as.Settings(user);
+                    case 4:{
+                         FirstPage fp = new FirstPage();
+                        User u = fp.welcome();
+                        mainmenu(u);
+                    }
+                      
                 }
             }
             case "Educators": {
                 System.out.println("1.View Profile");
                 System.out.println("2.Account Settings ");
                 System.out.println("3.Create Quiz");
+                System.out.println("4.Create Event");
+                System.out.println("5.View Parent Child Relationship"); //Not Completed Yet. This where we acn see the result of populate child and parent
+                System.out.println("6.Log Out");
                 choice = scan.nextInt();
                 scan.nextLine();
                 switch (choice) {
@@ -83,6 +104,14 @@ public class Ui {
                         as.Settings(user);
                     case 3:
                         nq.CreateQuiz(user);
+                    case 4:
+                        CreateEvent.createEvent(user);
+                    case 6: {
+                        FirstPage fp = new FirstPage();
+                        User u = fp.welcome();
+                        mainmenu(u);
+                    }
+                        
                 }
             }
 

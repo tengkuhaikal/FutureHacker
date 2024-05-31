@@ -81,7 +81,10 @@ public class  Login {
           
           switch(user.getRole()){
               case "Young_Students":{
+                  int updatedpoints=countPoints(user);
+                  user.setCurrentPoints(updatedpoints);
                                     System.out.println("Current points: "+user.getCurrentPoints());
+                                    
                                     if(user.getParent()!=null) {
                                         System.out.println("Parents: "+user.getParent());
             } else {
@@ -100,6 +103,8 @@ public class  Login {
                                     break;
                                 }
                                 case "Educators":{
+                                    System.out.println("No. of Quizs created: "+countUserQuizRows(user));
+                                    System.out.println("No. of Events created: "+countUserEventRows( user));
                                     break;
                                 }
           }
@@ -111,7 +116,7 @@ public class  Login {
     
     public User lgin(){
          String input;
-         
+         System.out.println("----------Log In page----------");
          java.util.ArrayList <String> data = new ArrayList<>();
         System.out.print("Email: ");
         input=scan.nextLine();
@@ -216,6 +221,79 @@ public class  Login {
         }
         return null;
     }
+    
+    
+    
+    
+    
+    public static int countUserQuizRows(User user) {
+        int rowCount = 0;
+        String query = "SELECT COUNT(*) FROM quiz WHERE username = ?";
+
+        try (Connection conn = DriverManager.getConnection(url, "root", pass);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, user.getUsername());
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                rowCount = rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return rowCount;
+    }
+
+    // Method to calculate the number of rows containing User's username in the 'educator' column of the 'event' table
+    public static int countUserEventRows(User user) {
+        int rowCount = 0;
+        String query = "SELECT COUNT(*) FROM event WHERE educator = ?";
+
+        try (Connection conn = DriverManager.getConnection(url, "root", pass);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, user.getUsername());
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                rowCount = rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return rowCount;
+    }
+    
+    
+    
+    
+    
+    public static int countPoints(User user) {
+    int points = 0;
+    String query = "SELECT points FROM user WHERE username = ?";
+
+    try (Connection conn = DriverManager.getConnection(url, "root", pass);
+         PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+        pstmt.setString(1, user.getUsername());
+        ResultSet rs = pstmt.executeQuery();
+
+        if (rs.next()) {
+            points = rs.getInt("points");
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return points;
+}
+
     public static void main(String[] args) {
         Login l = new Login();
 

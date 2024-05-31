@@ -22,7 +22,7 @@ public class ParentChild {
         as.updateChildren(newparent, c, as.getChildren(newparent));
         boolean success = as.updateParent(user.getUsername(), newparent);
         if (success) {
-            System.out.println("Parents detail has been updated");
+           // System.out.println("Parents detail has been updated");
 
             user.setParent(newparent);
         } else {
@@ -60,7 +60,7 @@ public class ParentChild {
 
         boolean success = as.updateChildren(user.getUsername(), temp, temp2);
         if (success) {
-            System.out.println("Your Children list has been updated");
+           // System.out.println("Your Children list has been updated");
             for (int i = 0; i < temp.size(); i++) {
                 as.updateParent(temp.get(i), user.getUsername());
             }

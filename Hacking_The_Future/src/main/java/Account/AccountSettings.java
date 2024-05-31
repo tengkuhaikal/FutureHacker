@@ -311,10 +311,10 @@ public class AccountSettings {
                 }
             }
             if(!invalidChildren.isEmpty()){
-                System.out.println(" Children who are/is invalid  : "+ invalidChildren );
+                System.out.println( invalidChildren+ "are/is invalid to be added"+username+"'s children list" );
             }
             if(validChildren.isEmpty()){
-                System.out.println("The Children you want to add are already in your children list");
+                System.out.println("Redundant update to"+username+"'s children list detected !!");
                 return false;
             }
             for (int i = 0; i <childrenusernames2.size(); i++) {

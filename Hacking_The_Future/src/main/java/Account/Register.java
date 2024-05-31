@@ -28,7 +28,10 @@ public class Register extends User {
  
     
    public static User registernewuser (){
+       System.out.println("--------Register Page-------");
        java.util.ArrayList <String> data = new ArrayList<>();
+       System.out.println("\nPress enter to continue");
+       scan.nextLine();
        System.out.print("Email: ");
        String input= scan.nextLine();
        data.add(input);
@@ -154,8 +157,7 @@ public class Register extends User {
                 System.out.println("You have successfully registered \n");
                 
              Login l = new Login();
-             Ui starter = new Ui();
-             starter.mainmenu(l.lgin());
+             return l.lgin();
        
             } else {
                 System.out.println("Failed to register.");
