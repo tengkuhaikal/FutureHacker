@@ -43,8 +43,8 @@ public class CreateEvent {
         
         System.out.print("Event Description: ");
         String eventDescription = scan.nextLine();
-        System.out.println("");
-        String eventVenue=enterlocation();
+        System.out.println("Event Venue: ");
+        String eventVenue=scan.nextLine();
        
         
 

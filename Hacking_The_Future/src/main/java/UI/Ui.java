@@ -44,7 +44,7 @@ public class Ui {
                 System.out.println("3.View Leaderboard and Send Request Friend");
                 System.out.println("4.Manage Friend Request");
                 System.out.println("5.Attempt Quiz");
-                System.out.println("6.View and Book Events"); //Not completed Yet'
+                System.out.println("6.View and Register Events"); //Not completed Yet'
                 System.out.println("7.Log Out");
                 choice = scan.nextInt();
                 scan.nextLine();
@@ -71,7 +71,7 @@ public class Ui {
             case "Parents": {
                 System.out.println("1.View Profile");    // Please create a method to let parents view their past bookings
                 System.out.println("2.Account Settings");   
-                System.out.println("3.View and Book Event"); //Not Completed yet
+                System.out.println("3.View and Book Trips"); //Not Completed yet
                 System.out.println("4.Log Out");
                 choice = scan.nextInt();
                 scan.nextLine();
