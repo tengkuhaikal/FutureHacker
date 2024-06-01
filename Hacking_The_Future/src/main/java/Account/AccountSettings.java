@@ -370,49 +370,76 @@ public class AccountSettings {
         return childrenList;
     }
     
-    public static void populateParentChildFromFile(String filePath) {
-        String insertQuery = "INSERT INTO user (username, parents, role) VALUES (?, ?, ?), (?, ?, ?)";
-        String updateQuery = "UPDATE user SET children = CONCAT(IFNULL(children, ''), ?) WHERE username = ?";
-
-        try (Connection connect = DriverManager.getConnection(url, "root", pass);
-             BufferedReader reader = new BufferedReader(new FileReader(filePath));
-             PreparedStatement insertStatement = connect.prepareStatement(insertQuery);
-             PreparedStatement updateStatement = connect.prepareStatement(updateQuery)) {
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] relationship = line.split(",");
-                if (relationship.length == 2) {
-                    String parentUsername = relationship[0].trim();
-                    String childUsername = relationship[1].trim();
-
-                    // Insert child user
-                    insertStatement.setString(1, childUsername);
-                    insertStatement.setString(2, parentUsername);
-                    insertStatement.setString(3, "Young_Students");
-
-                    // Insert parent user
-                    insertStatement.setString(4, parentUsername);
-                    insertStatement.setNull(5, java.sql.Types.VARCHAR);
-                    insertStatement.setString(6, "Parents");
-
-                    insertStatement.addBatch();
-
-                    // Update parent's children field
-                    updateStatement.setString(1, "," + childUsername); // Append child username
-                    updateStatement.setString(2, parentUsername);
-                    updateStatement.addBatch();
-                }
-            }
-
-            insertStatement.executeBatch();
-            updateStatement.executeBatch();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
     
+public static boolean populateParentChildFromFile(String filePath) {
+    String insertQuery = "INSERT INTO user (username, parents, role, email, password, location) VALUES (?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?)";
+    String updateQuery = "UPDATE user SET children = CONCAT(IFNULL(children, ''), ?) WHERE username = ?";
+
+    try (Connection connect = DriverManager.getConnection(url, "root", pass);
+         BufferedReader reader = new BufferedReader(new FileReader(filePath));
+         PreparedStatement insertStatement = connect.prepareStatement(insertQuery);
+         PreparedStatement updateStatement = connect.prepareStatement(updateQuery)) {
+
+        String line;
+        int counter = 1; // Counter to generate unique values
+        while ((line = reader.readLine()) != null) {
+            String[] relationship = line.split(",");
+            if (relationship.length == 2) {
+                String parentUsername = relationship[0].trim();
+                String childUsername = relationship[1].trim();
+                
+                // Generate unique email addresses and passwords
+                String parentEmail = "parent" + counter + "@example.com";
+                String childEmail = "child" + counter + "@example.com";
+                String parentPassword = "password" + counter; // Example password generation
+                String childPassword = "password" + counter;
+                counter++;
+                
+                Random rand = new Random();
+                // Generate unique coordinates
+                    int parentLat = rand.nextInt(1001) - 500; // Latitude in the range -500 to 500
+                    int parentLong = rand.nextInt(1001) - 500; // Longitude in the range -500 to 500
+                    int childLat = rand.nextInt(1001) - 500; // Latitude in the range -500 to 500
+                    int childLong = rand.nextInt(1001) - 500; // Longitude in the range -500 to 500
+
+                    // Combine latitude and longitude into location string
+                    String parentLocation = parentLat + "," + parentLong;
+                    String childLocation = childLat + "," + childLong;
+
+                // Insert child user
+                insertStatement.setString(1, childUsername);
+                insertStatement.setString(2, parentUsername);
+                insertStatement.setString(3, "Young_Students");
+                insertStatement.setString(4, childEmail);
+                insertStatement.setString(5, childPassword);
+                insertStatement.setString(6, childLocation);
+
+                // Insert parent user
+                insertStatement.setString(7, parentUsername);
+                insertStatement.setNull(8, java.sql.Types.VARCHAR); // Assuming parents don't have a parent
+                insertStatement.setString(9, "Parents");
+                insertStatement.setString(10, parentEmail);
+                insertStatement.setString(11, parentPassword);
+                insertStatement.setString(12, parentLocation);
+
+                insertStatement.addBatch();
+
+                // Update parent's children field
+                updateStatement.setString(1, childUsername + ","); // Append child username
+                updateStatement.setString(2, parentUsername);
+                updateStatement.addBatch();
+            }
+        }
+
+        insertStatement.executeBatch();
+        updateStatement.executeBatch();
+        return true;
+
+    } catch (IOException | SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+}
+
+
 }

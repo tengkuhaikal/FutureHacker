@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Account;
+import UI.Ui;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 /**
@@ -12,6 +14,7 @@ import java.util.Scanner;
 public class ParentChild {
     Scanner sc = new Scanner (System.in);
     AccountSettings as;
+    private static final String defaultFilePath = "C:\\_Hasna\\UNIV\\SEM 2\\WIA1002\\Final Project\\Netbeans 19\\DataStructure\\Hacking_The_Future\\src\\main\\java\\Account\\ParentChild.txt";
     
     public void updateParentForChild(User user) {
         System.out.print("Enter your Parents Username: ");
@@ -73,6 +76,16 @@ public class ParentChild {
     }
 
     public static void main(String[] args) {
-        AccountSettings.populateParentChildFromFile("ParentChild.txt");
-    }
+        String filePath = (args.length == 1) ? args[0] : defaultFilePath;
+        boolean success = AccountSettings.populateParentChildFromFile(filePath);
+
+        if (success) {
+            System.out.println("Data populated successfully.");
+        } else {
+            System.out.println("Failed to populate data.");
+        }
+        System.out.println("Current Working Directory: " + System.getProperty("user.dir"));
+}
+
+    
 }
