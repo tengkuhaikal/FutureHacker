@@ -5,6 +5,7 @@
 package UI;
 
 import Account.AccountSettings;
+import static Account.AccountSettings.viewParentChildRelationships;
 import Account.FirstPage;
 import Account.Login;
 import Account.User;
@@ -93,7 +94,7 @@ public class Ui {
                 System.out.println("2.Account Settings ");
                 System.out.println("3.Create Quiz");
                 System.out.println("4.Create Event");
-                System.out.println("5.View Parent Child Relationship"); //Not Completed Yet. This where we acn see the result of populate child and parent(from the txt file and others)
+                System.out.println("5.View Parent Child Relationship"); //Additional actually but would be better to view all at once
                 System.out.println("6.Log Out");
                 choice = scan.nextInt();
                 scan.nextLine();
@@ -106,12 +107,13 @@ public class Ui {
                         nq.CreateQuiz(user);
                     case 4:
                         CreateEvent.createEvent(user);
+                    case 5:
+                        viewParentChildRelationships();
                     case 6: {
                         FirstPage fp = new FirstPage();
                         User u = fp.welcome();
                         mainmenu(u);
                     }
-                        
                 }
             }
 
@@ -124,7 +126,6 @@ public class Ui {
         FirstPage fp = new FirstPage();
         User user = fp.welcome();
         starter.mainmenu(user);
-        //AccessManager am = new AccessManager();
 
     }
 

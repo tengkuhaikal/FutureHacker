@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Account;
+
 import UI.Ui;
 import java.io.File;
 import java.util.ArrayList;
@@ -85,7 +86,6 @@ public class ParentChild {
             System.out.println("Failed to populate data.");
         }
         System.out.println("Current Working Directory: " + System.getProperty("user.dir"));
-}
-
+    }
     
 }
