@@ -4,6 +4,9 @@
  */
 package Account;
 
+import static Account.AccountSettings.getChildren;
+import static Account.AccountSettings.updateChildren;
+import static Account.AccountSettings.updateParent;
 import UI.Ui;
 import java.io.File;
 import java.util.ArrayList;
@@ -23,8 +26,8 @@ public class ParentChild {
         java.util.ArrayList<String> c = new ArrayList<String>();
         c.add(user.getUsername());
 
-        as.updateChildren(newparent, c, as.getChildren(newparent));
-        boolean success = as.updateParent(user.getUsername(), newparent);
+        updateChildren(newparent, c, getChildren(newparent));
+        boolean success = updateParent(user.getUsername(), newparent);
         if (success) {
            // System.out.println("Parents detail has been updated");
 
@@ -62,11 +65,11 @@ public class ParentChild {
             temp.add(studentname);
         }
 
-        boolean success = as.updateChildren(user.getUsername(), temp, temp2);
+        boolean success = updateChildren(user.getUsername(), temp, temp2);
         if (success) {
            // System.out.println("Your Children list has been updated");
             for (int i = 0; i < temp.size(); i++) {
-                as.updateParent(temp.get(i), user.getUsername());
+                updateParent(temp.get(i), user.getUsername());
             }
             ArrayList<String> combinedList = new ArrayList<>(temp2);
             combinedList.addAll(temp);
