@@ -36,8 +36,8 @@ List<String> usernames = new ArrayList<>();
         try (Connection conn = DriverManager.getConnection(url, "root", pass);
              PreparedStatement pstmt = conn.prepareStatement(query);
              ResultSet rs = pstmt.executeQuery()) {
-
-            System.out.println("   Rank\tUsername\tCurrent Points");
+System.out.printf("%-6s %-6s %-15s %-15s%n", "Index", "Rank", "Username", "Current Points");
+            //System.out.println("Index\tRank\tUsername\tCurrent Points");
             int i=1;
             while (rs.next()) {
                 int rank = rs.getInt("user_rank");
@@ -45,7 +45,10 @@ List<String> usernames = new ArrayList<>();
                 int currentPoints = rs.getInt("points");
                 Timestamp datetime = rs.getTimestamp("updated_at");
                 usernames.add(username);
-                System.out.println(i+"  "+rank + "\t" + username + "\t\t" + currentPoints + "\t\t" );
+//                int width=10;
+//                System.out.print(i+"\t"+rank + "\t" + username + "\t\t\t"  );
+//                System.out.printf("%" + width + "d\n", currentPoints+"/n");
+System.out.printf("%-6d %-6d %-15s %-15d%n", i, rank, username,currentPoints);
                 i++;
             }
         } catch (SQLException e) {
@@ -54,7 +57,7 @@ List<String> usernames = new ArrayList<>();
         
         // Prompt message to choose index for friend request
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the index of the user (order) to send a friend request, if you press zero you will be redirected to main menu:");
+        System.out.println("Enter the index of the user to send a friend request, if you press zero you will be redirected to main menu:");
         int index = scanner.nextInt();
         if (index == 0) {
             Ui starter = new Ui();
