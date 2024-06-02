@@ -107,8 +107,11 @@ public class Ui {
                         nq.CreateQuiz(user);
                     case 4:
                         CreateEvent.createEvent(user);
-                    case 5:
+                    case 5:{
                         viewParentChildRelationships();
+                         Ui starter = new Ui();     
+        starter.mainmenu(user);
+                    }
                     case 6: {
                         FirstPage fp = new FirstPage();
                         User u = fp.welcome();

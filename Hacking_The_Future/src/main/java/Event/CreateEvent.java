@@ -43,7 +43,7 @@ public class CreateEvent {
         
         System.out.print("Event Description: ");
         String eventDescription = scan.nextLine();
-        System.out.println("Event Venue: ");
+        System.out.print("Event Venue: ");
         String eventVenue=scan.nextLine();
        
         
