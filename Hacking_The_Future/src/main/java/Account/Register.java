@@ -9,6 +9,7 @@ package Account;
  * @author Afiq Zafry
  */
 import static Account.MySQLConfiguration.pass;
+import static Geoloaction.GeoLocation.getrealLocation;
 import UI.Ui;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -79,9 +80,12 @@ public class Register extends User {
         }
        data.add(input);
        
-       System.out.print("Your Location: ");
-       int lat = rand.nextInt(1001) - 500; // Generates latitude in the range -500 to 500
-       int log = rand.nextInt(1001) - 500; // Generates longitude in the range -500 to 500
+       System.out.print("Your Exact Current Coordinate: ");
+       Double [] reallocation= getrealLocation();
+       double lat = reallocation[0];
+               //rand.nextInt(1001) - 500; // Generates latitude in the range -500 to 500
+       double log = reallocation[1];
+               //rand.nextInt(1001) - 500; // Generates longitude in the range -500 to 500
        System.out.println("[" + lat + "," + log + "]");
        data.add(lat + "," + log);
        
