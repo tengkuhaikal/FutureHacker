@@ -66,7 +66,7 @@ public class EventManager {
         System.out.println(user.getUsername() + "'s current points: " + user.getCurrentPoints());
     }
     
-    public void selectAndJoinEvent(User user) {
+    public void selectAndJoinEvent(User user) { //need correction
         displayLiveAndUpcomingEvents();
         Scanner sc = new Scanner(System.in);
 
