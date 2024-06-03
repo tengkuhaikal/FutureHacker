@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -39,90 +40,25 @@ public class EventManager {
         System.out.println("New event created: " + title);
     }
 
-    public void displayEvents() {
-        if (events.isEmpty()) {
-            System.out.println("No events available.");
-            return;
-        }
-        System.out.println("Available Events:");
-        for (int i = 0; i < events.size(); i++) {
-            Event event = events.get(i);
-            System.out.println((i + 1) + ". " + event.getTitle() + " - " + event.getDescription() + " on " + event.getDate());
-        }
-    }
 
-    // Method for a user to join an event
-    public void joinEvent(int eventIndex, User user) { //still need correction
-        if (eventIndex < 0 || eventIndex >= events.size()) {
-            System.out.println("Invalid event selection.");
-            return;
-        }
-        Event event = events.get(eventIndex);
-        // Add points for joining an event using User's setCurrentPoints method
-        int newPoints = user.getCurrentPoints() + 5; // Assuming 5 points for joining an event
+public void joinEvent(Event event, User user) {
+    // Add points for joining an event using User's setCurrentPoints method
+    int newPoints = user.getCurrentPoints() + 5; // Assuming 5 points for joining an event
+    user.setCurrentPoints(newPoints);
+    System.out.println(user.getUsername() + " has joined the event: " + event.getTitle());
+    System.out.println(user.getUsername() + "'s current points: " + user.getCurrentPoints());
+}
 
-        user.setCurrentPoints(newPoints);
-        System.out.println(user.getUsername() + " has joined the event: " + event.getTitle());
-        System.out.println(user.getUsername() + "'s current points: " + user.getCurrentPoints());
-    }
     
-    public void selectAndJoinEvent(User user) { //need correction
-        displayLiveAndUpcomingEvents();
+       public void displayLiveAndUpcomingEvents(User user) {
         Scanner sc = new Scanner(System.in);
-
-        List<Event> liveEvents = new ArrayList<>();
-        List<Event> upcomingEvents = new ArrayList<>();
-
-        // Separate live events and upcoming events
-        LocalDate today = LocalDate.now();
-        for (Event event : events) {
-            LocalDate eventDate = LocalDate.parse(event.getDate());
-            if (eventDate.equals(today)) {
-                liveEvents.add(event);
-            } else if (eventDate.isAfter(today)) {
-                upcomingEvents.add(event);
-            }
-        }
-
-        // Handle user input for live events
-        if (!liveEvents.isEmpty()) {
-            System.out.println("Select the live event number to join (or enter 0 to skip):");
-            int selectedLiveNumber = sc.nextInt();
-            sc.nextLine();
-            if (selectedLiveNumber > 0 && selectedLiveNumber <= liveEvents.size()) {
-                Event selectedLiveEvent = liveEvents.get(selectedLiveNumber - 1);
-                joinEvent(events.indexOf(selectedLiveEvent), user);
-            } else if (selectedLiveNumber != 0) {
-                System.out.println("Invalid selection for live events.");
-            }
-        }
-
-        // Handle user input for upcoming events
-        if (!upcomingEvents.isEmpty()) {
-            System.out.println("Select the upcoming event number to join (or enter 0 to skip):");
-            int selectedUpcomingNumber = sc.nextInt();
-            sc.nextLine();
-            if (selectedUpcomingNumber > 0 && selectedUpcomingNumber <= upcomingEvents.size()) {
-                Event selectedUpcomingEvent = upcomingEvents.get(selectedUpcomingNumber - 1);
-                joinEvent(events.indexOf(selectedUpcomingEvent), user);
-            } else if (selectedUpcomingNumber != 0) {
-                System.out.println("Invalid selection for upcoming events.");
-            }
-        }
-
-        if (liveEvents.isEmpty() && upcomingEvents.isEmpty()) {
-            System.out.println("No events available to join.");
-        }
-    }
-    
-       public void displayLiveAndUpcomingEvents() {
         LocalDate today = LocalDate.now();
         List<Event> liveEvents = new ArrayList<>();
         List<Event> upcomingEvents = new ArrayList<>();
 
         for (Event event : events) {
             LocalDate date = LocalDate.parse(event.getDate());
-            if (event.getDate().equals(today)) {
+            if (date.equals(today)) {
                 liveEvents.add(event);
             } else if (date.isAfter(today)) {
                 upcomingEvents.add(event);
@@ -138,6 +74,14 @@ public class EventManager {
                 Event event = liveEvents.get(i);
                 System.out.println((i + 1) + ". " + event.getTitle() + " - " + event.getDescription() + " on " + event.getDate());
             }
+            System.out.println("Select the live event number to join: ");
+            int selectedLiveNumber = sc.nextInt();
+            if (selectedLiveNumber > 0 && selectedLiveNumber <= liveEvents.size()) {
+            Event selectedLiveEvent = liveEvents.get(selectedLiveNumber - 1);
+            joinEvent(selectedLiveEvent, user);
+        } else if (selectedLiveNumber != 0) {
+            System.out.println("Invalid selection for live events.");
+        }
         } else {
             System.out.println("No live events today.");
         }
@@ -147,6 +91,15 @@ public class EventManager {
         for (int i = 0; i < Math.min(3, upcomingEvents.size()); i++) {
             Event event = upcomingEvents.get(i);
             System.out.println((i + 1) + ". " + event.getTitle() + " - " + event.getDescription() + " on " + event.getDate());
+        }
+        System.out.println("Select the live event number to join: ");
+        int selectedUpcomingNumber = sc.nextInt();
+        sc.nextLine();
+        if (selectedUpcomingNumber > 0 && selectedUpcomingNumber <= upcomingEvents.size()) {
+            Event selectedUpcomingEvent = upcomingEvents.get(selectedUpcomingNumber - 1);
+            joinEvent(selectedUpcomingEvent, user);
+        } else if (selectedUpcomingNumber != 0) {
+            System.out.println("Invalid selection for upcoming events.");
         }
     }
   

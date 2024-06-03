@@ -63,7 +63,7 @@ public class Ui {
                     case 5:
                         at.attemptquiz(user);
                     case 6:
-                        em.selectAndJoinEvent(user);
+                        em.displayLiveAndUpcomingEvents(user);
                     case 7:{
                          FirstPage fp = new FirstPage();
                         User u = fp.welcome();
