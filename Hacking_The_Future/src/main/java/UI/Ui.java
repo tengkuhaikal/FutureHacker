@@ -15,6 +15,7 @@ import static Leaderboard.FriendManager.managerequest;
 import static Leaderboard.rank.viewrank;
 import Quiz.NewQuiz;
 import Quiz.AttemptQuiz;
+import activity.EventManager;
 
 import java.util.Scanner;
 
@@ -31,6 +32,7 @@ public class Ui {
     NewQuiz nq = new NewQuiz();
     AttemptQuiz at = new AttemptQuiz();
     CreateEvent ce = new CreateEvent();
+    EventManager em = new EventManager();
 
     public void mainmenu(User user) {
         System.out.println("\n\n-----------Main Menu-------------");
@@ -60,6 +62,8 @@ public class Ui {
                         managerequest(user);
                     case 5:
                         at.attemptquiz(user);
+                    case 6:
+                        em.selectAndJoinEvent(user);
                     case 7:{
                          FirstPage fp = new FirstPage();
                         User u = fp.welcome();

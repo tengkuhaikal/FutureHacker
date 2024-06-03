@@ -9,6 +9,7 @@ import static Account.MySQLConfiguration.url;
 import Account.User;
 import static Event.Filepath.filepath;
 import UI.Ui;
+import activity.EventManager;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileReader;
@@ -32,6 +33,7 @@ import java.util.Scanner;
  */
 public class CreateEvent {
     private static final Scanner scan = new Scanner(System.in);
+    private static EventManager em = new EventManager();
 
     
     public static void createEvent(User user) {
@@ -58,6 +60,8 @@ public class CreateEvent {
             try {
                 System.out.print("Event Date (YYYY-MM-DD): ");
                 String dateInput = scan.nextLine();
+                em.addEvent(eventTitle, eventDescription,dateInput);
+
                 eventDate = new Date(dateFormat.parse(dateInput).getTime());
                 
                 System.out.print("Event Time (HH:MM:SS): ");
@@ -69,7 +73,7 @@ public class CreateEvent {
                 System.out.println("Invalid date or time format. Please try again.");
             }
         }
-
+        
         // Insert the new event into the database
         String insertEventQuery = "INSERT INTO event (title, description, venue, date, time, educator) VALUES (?, ?, ?, ?, ?, ?)";
         

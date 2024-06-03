@@ -4,55 +4,78 @@
  */
 package Activity;
 
+import Account.User;
 import java.time.LocalDate;
 import java.sql.Time;
+import java.util.ArrayList;
 
 /**
  *
  * @author Hasna
  */
 public class BookingDestination {
+
     private String username, destination;
     private double x;
     private double y;
     private LocalDate date;
     private Time time;
-    
-    public BookingDestination(String destination, double x, double y){
+    private User user;
+
+    public BookingDestination() {
+    }
+
+    public BookingDestination(String destination, double x, double y) {
         this.destination = destination;
         this.x = x;
         this.y = y;
-    }
-    
-    public BookingDestination(String username, String destination, LocalDate date, Time time){
-        this.username = username;
-        this.destination = destination;
         date = LocalDate.now();
         time = new Time(System.currentTimeMillis());
+
     }
-    
-    public String getName(){
+
+    public BookingDestination(String username, String destination, LocalDate date, Time time) {
+        this.username = username;
+        this.destination = destination;
+//        date = LocalDate.now();
+//        time = new Time(System.currentTimeMillis());
+        this.date = date;
+        this.time = time;
+    }
+
+    public String getName() { //for parents
         return username;
     }
-    
-    public double getX(){
+
+    public ArrayList<String> getChildrenName() {
+        return user.getChildren();
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+    public double getX() {
         return x;
     }
-    
-    public double getY(){
+
+    public double getY() {
         return y;
     }
-    
-    public String getDestination(){
+
+    public String getDestination() {
         return destination;
     }
-    
-    public LocalDate getDate(){
+
+    public LocalDate getDate() {
         return date;
     }
-    
-    public Time getTime(){
+
+    public Time getTime() {
         return time;
     }
-}
 
+//    public String getEventName(){
+//        return 
+//    }
+}
