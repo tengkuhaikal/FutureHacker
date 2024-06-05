@@ -22,6 +22,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.*;
 import java.util.List;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class  Login {
 //     public static String url = "jdbc:mysql://localhost:3306/datastructure";
@@ -145,7 +146,7 @@ public class  Login {
                 if (check.getString(2).equals(data.get(0)) ) {
                     emailExist = true;
                    
-                               if(check.getString(4).equals(data.get(1))){
+                                if(BCrypt.checkpw(data.get(1), check.getString(4))){
                                 passwordExist = true;
                           
                             user.setEmail(data.get(0));

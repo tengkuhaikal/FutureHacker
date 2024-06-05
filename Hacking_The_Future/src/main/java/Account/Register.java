@@ -21,12 +21,17 @@ import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Random;
+import org.mindrot.jbcrypt.BCrypt;
 public class Register extends User {
     public static String url = "jdbc:mysql://localhost:3306/datastructure";
     static Scanner scan = new Scanner (System.in);
     static Random rand = new Random ();
     public static String user = "root";
  
+    public static String hashPassword(String plainPassword) {
+        return BCrypt.hashpw(plainPassword, BCrypt.gensalt());
+    }
+    
     
    public static User registernewuser (){
        System.out.println("--------Register Page-------");
@@ -43,7 +48,8 @@ public class Register extends User {
        
            System.out.print("Password: ");
              input= scan.nextLine();
-       data.add(input);
+        String hashedpassword=hashPassword(input);
+       data.add(hashedpassword);
        
        
              boolean validChoice = false;

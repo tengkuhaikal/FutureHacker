@@ -8,6 +8,7 @@ package Account;
  *
  * @author Afiq Zafry
  */
+import static Account.Register.hashPassword;
 import java.sql.Connection; // Represents a connection to the database
 import java.sql.DriverManager; // Helps in obtaining a connection to the database
 import java.sql.PreparedStatement; // Used for prepared statements
@@ -182,8 +183,9 @@ public class AccountSettings {
         try (Connection connect = DriverManager.getConnection(url, "root", pass);
              PreparedStatement preparedStatement = connect.prepareStatement(updateQuery)) {
 
+            String hashedpass= hashPassword(newPassword);
             // Set the parameters for the prepared statement
-            preparedStatement.setString(1, newPassword);
+            preparedStatement.setString(1, hashedpass);
             preparedStatement.setString(2, username);
 
             // Execute the update
