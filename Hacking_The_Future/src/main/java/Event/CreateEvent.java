@@ -60,12 +60,13 @@ public class CreateEvent {
             try {
                 System.out.print("Event Date (YYYY-MM-DD): ");
                 String dateInput = scan.nextLine();
-                em.addEvent(eventTitle, eventDescription,dateInput);
+//                em.addEvent(eventTitle, eventDescription,dateInput);
 
                 eventDate = new Date(dateFormat.parse(dateInput).getTime());
                 
                 System.out.print("Event Time (HH:MM:SS): ");
                 String timeInput = scan.nextLine();
+                em.addEvent(eventTitle, eventDescription,dateInput,timeInput);
                 eventTime = new Time(timeFormat.parse(timeInput).getTime());
                 
                 validInput = true; // If parsing is successful, exit loop

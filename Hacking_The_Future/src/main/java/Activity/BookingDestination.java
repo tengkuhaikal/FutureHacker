@@ -19,6 +19,7 @@ public class BookingDestination {
     private double x;
     private double y;
     private LocalDate date;
+    private LocalDate bookingDateChoice;
     private Time time;
     private User user;
 
@@ -74,8 +75,13 @@ public class BookingDestination {
     public Time getTime() {
         return time;
     }
+    
+    public void setBookingDateChoice(LocalDate bookingDateChoice){
+        this.bookingDateChoice = bookingDateChoice;
+    }
+    
+    public LocalDate getBookingDateChoice(){
+        return bookingDateChoice;
+    } 
 
-//    public String getEventName(){
-//        return 
-//    }
 }

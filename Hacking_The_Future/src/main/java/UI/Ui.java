@@ -10,6 +10,7 @@ import Account.FirstPage;
 import Account.Login;
 import Account.User;
 import Activity.AccessManager;
+import Activity.BookingService;
 import Event.CreateEvent;
 import static Leaderboard.FriendManager.managerequest;
 import static Leaderboard.rank.viewrank;
@@ -33,6 +34,7 @@ public class Ui {
     AttemptQuiz at = new AttemptQuiz();
     CreateEvent ce = new CreateEvent();
     EventManager em = new EventManager();
+    BookingService bs = new BookingService();
 
     public void mainmenu(User user) {
         System.out.println("\n\n-----------Main Menu-------------");
@@ -85,6 +87,8 @@ public class Ui {
                         l.viewprofile(user);
                     case 2:
                         as.Settings(user);
+                    case 3:
+                        bs.createBooking(user);
                     case 4:{
                          FirstPage fp = new FirstPage();
                         User u = fp.welcome();
