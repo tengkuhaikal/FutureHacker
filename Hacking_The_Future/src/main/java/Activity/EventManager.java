@@ -1,6 +1,7 @@
 package activity;
 
 import Account.User;
+import UI.Ui;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -111,6 +112,15 @@ public void joinEvent(Event event, User user) {
                 System.out.println("Invalid selection for upcoming events.");
             }
         }
+        System.out.print("Do you want to join more events ? (yes: 1 , No : etc): ");
+        int choice;
+        choice = sc.nextInt();
+        if(choice==1){
+            displayLiveAndUpcomingEvents( user);
+        }else{
+    Ui starter = new Ui();     
+        starter.mainmenu(user);
+        }
     }
   
     public void saveEventChoice(String childUsername, String parentUsername, String eventName, java.sql.Date eventDate, java.sql.Time eventTime, int points) {
@@ -132,6 +142,7 @@ public void joinEvent(Event event, User user) {
             e.printStackTrace();
             System.out.println("Failed to save event choice.");
         }
+       
     }
     
 }
