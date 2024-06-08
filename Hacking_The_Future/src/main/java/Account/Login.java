@@ -10,6 +10,7 @@ package Account;
  */
 import static Account.MySQLConfiguration.pass;
 import static Account.MySQLConfiguration.url;
+import Activity.BookingService;
 import Leaderboard.FriendManager;
 import UI.Ui;
 import java.sql.Connection; // Represents a connection to the database
@@ -31,6 +32,7 @@ public class  Login {
     Scanner scan = new Scanner(System.in);
     
    FriendManager fm = new FriendManager();
+   BookingService bs = new BookingService();
     
 //    public User userlogin(){
 //        
@@ -98,8 +100,10 @@ public class  Login {
                                     
                                        if(user.getChildren() != null && !user.getChildren().isEmpty()) {
                                         System.out.println("Children: "+user.getChildren());
+                                        bs.displayBookingHistoryForUser(user);
             } else {
                                         System.out.println("Children: "+"null");
+                                        bs.displayBookingHistoryForUser(user);
             }
                                     break;
                                 }

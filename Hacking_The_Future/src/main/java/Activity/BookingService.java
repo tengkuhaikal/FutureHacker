@@ -20,6 +20,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -255,6 +256,41 @@ private List<BookingDestination> loadBookingDestinations() {
         e.printStackTrace();
     }
 }
+ public void displayBookingHistoryForUser(User user) {
+        // SQL query to select all bookings made by the specified user
+        String query = "SELECT * FROM parent_bookings WHERE parent_username = ?";
+
+        try (Connection connect = DriverManager.getConnection(url, "root", pass);
+             PreparedStatement statement = connect.prepareStatement(query)) {
+            statement.setString(1, user.getUsername());
+
+            ResultSet resultSet = statement.executeQuery();
+            if (!resultSet.isBeforeFirst()) {
+                System.out.println("No booking history found for user: " + user.getUsername());
+                return;
+            }
+
+            System.out.println("Booking history for user: " + user.getUsername());
+            System.out.println("=======================================================");
+            System.out.printf("%-5s | %-20s | %-20s | %-20s | %-10s | %-10s\n",
+                    "ID", "Child Username", "Booking Name", "Booking Date Choice", "Booking Time", "Created At");
+            System.out.println("-------------------------------------------------------");
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String childUsername = resultSet.getString("child_username");
+                String bookingName = resultSet.getString("booking_name");
+                Date bookingDate = resultSet.getDate("booking_date_choice");
+                Time bookingTime = resultSet.getTime("booking_time");
+                Timestamp createdAt = resultSet.getTimestamp("created_at");
+
+                System.out.printf("%-5d | %-20s | %-20s | %-20s | %-10s | %-10s\n",
+                        id, childUsername, bookingName, bookingDate, bookingTime, createdAt);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
         Ui starter = new Ui();
