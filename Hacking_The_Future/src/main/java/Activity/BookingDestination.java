@@ -42,6 +42,7 @@ public class BookingDestination {
 //        time = new Time(System.currentTimeMillis());
         this.date = date;
         this.time = time;
+        //this.bookingDateChoice = dateChoice;
     }
 
     public String getName() { //for parents

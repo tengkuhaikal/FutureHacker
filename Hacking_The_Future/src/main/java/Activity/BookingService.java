@@ -33,10 +33,11 @@ public class BookingService {
     static String url = "jdbc:mysql://localhost:3306/datastructure";
     public static String pass = "root";
     private List<BookingDestination> bookingDestinations;
-   // public static final String filepath = "C:\\_Hasna\\UNIV\\SEM 2\\WIA1002\\Final Project\\Netbeans 19\\DataStructure\\Hacking_The_Future\\src\\main\\java\\Activity\\BookingDestination.txt"; 
-    public static final String filepath = "C:\\Users\\Afiq Zafry\\OneDrive - Universiti Malaya\\Documents\\NetBeansProjects\\Hacking_The_Future\\WIA1002\\FutureHacker\\Hacking_The_Future\\src\\main\\java\\Activity\\BookingDestination.txt";
+    public static final String filepath = "C:\\_Hasna\\UNIV\\SEM 2\\WIA1002\\Final Project\\Netbeans 19\\DataStructure\\Hacking_The_Future\\src\\main\\java\\Activity\\BookingDestination.txt"; 
+    //public static final String filepath = "C:\\Users\\Afiq Zafry\\OneDrive - Universiti Malaya\\Documents\\NetBeansProjects\\Hacking_The_Future\\WIA1002\\FutureHacker\\Hacking_The_Future\\src\\main\\java\\Activity\\BookingDestination.txt";
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private static final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+    BookingDestination book;
     
     public BookingService() {
         bookingDestinations = loadBookingDestinations();
@@ -151,103 +152,43 @@ private List<BookingDestination> loadBookingDestinations() {
     }
 
     
-//    public void createBooking(User user) {
-//        ArrayList<String> childrenNames = user.getChildren();
-//        if (childrenNames == null || childrenNames.isEmpty()) {
-//            System.out.println("You have no children registered. You cannot make a booking.");
-//            return;
-//        }
-//        List<BookingDestination> sortedDestinations = null;
-//        Double[] userCoordinate = user.getLocationCoordinate();
-//
-//        Double x = userCoordinate[0];
-//        Double y = userCoordinate[1];
-//        displaySortedBookingDestination(x, y);
-//        sortedDestinations = getSortedBookingDestinations(x, y);
-//        
-//
-//        Scanner sc = new Scanner(System.in);
-//        System.out.println("\nSelect the destination number to book:");
-//        int selectedNumber = sc.nextInt();
-//        sc.nextLine();
-//
-//        if (selectedNumber > 0 && selectedNumber <= sortedDestinations.size()) {
-//            BookingDestination selectedDestination = sortedDestinations.get(selectedNumber - 1);
-//
-//            BookingDestination booking = new BookingDestination(user.getUsername(), selectedDestination.getDestination(), selectedDestination.getDate(), selectedDestination.getTime());
-//            boolean success = addBooking(booking,user);
-//
-//            if (success) {
-//                System.out.println("Booking successfully added.");
-//            } else {
-//                System.out.println("Failed to add booking.");
-//            }
-//        } else {
-//            System.out.println("Invalid selection.");
-//        }
-//    }
+
     public void createBooking(User user) {
-    ArrayList<String> childrenNames = user.getChildren();
-    if (childrenNames == null || childrenNames.isEmpty()) {
-        System.out.println("You have no children registered. You cannot make a booking.");
-        return;
-    }
+        ArrayList<String> childrenNames = user.getChildren();
+        if (childrenNames == null || childrenNames.isEmpty()) {
+            System.out.println("You have no children registered. You cannot make a booking.");
+            return;
+        }
 
-    List<BookingDestination> sortedDestinations = null;
-    Double[] userCoordinate = user.getLocationCoordinate();
-    Double x = userCoordinate[0];
-    Double y = userCoordinate[1];
-    displaySortedBookingDestination(x, y);
-    sortedDestinations = getSortedBookingDestinations(x, y);
+        List<BookingDestination> sortedDestinations = null;
+        Double[] userCoordinate = user.getLocationCoordinate();
+        Double x = userCoordinate[0];
+        Double y = userCoordinate[1];
+        displaySortedBookingDestination(x, y);
+        sortedDestinations = getSortedBookingDestinations(x, y);
 
-    Scanner sc = new Scanner(System.in);
-    System.out.println("\nSelect the destination number to book:");
-    int selectedNumber = sc.nextInt();
-    sc.nextLine();
-
-    if (selectedNumber > 0 && selectedNumber <= sortedDestinations.size()) {
-        BookingDestination selectedDestination = sortedDestinations.get(selectedNumber - 1);
-
-        // Display available dates for booking
-        displayAvailableDatesForBooking(user.getUsername(), selectedDestination.getDestination());
-
-        System.out.print("Enter the selected time slot: ");
-        int selectedTimeSlot = sc.nextInt();
+        Scanner sc = new Scanner(System.in);
+        System.out.println("\nSelect the destination number to book:");
+        int selectedNumber = sc.nextInt();
         sc.nextLine();
 
-        if (selectedTimeSlot > 0 && selectedTimeSlot <= 7) {
-            LocalDate bookingDateChoice = LocalDate.now().plusDays(selectedTimeSlot - 1);
+        if (selectedNumber > 0 && selectedNumber <= sortedDestinations.size()) {
+            BookingDestination selectedDestination = sortedDestinations.get(selectedNumber - 1);
+            // Display available dates for booking
+            displayAvailableDatesForBooking(user, selectedDestination.getDestination());
 
-            // Create a new booking object with the selected date choice
-            BookingDestination booking = new BookingDestination(user.getUsername(), selectedDestination.getDestination(),
-                    selectedDestination.getDate(), selectedDestination.getTime());
-            booking.setBookingDateChoice(bookingDateChoice);
-
-            // Add the booking to the database
-            boolean success = addBooking(booking, user);
-            if (success) {
-                System.out.println("Booking successfully added.");
-            } else {
-                System.out.println("Failed to add booking.");
-            }
+        System.out.print("Do you want to add more bookings? (yes: 1, No: etc): ");
+        int choice = sc.nextInt();
+        if (choice == 1) {
+            createBooking(user);
         } else {
-            System.out.println("Invalid time slot selection.");
+            Ui starter = new Ui();
+            starter.mainmenu(user);
         }
-    } else {
-        System.out.println("Invalid selection.");
     }
-        System.out.print("Do you want to add more bookings ? (yes: 1 , No : etc): ");
-        int choice;
-        choice = sc.nextInt();
-        if(choice==1){
-            createBooking( user);
-        }else{
-    Ui starter = new Ui();     
-        starter.mainmenu(user);
-        }
-}
-    
-   public void displayAvailableDatesForBooking(String parentUsername, String destinationName) {
+    }
+ 
+   public void displayAvailableDatesForBooking(User user, String destinationName) {
     LocalDate currentDate = LocalDate.now();
     LocalDate endDate = currentDate.plusWeeks(1);
 
@@ -255,15 +196,19 @@ private List<BookingDestination> loadBookingDestinations() {
                    "FROM (SELECT 1 AS i UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7) t " +
                    "WHERE NOT EXISTS (" +
                    "    SELECT 1 " +
-                   "    FROM child_event ce " +
-                   "    JOIN user u ON ce.child_username = u.username " +
-                   "    WHERE u.parents = ? AND ce.event_date = DATE(DATE_ADD(?, INTERVAL (t.i - 1) DAY))" +
+                   "    FROM parent_bookings pb " +
+                   "    WHERE pb.booking_date_choice = DATE(DATE_ADD(?, INTERVAL (t.i - 1) DAY)) " +
+                   "    OR EXISTS (" +
+                   "        SELECT 1 " +
+                   "        FROM child_event ce " +
+                   "        WHERE ce.event_date = DATE(DATE_ADD(?, INTERVAL (t.i - 1) DAY)) " +
+                   "    )" +
                    ")";
 
     try (Connection connect = DriverManager.getConnection(url, "root", pass);
          PreparedStatement statement = connect.prepareStatement(query)) {
         statement.setDate(1, java.sql.Date.valueOf(currentDate));
-        statement.setString(2, parentUsername);
+        statement.setDate(2, java.sql.Date.valueOf(currentDate));
         statement.setDate(3, java.sql.Date.valueOf(currentDate));
 
         ResultSet resultSet = statement.executeQuery();
@@ -280,6 +225,29 @@ private List<BookingDestination> loadBookingDestinations() {
             for (int i = 0; i < availableDates.size(); i++) {
                 System.out.println("[" + (i + 1) + "] " + availableDates.get(i));
             }
+            Scanner sc = new Scanner(System.in);
+            System.out.print("\nEnter the index of the date you want to book: ");
+            int selectedDateIndex = sc.nextInt();
+            sc.nextLine();
+
+            // Validate user input
+            if (selectedDateIndex > 0 && selectedDateIndex <= availableDates.size()) {
+                LocalDate bookingDateChoice = availableDates.get(selectedDateIndex - 1);
+
+                // Create a new booking object
+                BookingDestination booking = new BookingDestination(user.getUsername(), destinationName, currentDate, null);
+                booking.setBookingDateChoice(bookingDateChoice);
+
+                // Add the booking to the database (assuming addBooking method exists)
+                boolean success = addBooking(booking, user);
+                if (success) {
+                    System.out.println("Booking successfully added.");
+        } else {
+                    System.out.println("Failed to add booking.");
+                }
+            } else {
+                System.out.println("Invalid date selection.");
+            }
         } else {
             System.out.println("No available dates for booking within the next week.");
         }
@@ -287,7 +255,6 @@ private List<BookingDestination> loadBookingDestinations() {
         e.printStackTrace();
     }
 }
-
 
     public static void main(String[] args) {
         Ui starter = new Ui();

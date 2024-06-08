@@ -20,7 +20,7 @@ import java.util.Scanner;
 
 
 public class EventManager {
-    private List<Event> events;
+    private List<Event> events = loadEventsFromDatabase();
     Event event;
     static String url = "jdbc:mysql://localhost:3306/datastructure";
     public static String pass = "root";
