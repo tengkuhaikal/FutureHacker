@@ -12,6 +12,7 @@ import Account.User;
 import Activity.AccessManager;
 import Activity.BookingService;
 import Event.CreateEvent;
+import static Event.CreateEvent.createEvent;
 import static Leaderboard.FriendManager.managerequest;
 import static Leaderboard.rank.viewrank;
 import Quiz.NewQuiz;
@@ -79,7 +80,8 @@ public class Ui {
                 System.out.println("1.View Profile");    // Please create a method to let parents view their past bookings
                 System.out.println("2.Account Settings");   
                 System.out.println("3.View and Book Trips"); //Not Completed yet
-                System.out.println("4.Log Out");
+                System.out.println("4.View Events");
+                System.out.println("5.Log Out");
                 choice = scan.nextInt();
                 scan.nextLine();
                 switch (choice) {
@@ -89,7 +91,9 @@ public class Ui {
                         as.Settings(user);
                     case 3:
                         bs.createBooking(user);
-                    case 4:{
+                    case 4 :
+                         em.displayLiveAndUpcomingEvents(user);
+                    case 5:{
                          FirstPage fp = new FirstPage();
                         User u = fp.welcome();
                         mainmenu(u);
@@ -101,9 +105,10 @@ public class Ui {
                 System.out.println("1.View Profile");
                 System.out.println("2.Account Settings ");
                 System.out.println("3.Create Quiz");
-                System.out.println("4.Create Event");
-                System.out.println("5.View Parent Child Relationship"); //Additional actually but would be better to view all at once
-                System.out.println("6.Log Out");
+                System.out.println("4.View Events");
+                System.out.println("5.Create Event");
+                System.out.println("6.View Parent Child Relationship"); //Additional actually but would be better to view all at once
+                System.out.println("7.Log Out");
                 choice = scan.nextInt();
                 scan.nextLine();
                 switch (choice) {
@@ -114,13 +119,15 @@ public class Ui {
                     case 3:
                         nq.CreateQuiz(user);
                     case 4:
-                        CreateEvent.createEvent(user);
-                    case 5:{
+                        em.displayLiveAndUpcomingEvents(user);
+                    case 5:
+                          createEvent(user);
+                    case 6:{
                         viewParentChildRelationships();
                          Ui starter = new Ui();     
         starter.mainmenu(user);
                     }
-                    case 6: {
+                    case 7: {
                         FirstPage fp = new FirstPage();
                         User u = fp.welcome();
                         mainmenu(u);
