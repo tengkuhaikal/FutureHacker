@@ -174,22 +174,24 @@ public class DiscussionPage {
 
             switch (choice) {
                 case 1:
-                    postMessage(user.getRole(),user.getUsername());
+                    postMessage(user.getRole(), user.getUsername());
                     break;
                 case 2:
-                    replyToMessage(user.getRole(),user.getUsername());
+                    replyToMessage(user.getRole(), user.getUsername());
                     break;
                 case 3:
                     likeMessage();
                     break;
                 case 4:
-                    deleteMessage(user.getRole(),user.getUsername());
+                    deleteMessage(user.getRole(), user.getUsername());
                     break;
                 case 5:
                     // Just redisplay, which happens at the start of the loop
                     break;
                 case 0:
                     stay = false;
+                    Ui starter = new Ui();
+                    starter.mainmenu(user);
                     break;
                 default:
                     System.out.println("Invalid option. Please try again.");
