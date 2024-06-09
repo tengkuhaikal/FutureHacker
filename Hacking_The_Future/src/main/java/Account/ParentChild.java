@@ -11,15 +11,19 @@ import UI.Ui;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 /**
  *
  * @author Hasna
  */
 public class ParentChild {
-    Scanner sc = new Scanner (System.in);
+
+    Scanner sc = new Scanner(System.in);
     AccountSettings as;
-    private static final String defaultFilePath = "C:\\_Hasna\\UNIV\\SEM 2\\WIA1002\\Final Project\\Netbeans 19\\DataStructure\\Hacking_The_Future\\src\\main\\java\\Account\\ParentChild.txt";
-   // private static final String defaultFilePath = "C:\\Users\\Afiq Zafry\\OneDrive - Universiti Malaya\\Documents\\NetBeansProjects\\WIA1002\\Hacking_The_Future\\src\\main\\java\\Account\\ParentChild.txt";
+    //private static final String defaultFilePath = "C:\\_Hasna\\UNIV\\SEM 2\\WIA1002\\Final Project\\Netbeans 19\\DataStructure\\Hacking_The_Future\\src\\main\\java\\Account\\ParentChild.txt";
+    private static final String defaultFilePath = "C:\\Users\\USER\\Desktop\\Hacking The Future Real 1\\FutureHacker\\Hacking_The_Future\\src\\main\\java\\Account\\ParentChild.txt";
+    //private static final String defaultFilePath = "C:\\Users\\Afiq Zafry\\OneDrive - Universiti Malaya\\Documents\\NetBeansProjects\\WIA1002\\Hacking_The_Future\\src\\main\\java\\Account\\ParentChild.txt";
+
     public void updateParentForChild(User user) {
         System.out.print("Enter your Parents Username: ");
         String newparent = sc.nextLine();
@@ -29,11 +33,11 @@ public class ParentChild {
         updateChildren(newparent, c, getChildren(newparent));
         boolean success = updateParent(user.getUsername(), newparent);
         if (success) {
-           // System.out.println("Parents detail has been updated");
+            // System.out.println("Parents detail has been updated");
 
             user.setParent(newparent);
         } else {
-            System.out.println("Your detail failed to be updated");
+            System.out.println("Your detail failed to be updated!");
         }
     }
 
@@ -79,54 +83,54 @@ public class ParentChild {
 //        }
 //    }
     public void updateChildrenForParent(User user) {
-    System.out.println("How many children do you want to add?");
-    int quantity = sc.nextInt();
-    sc.nextLine(); // consume newline
-    if (quantity == 0) {
-        System.out.println("You entered zero, no children will be added.");
-        return; // Exit the method early
-    }
-
-    String studentname;
-    ArrayList<String> existingChildren = user.getChildren();
-    ArrayList<String> newChildren = new ArrayList<>();
-    ArrayList<String> existingChildrenCopy = new ArrayList<>();
-
-    // Copy existing children to a new list
-    if (existingChildren != null && !existingChildren.isEmpty()) {
-        existingChildrenCopy.addAll(existingChildren);
-        System.out.println("Existing children:");
-        for (int i = 0; i < existingChildren.size(); i++) {
-            System.out.println((i + 1) + ". " + existingChildren.get(i));
-        }
-    } else {
-        System.out.println("No existing children found.");
-    }
-
-    System.out.println("Type your children usernames below:");
-    for (int i = 0; i < quantity; i++) {
-        System.out.print((i + 1) + ". ");
-        studentname = sc.nextLine();
-        newChildren.add(studentname);
-    }
-
-    // Update children in the database and set parent for new children
-    boolean success = updateChildren(user.getUsername(), newChildren, existingChildrenCopy);
-    if (success) {
-        System.out.println("Your Children list has been updated.");
-        for (String childUsername : newChildren) {
-            updateParent(childUsername, user.getUsername());
+        System.out.print("How many children do you want to add?");
+        int quantity = sc.nextInt();
+        sc.nextLine(); // consume newline
+        if (quantity == 0) {
+            System.out.println("You entered zero, no children will be added.");
+            return; // Exit the method early
         }
 
-        // Combine existing and new children
-        ArrayList<String> combinedList = new ArrayList<>(existingChildrenCopy);
-        combinedList.addAll(newChildren);
-        user.setChildren(combinedList);
-    } else {
-        System.out.println("Failed to update your children list. Please try again.");
+        String studentname;
+        ArrayList<String> existingChildren = user.getChildren();
+        ArrayList<String> newChildren = new ArrayList<>();
+        ArrayList<String> existingChildrenCopy = new ArrayList<>();
+
+        // Copy existing children to a new list
+        if (existingChildren != null && !existingChildren.isEmpty()) {
+            existingChildrenCopy.addAll(existingChildren);
+            System.out.println("Existing children:");
+            for (int i = 0; i < existingChildren.size(); i++) {
+                System.out.println((i + 1) + ". " + existingChildren.get(i));
+            }
+        } else {
+            System.out.println("No existing children found.");
+        }
+
+        System.out.println("Type your children usernames below:");
+        for (int i = 0; i < quantity; i++) {
+            System.out.print((i + 1) + ". ");
+            studentname = sc.nextLine();
+            newChildren.add(studentname);
+        }
+
+        // Update children in the database and set parent for new children
+        boolean success = updateChildren(user.getUsername(), newChildren, existingChildrenCopy);
+        if (success) {
+            System.out.println("Your Children list has been updated.");
+            for (String childUsername : newChildren) {
+                updateParent(childUsername, user.getUsername());
+            }
+
+            // Combine existing and new children
+            ArrayList<String> combinedList = new ArrayList<>(existingChildrenCopy);
+            combinedList.addAll(newChildren);
+            user.setChildren(combinedList);
+        } else {
+            System.out.println("Failed to update your children list. Please try again.");
+        }
     }
-}
-    
+
     public static void main(String[] args) {
         String filePath = (args.length == 1) ? args[0] : defaultFilePath;
         boolean success = AccountSettings.populateParentChildFromFile(filePath);
@@ -138,5 +142,5 @@ public class ParentChild {
         }
         System.out.println("Current Working Directory: " + System.getProperty("user.dir"));
     }
-    
+
 }
