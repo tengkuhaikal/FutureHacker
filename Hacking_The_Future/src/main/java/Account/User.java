@@ -12,19 +12,20 @@ import java.util.List;
 import java.util.*;
 
 public class User {
+
     private String email;
     private String username;
     private String password;
     private String role;
     private String parent;
     private java.util.ArrayList<String> children;
-    private Double [] locationCoordinate;
+    private Double[] locationCoordinate;
     private Integer currentPoints;
-    
-    
-    public User (){
-        
+
+    public User() {
+
     }
+
     public User(String email, String username, String password, String role, Double[] locationCoordinate) { // Constructor for Teacher
         this.email = email;
         this.username = username;
@@ -91,11 +92,10 @@ public class User {
     public void setLocationCoordinate(Double[] locationCoordinate) {
         this.locationCoordinate = locationCoordinate;
     }
-    
 
     public void setParent(String parent) {
         if ("Young_Students".equals(role)) {
-            this.parent=parent;
+            this.parent = parent;
         } else {
             throw new IllegalStateException("Access denied. Parent only accessible for Young Students.");
         }
@@ -103,7 +103,7 @@ public class User {
 
     public void setChildren(ArrayList<String> children) {
         if ("Parents".equals(role)) {
-            this.children=children;
+            this.children = children;
         } else {
             throw new IllegalStateException("Access denied. Children only accessible for Parents.");
         }
@@ -111,14 +111,11 @@ public class User {
 
     public void setCurrentPoints(Integer currentPoints) {
         if ("Young_Students".equals(role)) {
-            this.currentPoints=currentPoints;
+            this.currentPoints = currentPoints;
         } else {
             throw new IllegalStateException("Access denied. Current points only accessible for Young Students.");
         }
     }
-    
-    
-    
 
     public Integer getCurrentPoints() {
         if ("Young_Students".equals(role)) {
@@ -144,9 +141,4 @@ public class User {
         }
     }
 
-    
-   
-
-    
 }
-
