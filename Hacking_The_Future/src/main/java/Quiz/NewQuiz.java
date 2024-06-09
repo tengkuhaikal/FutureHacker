@@ -19,10 +19,12 @@ import java.util.*;
  * @author Afiq Zafry
  */
 public class NewQuiz {
-    Scanner scan = new Scanner (System.in);
-   String title,desc,theme,content;
-    public void CreateQuiz (User user){
-        
+
+    Scanner scan = new Scanner(System.in);
+    String title, desc, theme, content;
+
+    public void CreateQuiz(User user) {
+
         System.out.println("\n\n------Creating new quiz------");
         System.out.println("Educator: " + user.getUsername());
         System.out.print("Quiz Title: ");
@@ -56,12 +58,12 @@ public class NewQuiz {
                     break;
             }
         } while (valid);
-      scan.nextLine(); // Consume newline left by nextInt()
+        scan.nextLine(); // Consume newline left by nextInt()
 
         System.out.print("Quiz Linkt: ");
         content = scan.nextLine();
-        
-        Quiziz quiz= new Quiziz(title,desc,theme,content);
+
+        Quiziz quiz = new Quiziz(title, desc, theme, content);
         // Insert quiz into the database
         try (Connection conn = DriverManager.getConnection(url, "root", pass)) {
             String insertQuery = "INSERT INTO quiz (title, description, theme, Content, username) VALUES (?, ?, ?, ?, ?)";
@@ -79,16 +81,15 @@ public class NewQuiz {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
-        System.out.print("Do you want to still continue create Quiz ?(1:Yes/etc:no) :" );
-        int choice=scan.nextInt();
-        if (choice==1)
-            CreateQuiz(user);
-        else{
-         Ui starter = new Ui();     
-        starter.mainmenu(user);
-        }
-            
-    }
-    }
 
+        System.out.print("Do you want to still continue create Quiz? [1:Yes || 0:No] :");
+        int choice = scan.nextInt();
+        if (choice == 1) {
+            CreateQuiz(user);
+        } else {
+            Ui starter = new Ui();
+            starter.mainmenu(user);
+        }
+
+    }
+}
