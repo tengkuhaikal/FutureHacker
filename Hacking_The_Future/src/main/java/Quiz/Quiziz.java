@@ -9,6 +9,7 @@ package Quiz;
  * @author Afiq Zafry
  */
 public class Quiziz {
+
     private String title;
     private String description;
     private String Theme;
@@ -17,7 +18,6 @@ public class Quiziz {
     public Quiziz() {
     }
 
-    
     public Quiziz(String title, String description, String Theme, String content) {
         this.title = title;
         this.description = description;
@@ -56,6 +56,5 @@ public class Quiziz {
     public void setContent(String content) {
         this.content = content;
     }
-    
-    
+
 }
