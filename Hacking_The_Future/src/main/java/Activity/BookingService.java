@@ -34,8 +34,8 @@ public class BookingService {
     static String url = "jdbc:mysql://localhost:3306/datastructure";
     public static String pass = "root";
     private List<BookingDestination> bookingDestinations;
-    public static final String filepath = "C:\\_Hasna\\UNIV\\SEM 2\\WIA1002\\Final Project\\Netbeans 19\\DataStructure\\Hacking_The_Future\\src\\main\\java\\Activity\\BookingDestination.txt"; 
-    //public static final String filepath = "C:\\Users\\Afiq Zafry\\OneDrive - Universiti Malaya\\Documents\\NetBeansProjects\\Hacking_The_Future\\WIA1002\\FutureHacker\\Hacking_The_Future\\src\\main\\java\\Activity\\BookingDestination.txt";
+    //public static final String filepath = "C:\\_Hasna\\UNIV\\SEM 2\\WIA1002\\Final Project\\Netbeans 19\\DataStructure\\Hacking_The_Future\\src\\main\\java\\Activity\\BookingDestination.txt"; 
+    public static final String filepath = "C:\\Users\\Afiq Zafry\\OneDrive - Universiti Malaya\\Documents\\NetBeansProjects\\Hacking_The_Future\\WIA1002\\FutureHacker\\Hacking_The_Future\\src\\main\\java\\Activity\\BookingDestination.txt";
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private static final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
     BookingDestination book;
@@ -272,7 +272,7 @@ private List<BookingDestination> loadBookingDestinations() {
 
             System.out.println("Booking history for user: " + user.getUsername());
             System.out.println("=======================================================");
-            System.out.printf("%-5s | %-20s | %-20s | %-20s | %-10s | %-10s\n",
+            System.out.printf("%-5s | %-20s | %-30s | %-20s | %-15s | %-10s\n",
                     "ID", "Child Username", "Booking Name", "Booking Date Choice", "Booking Time", "Created At");
             System.out.println("-------------------------------------------------------");
 
@@ -284,7 +284,7 @@ private List<BookingDestination> loadBookingDestinations() {
                 Time bookingTime = resultSet.getTime("booking_time");
                 Timestamp createdAt = resultSet.getTimestamp("created_at");
 
-                System.out.printf("%-5d | %-20s | %-20s | %-20s | %-10s | %-10s\n",
+                System.out.printf("%-5d | %-20s | %-30s | %-20s | %-15s | %-10s\n",
                         id, childUsername, bookingName, bookingDate, bookingTime, createdAt);
             }
         } catch (SQLException e) {
