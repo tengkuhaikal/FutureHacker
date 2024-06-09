@@ -201,39 +201,90 @@ public class AccountSettings {
     }
     
     
+//    public static boolean updateParent(String username, String parentUsername) {
+//        String checkParentQuery = "SELECT COUNT(*) FROM user WHERE username = ? AND role = 'Parents' ;";
+//        String updateQuery = "UPDATE user SET parents = ? WHERE username = ?";
+//
+//        try (Connection connect = DriverManager.getConnection(url, "root", pass)) {
+//            // Check if the parent username exists
+//            try (PreparedStatement checkStatement = connect.prepareStatement(checkParentQuery)) {
+//                checkStatement.setString(1, parentUsername);
+//                try (ResultSet result = checkStatement.executeQuery()) {
+//                    if (result.next()) {
+//                        int count = result.getInt(1);
+//                        if (count == 0) {
+//                            System.out.println("Parent username does not exist.");
+//                            return false;
+//                        }
+//                    }
+//                }
+//            }
+//            
+//            // Proceed with the update if the parent username exists
+//            try (PreparedStatement updateStatement = connect.prepareStatement(updateQuery)) {
+//                updateStatement.setString(1, parentUsername);
+//                updateStatement.setString(2, username);
+//                
+//                int rowsAffected = updateStatement.executeUpdate();
+//                return rowsAffected > 0;
+//            }
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
+    
+    
     public static boolean updateParent(String username, String parentUsername) {
-        String checkParentQuery = "SELECT COUNT(*) FROM user WHERE username = ? AND role = 'Parents' ;";
-        String updateQuery = "UPDATE user SET parents = ? WHERE username = ?";
+    String checkParentQuery = "SELECT COUNT(*) FROM user WHERE username = ? AND role = 'Parents';";
+    String checkExistingParentQuery = "SELECT COUNT(*) FROM user WHERE username = ? AND parents IS NOT NULL;";
+    String updateQuery = "UPDATE user SET parents = ? WHERE username = ?";
 
-        try (Connection connect = DriverManager.getConnection(url, "root", pass)) {
-            // Check if the parent username exists
-            try (PreparedStatement checkStatement = connect.prepareStatement(checkParentQuery)) {
-                checkStatement.setString(1, parentUsername);
-                try (ResultSet result = checkStatement.executeQuery()) {
-                    if (result.next()) {
-                        int count = result.getInt(1);
-                        if (count == 0) {
-                            System.out.println("Parent username does not exist.");
-                            return false;
-                        }
+    try (Connection connect = DriverManager.getConnection(url, "root", pass)) {
+        // Check if the parent username exists
+        try (PreparedStatement checkStatement = connect.prepareStatement(checkParentQuery)) {
+            checkStatement.setString(1, parentUsername);
+            try (ResultSet result = checkStatement.executeQuery()) {
+                if (result.next()) {
+                    int count = result.getInt(1);
+                    if (count == 0) {
+                        System.out.println("Parent username does not exist.");
+                        return false;
                     }
                 }
             }
-            
-            // Proceed with the update if the parent username exists
-            try (PreparedStatement updateStatement = connect.prepareStatement(updateQuery)) {
-                updateStatement.setString(1, parentUsername);
-                updateStatement.setString(2, username);
-                
-                int rowsAffected = updateStatement.executeUpdate();
-                return rowsAffected > 0;
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
         }
+
+        // Check if the user already has a non-null parents column
+        try (PreparedStatement checkExistingParentStatement = connect.prepareStatement(checkExistingParentQuery)) {
+            checkExistingParentStatement.setString(1, username);
+            try (ResultSet result = checkExistingParentStatement.executeQuery()) {
+                if (result.next()) {
+                    int count = result.getInt(1);
+                    if (count > 0) {
+                        System.out.println("The user already has a parent assigned.");
+                        return false;
+                    }
+                }
+            }
+        }
+
+        // Proceed with the update if the parent username exists and the user does not already have a parent
+        try (PreparedStatement updateStatement = connect.prepareStatement(updateQuery)) {
+            updateStatement.setString(1, parentUsername);
+            updateStatement.setString(2, username);
+
+            int rowsAffected = updateStatement.executeUpdate();
+            return rowsAffected > 0;
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
     }
+}
+
     
     public static boolean updateChildren(String username, ArrayList<String> childrenUsernames, ArrayList<String> childrenusernames2) {
         String checkChildQuery = "SELECT COUNT(*) FROM user WHERE username = ? AND role = 'Young_Students' AND parents IS NULL";
