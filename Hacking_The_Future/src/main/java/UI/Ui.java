@@ -51,6 +51,7 @@ public class Ui {
                 System.out.println("5.Attempt Quiz");
                 System.out.println("6.View and Register Events"); //Not completed Yet'
                 System.out.println("7.Log Out");
+                System.out.print("Option: ");
                 choice = scan.nextInt();
                 scan.nextLine();
                 switch (choice) {
@@ -80,6 +81,7 @@ public class Ui {
                 System.out.println("3.View and Book Trips"); //Done
                 System.out.println("4.View Events");
                 System.out.println("5.Log Out");
+                System.out.print("Option: ");
                 choice = scan.nextInt();
                 scan.nextLine();
                 switch (choice) {
@@ -107,6 +109,8 @@ public class Ui {
                 System.out.println("5.Create Event");
                 System.out.println("6.View Parent Child Relationship"); //Additional actually but would be better to view all at once
                 System.out.println("7.Log Out");
+                System.out.print("Option: ");
+
                 choice = scan.nextInt();
                 scan.nextLine();
                 switch (choice) {
