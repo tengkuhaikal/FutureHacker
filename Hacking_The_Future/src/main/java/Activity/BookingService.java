@@ -22,6 +22,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -191,6 +192,7 @@ private List<BookingDestination> loadBookingDestinations() {
  
    public void displayAvailableDatesForBooking(User user, String destinationName) {
     LocalDate currentDate = LocalDate.now();
+    LocalTime currentTime = LocalTime.now();
     LocalDate endDate = currentDate.plusWeeks(1);
 
     String query = "SELECT DISTINCT DATE(DATE_ADD(?, INTERVAL (t.i - 1) DAY)) AS booking_date_choice " +
@@ -236,7 +238,7 @@ private List<BookingDestination> loadBookingDestinations() {
                 LocalDate bookingDateChoice = availableDates.get(selectedDateIndex - 1);
 
                 // Create a new booking object
-                BookingDestination booking = new BookingDestination(user.getUsername(), destinationName, currentDate, null);
+                BookingDestination booking = new BookingDestination(user.getUsername(), destinationName, currentDate, Time.valueOf(currentTime));
                 booking.setBookingDateChoice(bookingDateChoice);
 
                 // Add the booking to the database (assuming addBooking method exists)
