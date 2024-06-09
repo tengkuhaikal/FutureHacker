@@ -35,8 +35,8 @@ public class BookingService {
     static String url = "jdbc:mysql://localhost:3306/datastructure";
     public static String pass = "root";
     private List<BookingDestination> bookingDestinations;
-    //public static final String filepath = "C:\\_Hasna\\UNIV\\SEM 2\\WIA1002\\Final Project\\Netbeans 19\\DataStructure\\Hacking_The_Future\\src\\main\\java\\Activity\\BookingDestination.txt"; 
-    public static final String filepath = "C:\\Users\\Afiq Zafry\\OneDrive - Universiti Malaya\\Documents\\NetBeansProjects\\Hacking_The_Future\\WIA1002\\FutureHacker\\Hacking_The_Future\\src\\main\\java\\Activity\\BookingDestination.txt";
+    public static final String filepath = "C:\\_Hasna\\UNIV\\SEM 2\\WIA1002\\Final Project\\Netbeans 19\\DataStructure\\Hacking_The_Future\\src\\main\\java\\Activity\\BookingDestination.txt"; 
+    //public static final String filepath = "C:\\Users\\Afiq Zafry\\OneDrive - Universiti Malaya\\Documents\\NetBeansProjects\\Hacking_The_Future\\WIA1002\\FutureHacker\\Hacking_The_Future\\src\\main\\java\\Activity\\BookingDestination.txt";
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private static final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
     BookingDestination book;
@@ -200,19 +200,39 @@ private List<BookingDestination> loadBookingDestinations() {
                    "WHERE NOT EXISTS (" +
                    "    SELECT 1 " +
                    "    FROM parent_bookings pb " +
-                   "    WHERE pb.booking_date_choice = DATE(DATE_ADD(?, INTERVAL (t.i - 1) DAY)) " +
-                   "    OR EXISTS (" +
-                   "        SELECT 1 " +
-                   "        FROM child_event ce " +
-                   "        WHERE ce.event_date = DATE(DATE_ADD(?, INTERVAL (t.i - 1) DAY)) " +
-                   "    )" +
+                   "    WHERE pb.parent_username = ? " +  // Only consider bookings by the current parent
+                   "    AND pb.booking_date_choice = DATE(DATE_ADD(?, INTERVAL (t.i - 1) DAY)) " +
+                   ") AND NOT EXISTS (" +
+                   "    SELECT 1 " +
+                   "    FROM child_event ce " +
+                   "    WHERE ce.parent_username = ? " +  // Only consider events for the current parent's children
+                   "    AND ce.event_date = DATE(DATE_ADD(?, INTERVAL (t.i - 1) DAY)) " +
                    ")";
+
+//    String query = "SELECT DISTINCT DATE(DATE_ADD(?, INTERVAL (t.i - 1) DAY)) AS booking_date_choice " +
+//                   "FROM (SELECT 1 AS i UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7) t " +
+//                   "WHERE NOT EXISTS (" +
+//                   "    SELECT 1 " +
+//                   "    FROM parent_bookings pb " +
+//                   "    WHERE pb.booking_date_choice = DATE(DATE_ADD(?, INTERVAL (t.i - 1) DAY)) " +
+//                   "    OR EXISTS (" +
+//                   "        SELECT 1 " +
+//                   "        FROM child_event ce " +
+//                   "        WHERE ce.event_date = DATE(DATE_ADD(?, INTERVAL (t.i - 1) DAY)) " +
+//                   "    )" +
+//                   ")";
 
     try (Connection connect = DriverManager.getConnection(url, "root", pass);
          PreparedStatement statement = connect.prepareStatement(query)) {
+//        statement.setDate(1, java.sql.Date.valueOf(currentDate));
+//        statement.setDate(2, java.sql.Date.valueOf(currentDate));
+//        statement.setDate(3, java.sql.Date.valueOf(currentDate));
+        
         statement.setDate(1, java.sql.Date.valueOf(currentDate));
-        statement.setDate(2, java.sql.Date.valueOf(currentDate));
+        statement.setString(2, user.getUsername());  // Set the user's username
         statement.setDate(3, java.sql.Date.valueOf(currentDate));
+        statement.setString(4, user.getUsername());  // Set the user's username again
+        statement.setDate(5, java.sql.Date.valueOf(currentDate));
 
         ResultSet resultSet = statement.executeQuery();
         List<LocalDate> availableDates = new ArrayList<>();
