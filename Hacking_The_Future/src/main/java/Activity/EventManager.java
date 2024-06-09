@@ -123,7 +123,7 @@ public void joinEvent(Event event, User user) {
         }
         //Only young students can choose
         if (user.getRole().equals("Young_Students")) {
-            System.out.print("\nSelect the live event number to join: ");
+            System.out.print("\nSelect the  event number to join: ");
             int selectedUpcomingNumber = sc.nextInt();
             sc.nextLine();
             if (selectedUpcomingNumber > 0 && selectedUpcomingNumber <= upcomingEvents.size()) {
@@ -178,7 +178,7 @@ public void joinEvent(Event event, User user) {
     public void saveEventChoice(String childUsername, String parentUsername, String eventName, java.sql.Date eventDate, java.sql.Time eventTime, int points) {
     String checkSameEventQuery = "SELECT COUNT(*) FROM child_event WHERE child_username = ? AND event_name = ? AND event_date = ?";
     String checkDateClashQuery = "SELECT COUNT(*) FROM child_event WHERE child_username = ? AND event_date = ?";
-    String checkParentBookingClashQuery = "SELECT COUNT(*) FROM parent_bookings WHERE child_username = ? AND booking_date = ?";
+    String checkParentBookingClashQuery = "SELECT COUNT(*) FROM parent_bookings WHERE child_username = ? AND booking_date_choice = ?";
     String insertChoiceQuery = "INSERT INTO child_event (child_username, parent_username, event_name, event_date, event_time) VALUES (?, ?, ?, ?, ?)";
     
     try (Connection connect = DriverManager.getConnection(url, "root", pass);
