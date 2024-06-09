@@ -59,7 +59,7 @@ public class CreateEvent {
             try {
                 System.out.print("Event Date (YYYY-MM-DD): ");
                 String dateInput = scan.nextLine();
-//                em.addEvent(eventTitle, eventDescription,dateInput);
+
 
                 eventDate = new Date(dateFormat.parse(dateInput).getTime());
                 

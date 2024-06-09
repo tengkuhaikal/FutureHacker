@@ -26,54 +26,13 @@ import java.util.List;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class  Login {
-//     public static String url = "jdbc:mysql://localhost:3306/datastructure";
-//    public static String user = "root";
-//    public static String pass ="root";
+
     Scanner scan = new Scanner(System.in);
     
    FriendManager fm = new FriendManager();
    BookingService bs = new BookingService();
     
-//    public User userlogin(){
-//        
-//          boolean validChoice = false;
-//        System.out.println("\n\nWelcome to Log in Page !! \n");
-//        while (!validChoice) {
-//            System.out.println("Role:");
-//            System.out.println("1.Young_Student");
-//            System.out.println("2.Parents");
-//            System.out.println("3.Educator");
-//            System.out.print("Choice: ");
-//           
-//
-//            int choice = scan.nextInt();
-//           
-//            String role;
-//            switch (choice) {
-//                case 1:
-//                    role="Young_Students";
-//                    validChoice = true;
-//                    return lgin(role);
-//                    
-//                case 2:
-//                    role="Parents";
-//                    validChoice = true;
-//                    return lgin(role);
-//                    
-//                case 3:
-//                    role="Educators";
-//                    validChoice = true;
-//                    return lgin(role);
-//                    
-//                default:
-//                    System.out.println("Invalid choice. Please try again.");
-//                    // Set validChoice to false to repeat the loop
-//                    break;
-//                   
-//            }
-//        }
-//        return null;
-//    }
+
     public void viewprofile(User user){
       
         System.out.println("Your Profile Details : \n");
@@ -126,9 +85,7 @@ public class  Login {
         System.out.print("Email: ");
         input=scan.nextLine();
         data.add(input);
-//        System.out.print("Username: ");
-//        input=scan.nextLine();
-//        data.add(input);
+
         System.out.print("Password: ");
         input=scan.nextLine();
         data.add(input);
@@ -209,7 +166,7 @@ public class  Login {
                 if(passwordExist){
                     System.out.println("Welcome back "+user.getUsername().toUpperCase()+"!"); 
                     return user;
-                    //mod.promptAcc();
+                   
                     
                 }else{
                     System.out.println("Incorrect password, please try again!");
@@ -217,7 +174,7 @@ public class  Login {
                 }
             }else{
                 System.out.println("No email found, please register an account if you don't have an account!");
-                //successLogin = false;
+                
                 return null;
             }
 
@@ -230,7 +187,7 @@ public class  Login {
     
     
     
-    
+    // count quantity of quiz made by particular educator
     public static int countUserQuizRows(User user) {
         int rowCount = 0;
         String query = "SELECT COUNT(*) FROM quiz WHERE username = ?";
@@ -277,7 +234,7 @@ public class  Login {
     
     
     
-    
+    // method to retrieve students current points from sql 
     public static int countPoints(User user) {
     int points = 0;
     String query = "SELECT points FROM user WHERE username = ?";

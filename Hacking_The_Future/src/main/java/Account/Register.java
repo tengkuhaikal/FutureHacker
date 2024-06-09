@@ -85,13 +85,13 @@ public class Register extends User {
 
         }
         data.add(input);
-
+        // retrieve user location using realtime coordinate
         System.out.print("Your Exact Current Coordinate: ");
         Double[] reallocation = getrealLocation();
         double lat = reallocation[0];
-        //rand.nextInt(1001) - 500; // Generates latitude in the range -500 to 500
+        
         double log = reallocation[1];
-        //rand.nextInt(1001) - 500; // Generates longitude in the range -500 to 500
+       
         System.out.println("[" + lat + "," + log + "]");
         data.add(lat + "," + log);
 
@@ -102,7 +102,7 @@ public class Register extends User {
             PreparedStatement checkStatement = connect.prepareStatement(query);
             checkStatement.setString(1, data.get(0));
             ResultSet result = checkStatement.executeQuery();
-
+            //check if email is already exist
             while (result.next()) {
                 if (result.getString(2).equals(data.get(0))) {
                     System.out.println("Email already exist");
@@ -111,20 +111,7 @@ public class Register extends User {
 
             }
 
-//                String query2 = "SELECT * FROM user WHERE username = ?";
-//                PreparedStatement checkStatement2 = connect.prepareStatement(query2);
-//                checkStatement2.setString(1, data.get(1));
-//                ResultSet result2 = checkStatement2.executeQuery();
-//
-//            while (result2.next()) {
-//                if (result.getString(3).equals(data.get(1)) ){
-//                    System.out.println("username already exist");
-//                    return null;
-//                }
-//                
-//                
-//            
-//            }
+           // check if username is already exist
             String queryUsername = "SELECT * FROM user WHERE username = ?";
             try (PreparedStatement checkStatement2 = connect.prepareStatement(queryUsername)) {
                 checkStatement2.setString(1, data.get(1));

@@ -25,20 +25,7 @@ public class EventManager {
     static String url = "jdbc:mysql://localhost:3306/datastructure";
     public static String pass = "root";
 
-//    public EventManager() {
-//        this.events = new ArrayList<>();
-//        // Initialize with some sample events
-//        this.events.add(new Event("Tech Talk", "Learn about the latest in technology.", "2024-06-07","20:00:00"));
-//        this.events.add(new Event("Hackathon", "Collaborate and create apps within a day.", "2024-07-15", "15:30:00"));
-//        this.events.add(new Event("Workshop on AI", "Hands-on session on Artificial Intelligence", "2024-07-05", "10:15:00"));
-//        this.events.add(new Event("Cybersecurity Seminar", "Understanding the importance of cybersecurity", "2024-07-20", "19:00:00"));
-//        this.events.add(new Event("Web Development Bootcamp", "Learn how to build websites", "2024-07-10", "17:45:00"));
-//        this.events.add(new Event("Data Science Conference", "Discussing trends in data science", "2024-07-25", "12:00:00"));
-//        this.events.add(new Event("Mobile App Development", "Create mobile applications.", "2024-07-01", "13:35:00"));
-//        this.events.add(new Event("Blockchain Basics", "Introduction to blockchain technology", "2024-07-15", "15:00:00"));
-//        this.events.add(new Event("Cloud Computing", "Exploring cloud services and solutions", "2024-07-01", "18:15:00"));
-//        this.events.add(new Event("Networking Event", "Meet and connect with professionals", "2024-07-10", "11:20:00"));
-//    }
+
     
     public List<Event> loadEventsFromDatabase() {
         try (Connection conn = DriverManager.getConnection(url, "root", pass);
@@ -68,7 +55,7 @@ public class EventManager {
 
 public void joinEvent(Event event, User user) {
     // Add points for joining an event using User's setCurrentPoints method
-    int newPoints = user.getCurrentPoints() + 5; // Assuming 5 points for joining an event
+    int newPoints = user.getCurrentPoints() + 5; 
     user.setCurrentPoints(newPoints);
     System.out.println(user.getUsername() + " has joined the event: " + event.getTitle());
     System.out.println(user.getUsername() + "'s current points: " + user.getCurrentPoints());
@@ -153,27 +140,7 @@ public void joinEvent(Event event, User user) {
         }
     }
   
-//    public void saveEventChoice(String childUsername, String parentUsername, String eventName, java.sql.Date eventDate, java.sql.Time eventTime, int points) {
-//        String insertChoiceQuery = "INSERT INTO child_event (child_username, parent_username, event_name, event_date, event_time, points) VALUES (?, ?, ?, ?, ?, ?)";
-//        try (Connection connect = DriverManager.getConnection(url, "root", pass); PreparedStatement insertStatement = connect.prepareStatement(insertChoiceQuery)) {
-//            insertStatement.setString(1, childUsername);
-//            if (parentUsername != null && !parentUsername.isEmpty()) {
-//                insertStatement.setString(2, parentUsername);
-//            } else {
-//                insertStatement.setString(2, "N/A");
-//            }
-//            insertStatement.setString(3, eventName);
-//            insertStatement.setDate(4, eventDate);
-//            insertStatement.setTime(5, eventTime);
-//            insertStatement.setInt(6, points);
-//            insertStatement.executeUpdate();
-//            System.out.println("Event choice saved successfully.");
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            System.out.println("Failed to save event choice.");
-//        }
-//       
-//    }
+
     
     public void saveEventChoice(String childUsername, String parentUsername, String eventName, java.sql.Date eventDate, java.sql.Time eventTime, int points) {
     String checkSameEventQuery = "SELECT COUNT(*) FROM child_event WHERE child_username = ? AND event_name = ? AND event_date = ?";

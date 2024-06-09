@@ -127,7 +127,7 @@ public class AttemptQuiz {
         }
 
     }
-
+  // check if user entered correct title
     private boolean isQuizTitleValid(String title) {
         String query = "SELECT COUNT(*) FROM quiz WHERE title = ?";
         try (Connection conn = DriverManager.getConnection(url, "root", pass); PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -161,7 +161,7 @@ public class AttemptQuiz {
             return null;
         }
     }
-
+// method to open web browser of quizs
     private void attemptSelectedQuiz(String link, User user) {
         try {
             Desktop.getDesktop().browse(new URI(link));

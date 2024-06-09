@@ -25,6 +25,7 @@ import java.util.Scanner;
 public class rank {
 
     public static void viewrank(User user) {
+        // query to sort rows in sql based on points followed by date and time
         String query = "SELECT username,points, updated_at, "
                 + "RANK() OVER (ORDER BY points DESC, updated_at) AS user_rank "
                 + "FROM user "
@@ -91,31 +92,7 @@ public class rank {
             System.out.println("You selected yourself. Please try again!\n");
             return false;
         }
-        // Check if req is already a friend of user
-//    String checkFriendQuery = "SELECT COUNT(*) FROM friendrequest WHERE (`from` = ? AND `to` = ? AND `status` = 'Accepted') OR (`from` = ? AND `to` = ? AND `status` = 'Accepted')";
-//    try (Connection conn = DriverManager.getConnection(url, "root", pass);
-//         PreparedStatement checkFriendStmt = conn.prepareStatement(checkFriendQuery)) {
-//
-//        checkFriendStmt.setString(1, user.getUsername());
-//        checkFriendStmt.setString(2, req);
-//        checkFriendStmt.setString(3, req);
-//        checkFriendStmt.setString(4, user.getUsername());
-//        
-//        try (ResultSet rs = checkFriendStmt.executeQuery()) {
-//            if (rs.next()) {
-//                int count = rs.getInt(1);
-//                if (count > 0) {
-//                    // req is already a friend of user, return false
-//                    System.out.println(req + " is already your friend.");
-//                    return false;
-//                }
-//            }
-//        }
-//
-//    } catch (SQLException ex) {
-//        ex.printStackTrace();
-//        return false;
-//    }
+ 
 
         // Check if req is already a friend of user
         String checkStatusQuery = "SELECT `status` FROM friendrequest WHERE ((`from` = ? AND `to` = ?) OR (`from` = ? AND `to` = ?))";

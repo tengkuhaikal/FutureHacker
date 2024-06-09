@@ -41,47 +41,7 @@ public class ParentChild {
         }
     }
 
-//    public void updateChildrenForParent(User user) {
-//        System.out.println("How many children you do you want to add");
-//        int quantity = sc.nextInt();
-//        sc.nextLine();
-//        if (quantity == 0) {
-//            System.out.println("You press zero, no children will be added");
-//        }
-//
-//        String studentname;
-//
-//        ArrayList<String> real = user.getChildren();
-//        java.util.ArrayList<String> temp = new ArrayList<String>();
-//        java.util.ArrayList<String> temp2 = new ArrayList<String>();
-//        if (!real.isEmpty()) {
-//            for (int i = 0; i < real.size(); i++) {
-//                temp2.add(real.get(i));
-//            }
-//        }
-//        System.out.println("Type your children usernames below: ");
-//        int k;
-//        for (int i = 0; i < quantity; i++) {
-//            k = i + 1;
-//            System.out.print(k + ". ");
-//            studentname = sc.nextLine();
-//
-//            temp.add(studentname);
-//        }
-//
-//        boolean success = updateChildren(user.getUsername(), temp, temp2);
-//        if (success) {
-//           // System.out.println("Your Children list has been updated");
-//            for (int i = 0; i < temp.size(); i++) {
-//                updateParent(temp.get(i), user.getUsername());
-//            }
-//            ArrayList<String> combinedList = new ArrayList<>(temp2);
-//            combinedList.addAll(temp);
-//            user.setChildren(combinedList);
-//        } else {
-//            System.out.println("Your detail failed to be updated");
-//        }
-//    }
+
     public void updateChildrenForParent(User user) {
         System.out.print("How many children do you want to add?");
         int quantity = sc.nextInt();
