@@ -10,7 +10,7 @@ package Account;
  */
 import static Account.MySQLConfiguration.pass;
 import static Account.MySQLConfiguration.url;
-import Activity.BookingService;
+import Booking.BookingService;
 import Leaderboard.FriendManager;
 import UI.Ui;
 import java.sql.Connection; // Represents a connection to the database

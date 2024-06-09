@@ -9,15 +9,14 @@ import static Account.AccountSettings.viewParentChildRelationships;
 import Account.FirstPage;
 import Account.Login;
 import Account.User;
-import Activity.AccessManager;
-import Activity.BookingService;
+import Booking.BookingService;
 import Event.CreateEvent;
 import static Event.CreateEvent.createEvent;
 import static Leaderboard.FriendManager.managerequest;
 import static Leaderboard.rank.viewrank;
 import Quiz.NewQuiz;
 import Quiz.AttemptQuiz;
-import activity.EventManager;
+import Event.EventManager;
 
 import java.util.Scanner;
 

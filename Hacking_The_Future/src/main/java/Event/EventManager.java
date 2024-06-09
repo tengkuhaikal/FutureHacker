@@ -1,4 +1,4 @@
-package activity;
+package Event;
 
 import static Account.MySQLConfiguration.pass;
 import static Account.MySQLConfiguration.url;

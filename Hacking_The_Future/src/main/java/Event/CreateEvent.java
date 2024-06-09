@@ -9,7 +9,6 @@ import static Account.MySQLConfiguration.url;
 import Account.User;
 import static Event.Filepath.filepath;
 import UI.Ui;
-import activity.EventManager;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileReader;
