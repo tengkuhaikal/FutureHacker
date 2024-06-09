@@ -9,5 +9,5 @@ package Event;
  * @author Afiq Zafry
  */
 public class Filepath {
-    public static final String filepath ="C:\\Users\\Afiq Zafry\\OneDrive - Universiti Malaya\\Documents\\NetBeansProjects\\WIA1002\\Hacking_The_Future\\src\\main\\java\\Event\\BookingDestination.txt";
+    public static final String filepath = "C:\\Users\\Afiq Zafry\\OneDrive - Universiti Malaya\\Documents\\NetBeansProjects\\WIA1002\\Hacking_The_Future\\src\\main\\java\\Event\\BookingDestination.txt";
 }
