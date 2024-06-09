@@ -21,6 +21,7 @@ public class DiscussionPage {
     Scanner scanner = new Scanner(System.in);
 
     private void displayPost(ResultSet rs, int indent) throws SQLException {
+        int id = rs.getInt("id");
         String role = rs.getString("role");
         String username = rs.getString("username");
         String message = rs.getString("message");
@@ -29,19 +30,18 @@ public class DiscussionPage {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDateTime = createdAt.format(formatter);
 
-        System.out.println(" ".repeat(indent) + "[" + formattedDateTime + "] " + role + "|" + username + " (" + likes + " likes): " + message);
+        System.out.println(" ".repeat(indent) + "[" + formattedDateTime + "] ID:" + id + " " + role + "|" + username + " (" + likes + " likes): " + message);
     }
 
-    public void displayDiscussion() {
-        String query = "WITH RECURSIVE post_tree AS (" +
-                      "    SELECT *, 0 AS level, CAST(id AS CHAR(200)) AS path FROM discussion_posts WHERE post_id IS NULL " +
-                      "    UNION ALL " +
-                      "    SELECT dp.*, pt.level + 1, CONCAT(pt.path, ',', dp.id) FROM discussion_posts dp " +
-                      "    JOIN post_tree pt ON dp.post_id = pt.id " +
-                      ") SELECT * FROM post_tree ORDER BY path";
+    private void displayDiscussion() {
+        String query = "WITH RECURSIVE post_tree AS ("
+                + "    SELECT *, 0 AS level, CAST(LPAD(id, 10, '0') AS CHAR(200)) AS path FROM discussion_posts WHERE post_id IS NULL "
+                + "    UNION ALL "
+                + "    SELECT dp.*, pt.level + 1, CONCAT(pt.path, ',', LPAD(dp.id, 10, '0')) FROM discussion_posts dp "
+                + "    JOIN post_tree pt ON dp.post_id = pt.id "
+                + ") SELECT * FROM post_tree ORDER BY path";
 
-        try (Connection conn = DriverManager.getConnection(url, "root", pass);
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+        try (Connection conn = DriverManager.getConnection(url, "root", pass); PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             ResultSet rs = pstmt.executeQuery();
             System.out.println("\n=========== Discussion Board ===========");
@@ -54,7 +54,7 @@ public class DiscussionPage {
         }
     }
 
-    public void postMessage(String role, String username) {
+    private void postMessage(String role, String username) {
         System.out.print("Enter your message: ");
         String message = scanner.nextLine();
 
@@ -81,7 +81,7 @@ public class DiscussionPage {
         }
     }
 
-    public void replyToMessage(String role, String username) {
+    private void replyToMessage(String role, String username) {
         System.out.print("Enter the ID of the message you want to reply to: ");
         int postId = scanner.nextInt();
         scanner.nextLine();  // Consume newline
@@ -109,7 +109,7 @@ public class DiscussionPage {
         }
     }
 
-    public void likeMessage() {
+    private void likeMessage() {
         System.out.print("Enter the ID of the message you want to like: ");
         int postId = scanner.nextInt();
         scanner.nextLine();  // Consume newline
@@ -131,7 +131,7 @@ public class DiscussionPage {
         }
     }
 
-    public void deleteMessage(String role, String username) {
+    private void deleteMessage(String role, String username) {
         System.out.print("Enter the ID of the message you want to delete: ");
         int postId = scanner.nextInt();
         scanner.nextLine();  // Consume newline
