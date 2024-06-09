@@ -94,36 +94,36 @@ public void joinEvent(Event event, User user) {
         upcomingEvents.sort((e1, e2) -> e1.getDate().compareTo(e2.getDate()));
         // Display live events
         if (!liveEvents.isEmpty()) {
-            System.out.println("Live Events:");
+            System.out.println("\n\nLive Events:");
             for (int i = 0; i < liveEvents.size(); i++) {
                 Event event = liveEvents.get(i);
                 System.out.println((i + 1) + ". " + event.getTitle() + " - " + event.getDescription() + " on " + event.getDate());
             }
             //Only young students can choose
             if (user.getRole().equals("Young_Students")) {
-                        System.out.println("Select the live event number to join: ");
+                        System.out.print("\nSelect the live event number to join: ");
             int selectedLiveNumber = sc.nextInt();
             if (selectedLiveNumber > 0 && selectedLiveNumber <= liveEvents.size()) {
                 Event selectedLiveEvent = liveEvents.get(selectedLiveNumber - 1);
               //  joinEvent(selectedLiveEvent, user);
                 saveEventChoice(user.getUsername(), user.getParent(), selectedLiveEvent.getTitle(), java.sql.Date.valueOf(selectedLiveEvent.getDate()), java.sql.Time.valueOf(selectedLiveEvent.getTime()), user.getCurrentPoints());
             } else if (selectedLiveNumber != 0) {
-                System.out.println("Invalid selection for live events.");
+                System.out.println("\nInvalid selection for live events.");
             }
         } 
 }else {
-            System.out.println("No live events today.");
+            System.out.println("\nNo live events today.\n");
         }
 
         // Display the closest 3 upcoming events
-        System.out.println("Closest 3 Upcoming Events:");
+        System.out.println("\nClosest 3 Upcoming Events:");
         for (int i = 0; i < Math.min(3, upcomingEvents.size()); i++) {
             Event event = upcomingEvents.get(i);
             System.out.println((i + 1) + ". " + event.getTitle() + " - " + event.getDescription() + " on " + event.getDate()+" at "+ event.getTime());
         }
         //Only young students can choose
         if (user.getRole().equals("Young_Students")) {
-            System.out.println("Select the live event number to join: ");
+            System.out.print("\nSelect the live event number to join: ");
             int selectedUpcomingNumber = sc.nextInt();
             sc.nextLine();
             if (selectedUpcomingNumber > 0 && selectedUpcomingNumber <= upcomingEvents.size()) {
@@ -132,7 +132,7 @@ public void joinEvent(Event event, User user) {
                 saveEventChoice(user.getUsername(), user.getParent(), selectedUpcomingEvent.getTitle(), java.sql.Date.valueOf(selectedUpcomingEvent.getDate()), java.sql.Time.valueOf(selectedUpcomingEvent.getTime()), user.getCurrentPoints());
                 
             } else if (selectedUpcomingNumber != 0) {
-                System.out.println("Invalid selection for upcoming events.");
+                System.out.println("\nInvalid selection for upcoming events.");
             }
         }
         
