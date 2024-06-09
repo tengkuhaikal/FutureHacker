@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Quiz;
+
 import java.awt.Desktop;
 import java.net.URI;
 import static Account.MySQLConfiguration.pass;
@@ -15,18 +16,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
+
 /**
  *
  * @author Afiq Zafry
  */
 public class AttemptQuiz {
-    Scanner scan = new Scanner (System.in);
-    public  void attemptquiz(User user){
+
+    Scanner scan = new Scanner(System.in);
+
+    public void attemptquiz(User user) {
         System.out.println("\n\n-----Welcome to Quiz section!!----\n");
         System.out.println("Choose your preference:\n1.Science\n2.Technology\n3.Engineering\n4.Mathmethics\n5.All themes");
         String theme = null;
-        
-         boolean valid = true;
+
+        boolean valid = true;
         do {
             System.out.print("Quiz Theme: ");
             int choice = scan.nextInt();
@@ -47,7 +51,7 @@ public class AttemptQuiz {
                     theme = "Mathematics";
                     valid = false;
                     break;
-                 case 5:
+                case 5:
                     theme = "All";
                     valid = false;
                     break;
@@ -56,10 +60,10 @@ public class AttemptQuiz {
                     break;
             }
         } while (valid);
-      scan.nextLine(); // Consume newline left by nextInt()
-        
+        scan.nextLine(); // Consume newline left by nextInt()
+
         System.out.println("\n\n");
-      
+
         // Retrieve quizzes based on theme
         String query;
         if (theme.equals("All")) {
@@ -68,8 +72,7 @@ public class AttemptQuiz {
             query = "SELECT title, description FROM quiz WHERE theme = ?";
         }
 
-        try (Connection conn = DriverManager.getConnection(url, "root", pass);
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+        try (Connection conn = DriverManager.getConnection(url, "root", pass); PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             if (!theme.equals("All")) {
                 pstmt.setString(1, theme);
@@ -89,99 +92,89 @@ public class AttemptQuiz {
             e.printStackTrace();
         }
 
-       // Allow the user to choose a quiz to attempt
-String selectedQuizTitle;
-boolean isValidQuizTitle;
-do {
-    System.out.print("Enter the title of the quiz you want to attempt: ");
-    selectedQuizTitle = scan.nextLine();
+        // Allow the user to choose a quiz to attempt
+        String selectedQuizTitle;
+        boolean isValidQuizTitle;
+        do {
+            System.out.print("Enter the title of the quiz you want to attempt: ");
+            selectedQuizTitle = scan.nextLine();
 
-    // Check if the entered title exists in the quiz table
-    isValidQuizTitle = isQuizTitleValid(selectedQuizTitle);
-    if (!isValidQuizTitle) {
-        System.out.println("Quiz title is not valid. Please try again.");
-    }
-} while (!isValidQuizTitle);
+            // Check if the entered title exists in the quiz table
+            isValidQuizTitle = isQuizTitleValid(selectedQuizTitle);
+            if (!isValidQuizTitle) {
+                System.out.println("Quiz title is not valid. Please try again.");
+            }
+        } while (!isValidQuizTitle);
 
 // Fetch the content column for the selected quiz title
-String quizContent = fetchQuizContent(selectedQuizTitle);
+        String quizContent = fetchQuizContent(selectedQuizTitle);
 
-if(!hasAttemptedQuiz(user.getUsername(),selectedQuizTitle,quizContent)){
-attemptSelectedQuiz(quizContent,user);
-recordQuizAttempt(user,selectedQuizTitle,quizContent);
-addPoints(user.getUsername());
-}
-else{
-    attemptSelectedQuiz(quizContent,user);
-}
+        if (!hasAttemptedQuiz(user.getUsername(), selectedQuizTitle, quizContent)) {
+            attemptSelectedQuiz(quizContent, user);
+            recordQuizAttempt(user, selectedQuizTitle, quizContent);
+            addPoints(user.getUsername());
+        } else {
+            attemptSelectedQuiz(quizContent, user);
+        }
 
-        System.out.println("Do you want to continue attempt other quiz? (Yes:1/Other:No)");
-        int choice=scan.nextInt();
-        if(choice==1){
+        System.out.print("Do you want to continue attempt other quiz? [1:Yes || 0:No]");
+        int choice = scan.nextInt();
+        if (choice == 1) {
             attemptquiz(user);
-        }else{
-            Ui starter = new Ui();     
-        starter.mainmenu(user);
+        } else {
+            Ui starter = new Ui();
+            starter.mainmenu(user);
         }
-
 
     }
 
-    
     private boolean isQuizTitleValid(String title) {
-    String query = "SELECT COUNT(*) FROM quiz WHERE title = ?";
-    try (Connection conn = DriverManager.getConnection(url, "root", pass);
-         PreparedStatement pstmt = conn.prepareStatement(query)) {
+        String query = "SELECT COUNT(*) FROM quiz WHERE title = ?";
+        try (Connection conn = DriverManager.getConnection(url, "root", pass); PreparedStatement pstmt = conn.prepareStatement(query)) {
 
-        pstmt.setString(1, title);
-        try (ResultSet rs = pstmt.executeQuery()) {
-            rs.next();
-            int count = rs.getInt(1);
-            return count > 0;
-        }
-    } catch (SQLException e) {
-        e.printStackTrace();
-        return false;
-    }
-}
-
-private String fetchQuizContent(String title) {
-    String query = "SELECT content FROM quiz WHERE title = ?";
-    try (Connection conn = DriverManager.getConnection(url, "root", pass);
-         PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-        pstmt.setString(1, title);
-        try (ResultSet rs = pstmt.executeQuery()) {
-            if (rs.next()) {
-                return rs.getString("content");
-            } else {
-                return null; // Quiz title not found
+            pstmt.setString(1, title);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                rs.next();
+                int count = rs.getInt(1);
+                return count > 0;
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
-        return null;
     }
-}
 
-    
-    
-    
-    private void attemptSelectedQuiz(String link,User user) {
+    private String fetchQuizContent(String title) {
+        String query = "SELECT content FROM quiz WHERE title = ?";
+        try (Connection conn = DriverManager.getConnection(url, "root", pass); PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, title);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("content");
+                } else {
+                    return null; // Quiz title not found
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private void attemptSelectedQuiz(String link, User user) {
         try {
             Desktop.getDesktop().browse(new URI(link));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
-        
+
     }
-    
+
     public static void addPoints(String username) {
         String updateQuery = "UPDATE user SET points = points + 2 WHERE username = ?";
 
-        try (Connection conn = DriverManager.getConnection(url, "root", pass);
-             PreparedStatement pstmt = conn.prepareStatement(updateQuery)) {
+        try (Connection conn = DriverManager.getConnection(url, "root", pass); PreparedStatement pstmt = conn.prepareStatement(updateQuery)) {
 
             pstmt.setString(1, username);
             int rowsAffected = pstmt.executeUpdate();
@@ -195,16 +188,15 @@ private String fetchQuizContent(String title) {
             e.printStackTrace();
         }
     }
-    
+
     // Method to check if the user has already attempted the quiz
-    private boolean hasAttemptedQuiz(String username, String title , String content) {
+    private boolean hasAttemptedQuiz(String username, String title, String content) {
         String query = "SELECT COUNT(*) FROM quizrecord WHERE username = ? AND title = ? AND content = ?";
-        try (Connection conn = DriverManager.getConnection(url, "root", pass);
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+        try (Connection conn = DriverManager.getConnection(url, "root", pass); PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, username);
             pstmt.setString(2, title);
             pstmt.setString(3, content);
-           
+
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     int count = rs.getInt(1);
@@ -216,20 +208,18 @@ private String fetchQuizContent(String title) {
         }
         return false;
     }
-    
-     // Method to record the quiz attempt
+
+    // Method to record the quiz attempt
     private void recordQuizAttempt(User user, String quizTitle, String quizContent) {
         String insertQuery = "INSERT INTO quizrecord (username, title, content) VALUES (?, ?, ?)";
-        try (Connection conn = DriverManager.getConnection(url, "root", pass);
-             PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
+        try (Connection conn = DriverManager.getConnection(url, "root", pass); PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
             pstmt.setString(1, user.getUsername());
             pstmt.setString(2, quizTitle);
             pstmt.setString(3, quizContent);
             pstmt.executeUpdate();
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    }
-
+}
