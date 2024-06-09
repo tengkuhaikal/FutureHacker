@@ -273,10 +273,10 @@ private List<BookingDestination> loadBookingDestinations() {
             }
 
             System.out.println("Booking history for user: " + user.getUsername());
-            System.out.println("=======================================================");
-            System.out.printf("%-5s | %-20s | %-30s | %-20s | %-15s | %-10s\n",
+            System.out.println("=============================================================================================================================================");
+            System.out.printf("%-5s | %-20s | %-45s | %-20s | %-15s | %-10s\n",
                     "ID", "Child Username", "Booking Name", "Booking Date Choice", "Booking Time", "Created At");
-            System.out.println("-------------------------------------------------------");
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------");
 
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
@@ -286,12 +286,13 @@ private List<BookingDestination> loadBookingDestinations() {
                 Time bookingTime = resultSet.getTime("booking_time");
                 Timestamp createdAt = resultSet.getTimestamp("created_at");
 
-                System.out.printf("%-5d | %-20s | %-30s | %-20s | %-15s | %-10s\n",
+                System.out.printf("%-5d | %-20s | %-45s | %-20s | %-15s | %-10s\n",
                         id, childUsername, bookingName, bookingDate, bookingTime, createdAt);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------");
     }
 
     public static void main(String[] args) {
