@@ -67,18 +67,17 @@ public class Ui {
                         at.attemptquiz(user);
                     case 6:
                         em.displayLiveAndUpcomingEvents(user);
-                    case 7:{
-                         FirstPage fp = new FirstPage();
+                    case 7: {
+                        FirstPage fp = new FirstPage();
                         User u = fp.welcome();
                         mainmenu(u);
                     }
-                       
 
                 }
             }
             case "Parents": {
                 System.out.println("1.View Profile");    //already a method to see booking history
-                System.out.println("2.Account Settings");   
+                System.out.println("2.Account Settings");
                 System.out.println("3.View and Book Trips"); //Done
                 System.out.println("4.View Events");
                 System.out.println("5.Log Out");
@@ -91,14 +90,14 @@ public class Ui {
                         as.Settings(user);
                     case 3:
                         bs.createBooking(user);
-                    case 4 :
-                         em.displayLiveAndUpcomingEvents(user);
-                    case 5:{
-                         FirstPage fp = new FirstPage();
+                    case 4:
+                        em.displayLiveAndUpcomingEvents(user);
+                    case 5: {
+                        FirstPage fp = new FirstPage();
                         User u = fp.welcome();
                         mainmenu(u);
                     }
-                      
+
                 }
             }
             case "Educators": {
@@ -121,11 +120,11 @@ public class Ui {
                     case 4:
                         em.displayLiveAndUpcomingEvents(user);
                     case 5:
-                          createEvent(user);
-                    case 6:{
+                        createEvent(user);
+                    case 6: {
                         viewParentChildRelationships();
-                         Ui starter = new Ui();     
-        starter.mainmenu(user);
+                        Ui starter = new Ui();
+                        starter.mainmenu(user);
                     }
                     case 7: {
                         FirstPage fp = new FirstPage();
@@ -134,9 +133,7 @@ public class Ui {
                     }
                 }
             }
-
         }
-
     }
 
     public static void main(String[] args) {
