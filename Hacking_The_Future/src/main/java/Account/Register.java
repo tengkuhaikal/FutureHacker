@@ -11,6 +11,7 @@ package Account;
 import static Account.MySQLConfiguration.pass;
 import static Geoloaction.GeoLocation.getrealLocation;
 import UI.Ui;
+import UI.ft;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -35,10 +36,8 @@ public class Register extends User {
     }
 
     public static User registernewuser() {
-        System.out.println("-------->Register Page<-------");
+        ft.ft("Register");
         java.util.ArrayList<String> data = new ArrayList<>();
-        System.out.println("\nPress enter to continue");
-        scan.nextLine();
         System.out.print("Email: ");
         String input = scan.nextLine();
         data.add(input);
@@ -59,7 +58,7 @@ public class Register extends User {
             System.out.println("1.Young_Students");
             System.out.println("2.Parents");
             System.out.println("3.Educator");
-            System.out.print("Option: ");
+            System.out.print("\nOption >> ");
 
             int choice = scan.nextInt();
 
@@ -77,7 +76,7 @@ public class Register extends User {
                     validChoice = true;
                     break;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    ft.error("Invalid choice. Please try again.");
                     validChoice = false;
                     // Set validChoice to false to repeat the loop
                     break;
@@ -105,7 +104,7 @@ public class Register extends User {
             //check if email is already exist
             while (result.next()) {
                 if (result.getString(2).equals(data.get(0))) {
-                    System.out.println("Email already exist");
+                    ft.error("Email already exist");
                     return null;
                 }
 
@@ -117,7 +116,7 @@ public class Register extends User {
                 checkStatement2.setString(1, data.get(1));
                 try (ResultSet result2 = checkStatement2.executeQuery()) {
                     if (result2.next()) { // Ensure there's a row in the result set
-                        System.out.println("Username already exists");
+                        ft.error("Username already exists");
                         return null;
                     }
                 }
@@ -140,13 +139,13 @@ public class Register extends User {
             // Execute the query
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected > 0) {
-                System.out.println("You have successfully registered \n");
+                ft.message("You have successfully registered \n");
 
                 Login l = new Login();
                 return l.lgin();
 
             } else {
-                System.out.println("Failed to register.");
+                ft.error("Failed to register.");
                 return null;
             }
         } catch (ClassNotFoundException ex) {
