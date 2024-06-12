@@ -13,7 +13,7 @@ import static Account.MySQLConfiguration.url;
 import Booking.BookingService;
 import Leaderboard.FriendManager;
 import UI.Ui;
-import UI.ft;
+import UI.formatText;
 import java.sql.Connection; // Represents a connection to the database
 import java.sql.DriverManager; // Helps in obtaining a connection to the database
 import java.sql.PreparedStatement; // Used for prepared statements
@@ -35,7 +35,7 @@ public class Login {
 
     public void viewprofile(User user) {
 
-        ft.ft("Profile details");
+        formatText.formatTitle("Profile details");
         System.out.println("Email: " + user.getEmail());
         System.out.println("Username: " + user.getUsername());
         System.out.println("Role: " + user.getRole());
@@ -77,14 +77,14 @@ public class Login {
         }
 
         System.out.println("");
-        ft.message("You will be redirected to main menu.");
+        formatText.message("You will be redirected to main menu.");
         Ui u = new Ui();
         u.mainmenu(user);
     }
 
     public User lgin() {
         String input;
-        ft.ft("Login");
+        formatText.formatTitle("Login");
         java.util.ArrayList<String> data = new ArrayList<>();
         System.out.print("Email: ");
         input = scan.nextLine();
@@ -168,11 +168,11 @@ public class Login {
                     return user;
 
                 } else {
-                    ft.error("Incorrect password. Try again");
+                    formatText.error("Incorrect password. Try again");
                     return null;
                 }
             } else {
-                ft.error("No email found. Please register an account");
+                formatText.error("No email found. Please register an account");
                 return null;
             }
 
