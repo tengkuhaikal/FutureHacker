@@ -139,7 +139,7 @@ public class Register extends User {
             // Execute the query
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected > 0) {
-                ft.message("You have successfully registered \n");
+                ft.message("You have successfully registered");
 
                 Login l = new Login();
                 return l.lgin();
