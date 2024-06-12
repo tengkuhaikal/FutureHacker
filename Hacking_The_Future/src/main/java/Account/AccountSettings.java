@@ -19,7 +19,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.*;
 import UI.Ui;
-import UI.ft;
+import UI.formatText;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -34,7 +34,7 @@ public class AccountSettings {
 
     public User Settings(User user) {
         
-        ft.ft("Your Profile Details");
+        formatText.formatTitle("Your Profile Details");
         System.out.println("Email: " + user.getEmail());
         System.out.println("Username: " + user.getUsername());
         System.out.println("Role: " + user.getRole());
@@ -73,7 +73,7 @@ public class AccountSettings {
 
             case "Young_Students": {
                 
-                ft.ft("Update");
+                formatText.formatTitle("Update");
                 System.out.println("1. Change password\n2. Add your parent username\n3. No");
                 System.out.print("\nOption >> ");
                 input = scan.nextInt();
@@ -84,9 +84,9 @@ public class AccountSettings {
                         newpass = scan.nextLine();
                         success = updatePassword(user.getUsername(), newpass);
                         if (success) {
-                            ft.message("Password has been updated");
+                            formatText.message("Password has been updated");
                         } else {
-                            ft.error("Failed to update your password");
+                            formatText.error("Failed to update your password");
                         }
                         break;
                     }
@@ -102,7 +102,7 @@ public class AccountSettings {
 
             case "Parents": {
                 //format the output to be center
-                ft.ft("Update");
+                formatText.formatTitle("Update");
                 System.out.println("1. Change password\n2. Add your child username\n3. No");
                 System.out.print("\nOption >> ");
                 input = scan.nextInt();
@@ -113,9 +113,9 @@ public class AccountSettings {
                         newpass = scan.nextLine();
                         success = updatePassword(user.getUsername(), newpass);
                         if (success) {
-                            ft.message("Password has been updated");
+                            formatText.message("Password has been updated");
                         } else {
-                            ft.error("Failed to update your password");
+                            formatText.error("Failed to update your password");
                         }
                         break;
                     }
@@ -129,7 +129,7 @@ public class AccountSettings {
                 break;
             }
             case "Educators": {
-                ft.ft("Do you want to change your password? [1:Yes || 0:No]");
+                formatText.formatTitle("Do you want to change your password? [1:Yes || 0:No]");
                 System.out.print("\nOption >> ");
                 input = scan.nextInt();
                 switch (input) {
@@ -140,9 +140,9 @@ public class AccountSettings {
                         newpass = scan.nextLine();
                         success = updatePassword(user.getUsername(), newpass);
                         if (success) {
-                            ft.message("Password has been updated");
+                            formatText.message("Password has been updated");
                         } else {
-                            ft.error("Failed to update your password");
+                            formatText.error("Failed to update your password");
                         }
                         break;
                     }
@@ -154,7 +154,7 @@ public class AccountSettings {
         }
         Ui u = new Ui();
         
-        ft.ft("Do you still want to edit your account details? [1:Yes || 0:No]");
+        formatText.formatTitle("Do you still want to edit your account details? [1:Yes || 0:No]");
         System.out.print("Option >> ");
         input = scan.nextInt();
 
@@ -164,7 +164,7 @@ public class AccountSettings {
             } else if (input == 0) {
                 u.mainmenu(user);
             } else {
-                ft.error("0 or 1 only.");
+                formatText.error("0 or 1 only.");
                 input = scan.nextInt();
                 scan.nextLine();
             }
@@ -241,7 +241,7 @@ public class AccountSettings {
                     if (result.next()) {
                         int count = result.getInt(1);
                         if (count == 0) {
-                            ft.error("Parent username does not exist.");
+                            formatText.error("Parent username does not exist.");
                             return false;
                         }
                     }
@@ -255,7 +255,7 @@ public class AccountSettings {
                     if (result.next()) {
                         int count = result.getInt(1);
                         if (count > 0) {
-                            ft.error("The user already has a parent assigned.");
+                            formatText.error("The user already has a parent assigned.");
                             return false;
                         }
                     }
@@ -298,7 +298,7 @@ public class AccountSettings {
                 }
             }
             if (!invalidChildren.isEmpty()) {
-                ft.error(invalidChildren + "are/is invalid to be added " + username + "'s children list");
+                formatText.error(invalidChildren + "are/is invalid to be added " + username + "'s children list");
             }
             if (validChildren.isEmpty()) {
                 //   System.out.println("Redundant update to"+username+"'s children list detected !!");
@@ -461,7 +461,7 @@ public static boolean viewParentChildRelationships() {
          PreparedStatement statement = connect.prepareStatement(query);
          ResultSet resultSet = statement.executeQuery()) {
 
-        ft.ft("Parent-Child Relationship");
+        formatText.formatTitle("Parent-Child Relationship");
 
         while (resultSet.next()) {
             String parentUsername = resultSet.getString("username");
