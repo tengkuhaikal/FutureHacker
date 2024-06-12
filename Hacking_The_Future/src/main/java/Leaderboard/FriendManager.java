@@ -8,6 +8,7 @@ import static Account.MySQLConfiguration.pass;
 import static Account.MySQLConfiguration.url;
 import Account.User;
 import UI.Ui;
+import UI.ft;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -52,12 +53,12 @@ public class FriendManager {
         }
 
         // Print the friend usernames
-        System.out.println("Friends List:");
+        ft.ft("Friends List:");
         for (String friend : friendUsernames) {
             System.out.println(friend);
         }
         if (friendUsernames.isEmpty()) {
-            System.out.println("null");
+            ft.message("null");
         }
     }
 
@@ -80,7 +81,7 @@ public class FriendManager {
         }
 
         // Print the usernames rejected by the user
-        System.out.println("Usernames Rejected by " + "others " + ":");
+        ft.message("Usernames Rejected by " + "others " + ":");
         for (String username : rejectedUsernames) {
             System.out.println(username);
         }
@@ -105,7 +106,7 @@ public class FriendManager {
         }
 
         // Print the usernames that have rejected the user's friend request
-        System.out.println("Usernames that Rejected by " + user.getUsername() + "'s Friend Request:");
+        ft.message("Usernames that rejected by " + user.getUsername() + "'s friend request:");
         for (String username : rejectedUsernames) {
             System.out.println(username);
         }
@@ -135,7 +136,8 @@ public class FriendManager {
 
         // Prompt user to choose an index
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the index of the user to accept the friend request:");
+        ft.ft("Friend request");
+        System.out.println("\nAccept >> ");
         int index = scanner.nextInt();
 
         if (index >= 1 && index <= pendingUsernames.size()) {
@@ -146,13 +148,13 @@ public class FriendManager {
 
                 pstmt.setInt(1, requestId);
                 pstmt.executeUpdate();
-                System.out.println("Friend request from " + pendingUsernames.get(index - 1) + " has been accepted.");
+                ft.message("Friend request from " + pendingUsernames.get(index - 1) + " has been accepted.");
 
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         } else {
-            System.out.println("Invalid index. Please enter a valid index.");
+            ft.error("Invalid index. Please enter a valid index.");
         }
     }
 
@@ -180,7 +182,8 @@ public class FriendManager {
 
         // Prompt user to choose an index
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the index of the user to reject the friend request:");
+        ft.ft("Friend request");
+        System.out.println("\nReject >> ");
         int index = scanner.nextInt();
 
         if (index >= 1 && index <= pendingUsernames.size()) {
@@ -191,13 +194,13 @@ public class FriendManager {
 
                 pstmt.setInt(1, requestId);
                 pstmt.executeUpdate();
-                System.out.println("Friend request from " + pendingUsernames.get(index - 1) + " has been rejected.");
+                ft.message("Friend request from " + pendingUsernames.get(index - 1) + " has been rejected.");
 
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         } else {
-            System.out.println("Invalid index. Please enter a valid index.");
+            ft.error("Invalid index. Please enter a valid index.");
         }
     }
 
@@ -220,7 +223,7 @@ public class FriendManager {
         }
 
         // Print the usernames rejected by the user
-        System.out.println("Usernames Friend Request Pending List " + ":");
+        ft.ft("Friend Request Pending List");
         for (String username : rejectedUsernames) {
             System.out.println(username);
         }
@@ -247,13 +250,14 @@ public class FriendManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        if (pendingUsernames.isEmpty()){
-            System.out.println("No friend request sent by others\n");
+        if (pendingUsernames.isEmpty()) {
+            ft.message("No friend request sent by others\n");
             managerequest(user);
         }
         // Prompt user to choose an index
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter the index of the user to process the friend request: ");
+        ft.ft("Manage friend request");
+        System.out.println("\nIndex >> ");
         int index = scanner.nextInt();
 
         if (index >= 1 && index <= pendingUsernames.size()) {
@@ -261,7 +265,7 @@ public class FriendManager {
 
             System.out.println("1. Accept");
             System.out.println("2. Reject");
-            System.out.println("Enter your choice:");
+            System.out.println("\nOption >> ");
 
             int choice = scanner.nextInt();
             if (choice == 1) {
@@ -269,10 +273,10 @@ public class FriendManager {
             } else if (choice == 2) {
                 rejectRequest(requestId);
             } else {
-                System.out.println("Invalid choice.");
+                ft.error("Invalid choice.");
             }
         } else {
-            System.out.println("Invalid index. Please enter a valid index.");
+            ft.error("Invalid index. Please enter a valid index.");
         }
     }
 
@@ -292,9 +296,9 @@ public class FriendManager {
             pstmt.setInt(1, requestId);
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
-                System.out.println("Friend request " + action + " successfully.");
+                ft.message("Friend request " + action + " successfully.");
             } else {
-                System.out.println("Failed to " + action + " friend request.");
+                ft.error("Failed to " + action + " friend request.");
             }
 
         } catch (SQLException e) {
@@ -303,14 +307,15 @@ public class FriendManager {
     }
 
     public static void managerequest(User user) {
-        System.out.println("\n---------->Welcome to Friend Request Management<----------\n");
+        ft.ft("Friends");
         System.out.println("1.View your Friends");
         System.out.println("2.Manage pending friend request");
-        System.out.println("3.View your pendling list request");
+        System.out.println("3.View your pending list request");
         System.out.println("4.View your rejected request");
         System.out.println("5.Main Menu");
         Scanner scan = new Scanner(System.in);
         boolean loop = true;
+        System.out.println("\nOption >> ");
         int choice = scan.nextInt();
         int decision;
         switch (choice) {
@@ -324,7 +329,7 @@ public class FriendManager {
                 do {
                     processPendingRequests(user);
 
-                    System.out.print("Do you want to continue? Press 1 , else any number to go toFriend Request management: ");
+                    ft.ft("Continue? [1:Yes || 0:Friends Menu]");
                     decision = scan.nextInt();
                     if (decision == 1) {
                         loop = true;
