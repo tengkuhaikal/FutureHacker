@@ -60,7 +60,7 @@ public class rank {
             Ui starter = new Ui();
             starter.mainmenu(user);
         }
-        if (index >= 0 && index < usernames.size()) {
+        if (index >= 0 && index <= usernames.size()) {
             String selectedUsername = usernames.get(index - 1);
             // Now you have the selected username, you can proceed to send the friend request
             System.out.println("You selected user: " + selectedUsername);
