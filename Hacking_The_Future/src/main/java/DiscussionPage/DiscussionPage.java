@@ -6,6 +6,7 @@ package DiscussionPage;
 import Account.FirstPage;
 import Account.User;
 import UI.Ui;
+import UI.ft;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -44,7 +45,7 @@ public class DiscussionPage {
         try (Connection conn = DriverManager.getConnection(url, "root", pass); PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             ResultSet rs = pstmt.executeQuery();
-            System.out.println("\n=========== Discussion Board ===========");
+            ft.ft("Discussion Board");
             while (rs.next()) {
                 int level = rs.getInt("level");
                 displayPost(rs, level * 4);  // Indent replies
@@ -71,10 +72,10 @@ public class DiscussionPage {
                 ResultSet rs = pstmt.getGeneratedKeys();
                 if (rs.next()) {
                     int postId = rs.getInt(1);
-                    System.out.println("Message posted successfully! Post ID: " + postId);
+                    ft.message("Message posted successfully! Post ID: " + postId);
                 }
             } else {
-                System.out.println("Failed to post message.");
+                ft.error("Failed to post message.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -100,9 +101,9 @@ public class DiscussionPage {
 
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
-                System.out.println("Reply posted successfully!");
+                ft.message("Reply posted successfully!");
             } else {
-                System.out.println("Failed to post reply.");
+                ft.error("Failed to post reply.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -122,9 +123,9 @@ public class DiscussionPage {
 
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
-                System.out.println("Post liked!");
+                ft.message("Post liked!");
             } else {
-                System.out.println("Failed to like post. Post might not exist.");
+                ft.error("Failed to like post. Post might not exist.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -146,9 +147,9 @@ public class DiscussionPage {
 
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
-                System.out.println("Post deleted successfully!");
+                ft.message("Post deleted successfully!");
             } else {
-                System.out.println("Failed to delete post. It might not exist or you might not be the author.");
+                ft.error("Failed to delete post. It might not exist or you might not be the author.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -167,7 +168,7 @@ public class DiscussionPage {
             System.out.println("[4] Delete your message");
             System.out.println("[5] Refresh discussion");
             System.out.println("[0] Back to main menu");
-            System.out.print("Choose an option: ");
+            System.out.print("\nOption >> ");
 
             int choice = scanner.nextInt();
             scanner.nextLine();  // Consume newline
@@ -194,7 +195,7 @@ public class DiscussionPage {
                     starter.mainmenu(user);
                     break;
                 default:
-                    System.out.println("Invalid option. Please try again.");
+                    ft.error("Invalid option. Please try again.");
             }
         }
     }
