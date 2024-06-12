@@ -34,7 +34,7 @@ public class AccountSettings {
 
     public User Settings(User user) {
         
-        ft.ft("Your Profile Details :");
+        ft.ft("Your Profile Details");
         System.out.println("Email: " + user.getEmail());
         System.out.println("Username: " + user.getUsername());
         System.out.println("Role: " + user.getRole());
@@ -74,7 +74,7 @@ public class AccountSettings {
             case "Young_Students": {
                 
                 ft.ft("Update");
-                System.out.println("1. Change password\n2. Add your parent username\n 3. No");
+                System.out.println("1. Change password\n2. Add your parent username\n3. No");
                 System.out.print("\nOption >> ");
                 input = scan.nextInt();
                 scan.nextLine();
