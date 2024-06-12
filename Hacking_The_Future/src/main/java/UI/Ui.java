@@ -14,7 +14,7 @@ import DiscussionPage.DiscussionPage;
 import Event.CreateEvent;
 import static Event.CreateEvent.createEvent;
 import static Leaderboard.FriendManager.managerequest;
-import static Leaderboard.rank.viewrank;
+import static Leaderboard.Rank.viewrank;
 import Quiz.NewQuiz;
 import Quiz.AttemptQuiz;
 import Event.EventManager;
@@ -144,6 +144,10 @@ public class Ui {
                         FirstPage fp = new FirstPage();
                         User u = fp.welcome();
                         mainmenu(u);
+                    }
+                    default: {
+                        Ui starter = new Ui();
+                        starter.mainmenu(user);
                     }
                 }
             }
