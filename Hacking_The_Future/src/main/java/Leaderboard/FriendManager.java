@@ -8,7 +8,7 @@ import static Account.MySQLConfiguration.pass;
 import static Account.MySQLConfiguration.url;
 import Account.User;
 import UI.Ui;
-import UI.ft;
+import UI.formatText;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -53,12 +53,12 @@ public class FriendManager {
         }
 
         // Print the friend usernames
-        ft.ft("Friends List:");
+        formatText.formatTitle("Friends List:");
         for (String friend : friendUsernames) {
             System.out.println(friend);
         }
         if (friendUsernames.isEmpty()) {
-            ft.message("null");
+            formatText.message("null");
         }
     }
 
@@ -81,7 +81,7 @@ public class FriendManager {
         }
 
         // Print the usernames rejected by the user
-        ft.message("Usernames Rejected by " + "others " + ":");
+        formatText.message("Usernames Rejected by " + "others " + ":");
         for (String username : rejectedUsernames) {
             System.out.println(username);
         }
@@ -106,7 +106,7 @@ public class FriendManager {
         }
 
         // Print the usernames that have rejected the user's friend request
-        ft.message("Usernames that rejected by " + user.getUsername() + "'s friend request:");
+        formatText.message("Usernames that rejected by " + user.getUsername() + "'s friend request:");
         for (String username : rejectedUsernames) {
             System.out.println(username);
         }
@@ -136,7 +136,7 @@ public class FriendManager {
 
         // Prompt user to choose an index
         Scanner scanner = new Scanner(System.in);
-        ft.ft("Friend request");
+        formatText.formatTitle("Friend request");
         System.out.println("\nAccept >> ");
         int index = scanner.nextInt();
 
@@ -148,13 +148,13 @@ public class FriendManager {
 
                 pstmt.setInt(1, requestId);
                 pstmt.executeUpdate();
-                ft.message("Friend request from " + pendingUsernames.get(index - 1) + " has been accepted.");
+                formatText.message("Friend request from " + pendingUsernames.get(index - 1) + " has been accepted.");
 
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         } else {
-            ft.error("Invalid index. Please enter a valid index.");
+            formatText.error("Invalid index. Please enter a valid index.");
         }
     }
 
@@ -182,7 +182,7 @@ public class FriendManager {
 
         // Prompt user to choose an index
         Scanner scanner = new Scanner(System.in);
-        ft.ft("Friend request");
+        formatText.formatTitle("Friend request");
         System.out.println("\nReject >> ");
         int index = scanner.nextInt();
 
@@ -194,13 +194,13 @@ public class FriendManager {
 
                 pstmt.setInt(1, requestId);
                 pstmt.executeUpdate();
-                ft.message("Friend request from " + pendingUsernames.get(index - 1) + " has been rejected.");
+                formatText.message("Friend request from " + pendingUsernames.get(index - 1) + " has been rejected.");
 
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         } else {
-            ft.error("Invalid index. Please enter a valid index.");
+            formatText.error("Invalid index. Please enter a valid index.");
         }
     }
 
@@ -223,7 +223,7 @@ public class FriendManager {
         }
 
         // Print the usernames rejected by the user
-        ft.ft("Friend Request Pending List");
+        formatText.formatTitle("Friend Request Pending List");
         for (String username : rejectedUsernames) {
             System.out.println(username);
         }
@@ -251,12 +251,12 @@ public class FriendManager {
             e.printStackTrace();
         }
         if (pendingUsernames.isEmpty()) {
-            ft.message("No friend request sent by others\n");
+            formatText.message("No friend request sent by others\n");
             managerequest(user);
         }
         // Prompt user to choose an index
         Scanner scanner = new Scanner(System.in);
-        ft.ft("Manage friend request");
+        formatText.formatTitle("Manage friend request");
         System.out.println("\nIndex >> ");
         int index = scanner.nextInt();
 
@@ -273,10 +273,10 @@ public class FriendManager {
             } else if (choice == 2) {
                 rejectRequest(requestId);
             } else {
-                ft.error("Invalid choice.");
+                formatText.error("Invalid choice.");
             }
         } else {
-            ft.error("Invalid index. Please enter a valid index.");
+            formatText.error("Invalid index. Please enter a valid index.");
         }
     }
 
@@ -296,9 +296,9 @@ public class FriendManager {
             pstmt.setInt(1, requestId);
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
-                ft.message("Friend request " + action + " successfully.");
+                formatText.message("Friend request " + action + " successfully.");
             } else {
-                ft.error("Failed to " + action + " friend request.");
+                formatText.error("Failed to " + action + " friend request.");
             }
 
         } catch (SQLException e) {
@@ -307,7 +307,7 @@ public class FriendManager {
     }
 
     public static void managerequest(User user) {
-        ft.ft("Friends");
+        formatText.formatTitle("Friends");
         System.out.println("1.View your Friends");
         System.out.println("2.Manage pending friend request");
         System.out.println("3.View your pending list request");
@@ -329,7 +329,7 @@ public class FriendManager {
                 do {
                     processPendingRequests(user);
 
-                    ft.ft("Continue? [1:Yes || 0:Friends Menu]");
+                    formatText.formatTitle("Continue? [1:Yes || 0:Friends Menu]");
                     decision = scan.nextInt();
                     if (decision == 1) {
                         loop = true;
