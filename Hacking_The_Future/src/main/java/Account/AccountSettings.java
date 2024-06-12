@@ -19,171 +19,166 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.*;
 import UI.Ui;
+import UI.ft;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+
 public class AccountSettings {
-    
+
     static String url = "jdbc:mysql://localhost:3306/datastructure";
-  
-    
-    public static String pass ="root";
+
+    public static String pass = "root";
     Scanner scan = new Scanner(System.in);
     ParentChild pc = new ParentChild();
-    
-    public User Settings (User user) {
+
+    public User Settings(User user) {
         
-        System.out.println("Your Profile Details : \n");
-          System.out.println("Email: "+user.getEmail());
-          System.out.println("Username: "+user.getUsername());
-          System.out.println("Role: "+user.getRole());
-          System.out.println("Location: "+Arrays.toString(user.getLocationCoordinate()));
-          
-          switch(user.getRole()){
-              case "Young_Students":{
-                                    System.out.println("Current points: "+user.getCurrentPoints());
-                                    if(user.getParent()!=null ) {
-                                        System.out.println("Parents: "+user.getParent());
-            } else {
-                                        System.out.println("Parents: "+"null");
+        ft.ft("Your Profile Details :");
+        System.out.println("Email: " + user.getEmail());
+        System.out.println("Username: " + user.getUsername());
+        System.out.println("Role: " + user.getRole());
+        System.out.println("Location: " + Arrays.toString(user.getLocationCoordinate()));
+
+        switch (user.getRole()) {
+            case "Young_Students": {
+                System.out.println("Current points: " + user.getCurrentPoints());
+                if (user.getParent() != null) {
+                    System.out.println("Parents: " + user.getParent());
+                } else {
+                    System.out.println("Parents: " + "null");
+                }
+                break;
             }
-                                    break;
-                                }
-                                case "Parents":{
-                                    
-                                       if(user.getChildren() != null && !user.getChildren().isEmpty()) {
-                                        System.out.println("Children: "+user.getChildren());
-            } else {
-                                        System.out.println("Children: "+"null");
+            case "Parents": {
+
+                if (user.getChildren() != null && !user.getChildren().isEmpty()) {
+                    System.out.println("Children: " + user.getChildren());
+                } else {
+                    System.out.println("Children: " + "null");
+                }
+                break;
             }
-                                    break;
-                                }
-                                case "Educators":{
-                                    break;
-                                }
-          }
-          
-     int input;
-      boolean success=false;  
-      String newpass;
-      //String newparent;
-         
-        switch(user.getRole()){
-            
-            case "Young_Students":{
-                System.out.println("Which Account detail you want to change/fill ? :");
-                System.out.println("1.Password");
-                System.out.println("2.Add Parents");
-                System.out.print(" Change Option no. : ");
+            case "Educators": {
+                break;
+            }
+        }
+
+        int input;
+        boolean success = false;
+        String newpass;
+        //String newparent;
+
+        switch (user.getRole()) {
+
+            case "Young_Students": {
+                
+                ft.ft("Update");
+                System.out.println("1. Change password\n2. Add your parent username\n 3. No");
+                System.out.print("\nOption >> ");
                 input = scan.nextInt();
                 scan.nextLine();
                 switch (input) {
                     case 1: {
-                        System.out.print("Enter new password: ");
+                        System.out.print("New password: ");
                         newpass = scan.nextLine();
                         success = updatePassword(user.getUsername(), newpass);
                         if (success) {
-                            System.out.println("Password has been updated");
+                            ft.message("Password has been updated");
                         } else {
-                            System.out.println("Your detail failed to be updated");
+                            ft.error("Failed to update your password");
                         }
                         break;
                     }
-                    case 2:{
-                        pc.updateParentForChild(user);                       
+                    case 2: {
+                        pc.updateParentForChild(user);
                         break;
                     }
-                    default: break;
+                    default:
+                        break;
                 }
-                    break;
-                }
-                
-                
-            
-            case "Parents":{
-                System.out.println("Which Account detail you want to change/fill ? :");
-                System.out.println("1.Password");
-                System.out.println("2.Add Children");
-                System.out.print(" Change Option no. : ");
+                break;
+            }
+
+            case "Parents": {
+                //format the output to be center
+                ft.ft("Update");
+                System.out.println("1. Change password\n2. Add your child username\n3. No");
+                System.out.print("\nOption >> ");
                 input = scan.nextInt();
                 scan.nextLine();
-                switch(input){
-                    case 1:{
-                        System.out.print("Enter new password: ");
+                switch (input) {
+                    case 1: {
+                        System.out.print("New password: ");
                         newpass = scan.nextLine();
                         success = updatePassword(user.getUsername(), newpass);
                         if (success) {
-                            System.out.println("Password has been updated");
+                            ft.message("Password has been updated");
                         } else {
-                            System.out.println("Your detail failed to be updated");
+                            ft.error("Failed to update your password");
                         }
                         break;
                     }
-                    case 2:{
+                    case 2: {
                         pc.updateChildrenForParent(user);
                         break;
                     }
-                    default:break;
+                    default:
+                        break;
                 }
                 break;
             }
-            case "Educators":{
-                System.out.println("do you want to change your password?");
-                System.out.println("1 for yes , 0 for no : ");
+            case "Educators": {
+                ft.ft("Do you want to change your password? [1:Yes || 0:No]");
+                System.out.print("\nOption >> ");
                 input = scan.nextInt();
-                switch(input){
-                    case 0: break;
-                    case 1 : {
-                        System.out.print("Enter new password: ");
-                         newpass=scan.nextLine();
-             success=updatePassword(user.getUsername(),newpass);
-            if(success){
-                System.out.println("Password has been updated");
-            }
-            else
-                            System.out.println("Your detail failed to be updated");
-            break;
+                switch (input) {
+                    case 0:
+                        break;
+                    case 1: {
+                        System.out.print("New password: ");
+                        newpass = scan.nextLine();
+                        success = updatePassword(user.getUsername(), newpass);
+                        if (success) {
+                            ft.message("Password has been updated");
+                        } else {
+                            ft.error("Failed to update your password");
+                        }
+                        break;
                     }
-                    
+
                 }
                 break;
             }
-    
+
         }
         Ui u = new Ui();
         
-        System.out.println("Do you still want to edit your account details ? (Yes:1/No:0)");
-        input=scan.nextInt();
-       
-        while(input==0 || input==1){
-            if(input==1)
-            Settings(user);
-        else if(input==0)
-            u.mainmenu(user);
-        else{
-            System.out.print("Please type 1 or 0 only: ");
-             input=scan.nextInt();
-        scan.nextLine();
+        ft.ft("Do you still want to edit your account details? [1:Yes || 0:No]");
+        System.out.print("Option >> ");
+        input = scan.nextInt();
+
+        while (input == 0 || input == 1) {
+            if (input == 1) {
+                Settings(user);
+            } else if (input == 0) {
+                u.mainmenu(user);
+            } else {
+                ft.error("0 or 1 only.");
+                input = scan.nextInt();
+                scan.nextLine();
+            }
         }
-        }
-        
-        
+
         return user;
     }
-        
-        
-        
-        
-        
-    
-    
+
     public static boolean updatePassword(String username, String newPassword) {
         String updateQuery = "UPDATE user SET password = ? WHERE username = ?";
-        
-        try (Connection connect = DriverManager.getConnection(url, "root", pass);
-             PreparedStatement preparedStatement = connect.prepareStatement(updateQuery)) {
 
-            String hashedpass= hashPassword(newPassword);
+        try (Connection connect = DriverManager.getConnection(url, "root", pass); PreparedStatement preparedStatement = connect.prepareStatement(updateQuery)) {
+
+            String hashedpass = hashPassword(newPassword);
             // Set the parameters for the prepared statement
             preparedStatement.setString(1, hashedpass);
             preparedStatement.setString(2, username);
@@ -193,14 +188,13 @@ public class AccountSettings {
 
             // Check if the update was successful
             return rowsAffected > 0;
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
-    
-    
+
 //    public static boolean updateParent(String username, String parentUsername) {
 //        String checkParentQuery = "SELECT COUNT(*) FROM user WHERE username = ? AND role = 'Parents' ;";
 //        String updateQuery = "UPDATE user SET parents = ? WHERE username = ?";
@@ -234,58 +228,55 @@ public class AccountSettings {
 //            return false;
 //        }
 //    }
-    
-    
     public static boolean updateParent(String username, String parentUsername) {
-    String checkParentQuery = "SELECT COUNT(*) FROM user WHERE username = ? AND role = 'Parents';";
-    String checkExistingParentQuery = "SELECT COUNT(*) FROM user WHERE username = ? AND parents IS NOT NULL;";
-    String updateQuery = "UPDATE user SET parents = ? WHERE username = ?";
+        String checkParentQuery = "SELECT COUNT(*) FROM user WHERE username = ? AND role = 'Parents';";
+        String checkExistingParentQuery = "SELECT COUNT(*) FROM user WHERE username = ? AND parents IS NOT NULL;";
+        String updateQuery = "UPDATE user SET parents = ? WHERE username = ?";
 
-    try (Connection connect = DriverManager.getConnection(url, "root", pass)) {
-        // Check if the parent username exists
-        try (PreparedStatement checkStatement = connect.prepareStatement(checkParentQuery)) {
-            checkStatement.setString(1, parentUsername);
-            try (ResultSet result = checkStatement.executeQuery()) {
-                if (result.next()) {
-                    int count = result.getInt(1);
-                    if (count == 0) {
-                        System.out.println("Parent username does not exist.");
-                        return false;
+        try (Connection connect = DriverManager.getConnection(url, "root", pass)) {
+            // Check if the parent username exists
+            try (PreparedStatement checkStatement = connect.prepareStatement(checkParentQuery)) {
+                checkStatement.setString(1, parentUsername);
+                try (ResultSet result = checkStatement.executeQuery()) {
+                    if (result.next()) {
+                        int count = result.getInt(1);
+                        if (count == 0) {
+                            ft.error("Parent username does not exist.");
+                            return false;
+                        }
                     }
                 }
             }
-        }
 
-        // Check if the user already has a non-null parents column
-        try (PreparedStatement checkExistingParentStatement = connect.prepareStatement(checkExistingParentQuery)) {
-            checkExistingParentStatement.setString(1, username);
-            try (ResultSet result = checkExistingParentStatement.executeQuery()) {
-                if (result.next()) {
-                    int count = result.getInt(1);
-                    if (count > 0) {
-                        System.out.println("The user already has a parent assigned.");
-                        return false;
+            // Check if the user already has a non-null parents column
+            try (PreparedStatement checkExistingParentStatement = connect.prepareStatement(checkExistingParentQuery)) {
+                checkExistingParentStatement.setString(1, username);
+                try (ResultSet result = checkExistingParentStatement.executeQuery()) {
+                    if (result.next()) {
+                        int count = result.getInt(1);
+                        if (count > 0) {
+                            ft.error("The user already has a parent assigned.");
+                            return false;
+                        }
                     }
                 }
             }
+
+            // Proceed with the update if the parent username exists and the user does not already have a parent
+            try (PreparedStatement updateStatement = connect.prepareStatement(updateQuery)) {
+                updateStatement.setString(1, parentUsername);
+                updateStatement.setString(2, username);
+
+                int rowsAffected = updateStatement.executeUpdate();
+                return rowsAffected > 0;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
-
-        // Proceed with the update if the parent username exists and the user does not already have a parent
-        try (PreparedStatement updateStatement = connect.prepareStatement(updateQuery)) {
-            updateStatement.setString(1, parentUsername);
-            updateStatement.setString(2, username);
-
-            int rowsAffected = updateStatement.executeUpdate();
-            return rowsAffected > 0;
-        }
-
-    } catch (SQLException e) {
-        e.printStackTrace();
-        return false;
     }
-}
 
-    
     public static boolean updateChildren(String username, ArrayList<String> childrenUsernames, ArrayList<String> childrenusernames2) {
         String checkChildQuery = "SELECT COUNT(*) FROM user WHERE username = ? AND role = 'Young_Students' AND parents IS NULL";
         String updateQuery = "UPDATE user SET children = ? WHERE username = ?";
@@ -300,26 +291,25 @@ public class AccountSettings {
                     try (ResultSet result = checkStatement.executeQuery()) {
                         if (result.next() && result.getInt(1) > 0) {
                             validChildren.add(childUsername);
-                        }
-                        else{
+                        } else {
                             invalidChildren.add(childUsername);
                         }
                     }
                 }
             }
-            if(!invalidChildren.isEmpty()){
-                System.out.println( invalidChildren+ "are/is invalid to be added "+username+"'s children list" );
+            if (!invalidChildren.isEmpty()) {
+                ft.error(invalidChildren + "are/is invalid to be added " + username + "'s children list");
             }
-            if(validChildren.isEmpty()){
-             //   System.out.println("Redundant update to"+username+"'s children list detected !!");
+            if (validChildren.isEmpty()) {
+                //   System.out.println("Redundant update to"+username+"'s children list detected !!");
                 return false;
             }
-            for (int i = 0; i <childrenusernames2.size(); i++) {
+            for (int i = 0; i < childrenusernames2.size(); i++) {
                 validChildren.add(childrenusernames2.get(i));
             }
             // Construct the string for existing children
             String childrenString = String.join(" ", validChildren);
-            
+
             // Proceed with the update if there are valid children
             try (PreparedStatement updateStatement = connect.prepareStatement(updateQuery)) {
                 updateStatement.setString(1, childrenString);
@@ -334,13 +324,12 @@ public class AccountSettings {
             return false;
         }
     }
-    
+
     public static ArrayList<String> getChildren(String parentUsername) {
         String query = "SELECT children FROM user WHERE username = ? AND role = 'Parents'";
         ArrayList<String> childrenList = new ArrayList<>();
 
-        try (Connection connect = DriverManager.getConnection(url, "root", pass);
-             PreparedStatement preparedStatement = connect.prepareStatement(query)) {
+        try (Connection connect = DriverManager.getConnection(url, "root", pass); PreparedStatement preparedStatement = connect.prepareStatement(query)) {
 
             // Set the parent username parameter
             preparedStatement.setString(1, parentUsername);
@@ -366,34 +355,30 @@ public class AccountSettings {
         }
         return childrenList;
     }
-    
-    
-public static boolean populateParentChildFromFile(String filePath) {
-    String insertQuery = "INSERT INTO user (username, parents, role, email, password, location) VALUES (?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?)";
-    String updateQuery = "UPDATE user SET children = CONCAT(IFNULL(children, ''), ?) WHERE username = ?";
 
-    try (Connection connect = DriverManager.getConnection(url, "root", pass);
-         BufferedReader reader = new BufferedReader(new FileReader(filePath));
-         PreparedStatement insertStatement = connect.prepareStatement(insertQuery);
-         PreparedStatement updateStatement = connect.prepareStatement(updateQuery)) {
+    public static boolean populateParentChildFromFile(String filePath) {
+        String insertQuery = "INSERT INTO user (username, parents, role, email, password, location) VALUES (?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?)";
+        String updateQuery = "UPDATE user SET children = CONCAT(IFNULL(children, ''), ?) WHERE username = ?";
 
-        String line;
-        int counter = 1; // Counter to generate unique values
-        while ((line = reader.readLine()) != null) {
-            String[] relationship = line.split(",");
-            if (relationship.length == 2) {
-                String parentUsername = relationship[0].trim();
-                String childUsername = relationship[1].trim();
-                
-                // Generate unique email addresses and passwords
-                String parentEmail = "parent" + counter + "@example.com";
-                String childEmail = "child" + counter + "@example.com";
-                String parentPassword = "password" + counter; // Example password generation
-                String childPassword = "password" + counter;
-                counter++;
-                
-                Random rand = new Random();
-                // Generate unique coordinates
+        try (Connection connect = DriverManager.getConnection(url, "root", pass); BufferedReader reader = new BufferedReader(new FileReader(filePath)); PreparedStatement insertStatement = connect.prepareStatement(insertQuery); PreparedStatement updateStatement = connect.prepareStatement(updateQuery)) {
+
+            String line;
+            int counter = 1; // Counter to generate unique values
+            while ((line = reader.readLine()) != null) {
+                String[] relationship = line.split(",");
+                if (relationship.length == 2) {
+                    String parentUsername = relationship[0].trim();
+                    String childUsername = relationship[1].trim();
+
+                    // Generate unique email addresses and passwords
+                    String parentEmail = "parent" + counter + "@example.com";
+                    String childEmail = "child" + counter + "@example.com";
+                    String parentPassword = "password" + counter; // Example password generation
+                    String childPassword = "password" + counter;
+                    counter++;
+
+                    Random rand = new Random();
+                    // Generate unique coordinates
                     int parentLat = rand.nextInt(1001) - 500; // Latitude in the range -500 to 500
                     int parentLong = rand.nextInt(1001) - 500; // Longitude in the range -500 to 500
                     int childLat = rand.nextInt(1001) - 500; // Latitude in the range -500 to 500
@@ -403,50 +388,47 @@ public static boolean populateParentChildFromFile(String filePath) {
                     String parentLocation = parentLat + "," + parentLong;
                     String childLocation = childLat + "," + childLong;
 
-                // Insert child user
-                insertStatement.setString(1, childUsername);
-                insertStatement.setString(2, parentUsername);
-                insertStatement.setString(3, "Young_Students");
-                insertStatement.setString(4, childEmail);
-                insertStatement.setString(5, childPassword);
-                insertStatement.setString(6, childLocation);
+                    // Insert child user
+                    insertStatement.setString(1, childUsername);
+                    insertStatement.setString(2, parentUsername);
+                    insertStatement.setString(3, "Young_Students");
+                    insertStatement.setString(4, childEmail);
+                    insertStatement.setString(5, childPassword);
+                    insertStatement.setString(6, childLocation);
 
-                // Insert parent user
-                insertStatement.setString(7, parentUsername);
-                insertStatement.setNull(8, java.sql.Types.VARCHAR); // Assuming parents don't have a parent
-                insertStatement.setString(9, "Parents");
-                insertStatement.setString(10, parentEmail);
-                insertStatement.setString(11, parentPassword);
-                insertStatement.setString(12, parentLocation);
+                    // Insert parent user
+                    insertStatement.setString(7, parentUsername);
+                    insertStatement.setNull(8, java.sql.Types.VARCHAR); // Assuming parents don't have a parent
+                    insertStatement.setString(9, "Parents");
+                    insertStatement.setString(10, parentEmail);
+                    insertStatement.setString(11, parentPassword);
+                    insertStatement.setString(12, parentLocation);
 
-                insertStatement.addBatch();
+                    insertStatement.addBatch();
 
-                // Update parent's children field
-                updateStatement.setString(1, childUsername + ","); // Append child username
-                updateStatement.setString(2, parentUsername);
-                updateStatement.addBatch();
+                    // Update parent's children field
+                    updateStatement.setString(1, childUsername + ","); // Append child username
+                    updateStatement.setString(2, parentUsername);
+                    updateStatement.addBatch();
+                }
             }
+
+            insertStatement.executeBatch();
+            updateStatement.executeBatch();
+            return true;
+
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
+            return false;
         }
-
-        insertStatement.executeBatch();
-        updateStatement.executeBatch();
-        return true;
-
-    } catch (IOException | SQLException e) {
-        e.printStackTrace();
-        return false;
     }
-}
 
-public static boolean viewParentChildRelationships() {
+    public static boolean viewParentChildRelationships() {
         String query = "SELECT username, children FROM user WHERE role = 'Parents'";
 
-        try (Connection connect = DriverManager.getConnection(url, "root", pass);
-             PreparedStatement statement = connect.prepareStatement(query);
-             ResultSet resultSet = statement.executeQuery()) {
+        try (Connection connect = DriverManager.getConnection(url, "root", pass); PreparedStatement statement = connect.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
 
-            System.out.println("Parent-Child Relationships:");
-            System.out.println("---------------------------");
+            ft.ft("Parent-Child Relationship");
 
             while (resultSet.next()) {
                 String parentUsername = resultSet.getString("username");
