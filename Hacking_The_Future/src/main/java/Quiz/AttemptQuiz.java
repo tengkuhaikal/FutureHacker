@@ -10,6 +10,7 @@ import static Account.MySQLConfiguration.pass;
 import static Account.MySQLConfiguration.url;
 import Account.User;
 import UI.Ui;
+import UI.ft;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -26,13 +27,14 @@ public class AttemptQuiz {
     Scanner scan = new Scanner(System.in);
 
     public void attemptquiz(User user) {
-        System.out.println("\n\n-----Welcome to Quiz section!!----\n");
-        System.out.println("Choose your preference:\n1.Science\n2.Technology\n3.Engineering\n4.Mathmethics\n5.All themes");
+        ft.ft("Quiz");
+        ft.ft("Choose your preference");
+        System.out.println("\n1.Science\n2.Technology\n3.Engineering\n4.Mathmethics\n5.All themes");
         String theme = null;
 
         boolean valid = true;
         do {
-            System.out.print("Quiz Theme: ");
+            System.out.println("\nOption >> ");
             int choice = scan.nextInt();
             switch (choice) {
                 case 1:
@@ -82,7 +84,7 @@ public class AttemptQuiz {
                 while (rs.next()) {
                     String title = rs.getString("title");
                     String description = rs.getString("description");
-                    System.out.println("Title: " + title);
+                    ft.ft("Title: " + title);
                     System.out.println("Description: " + description);
                     System.out.println();
                 }
@@ -96,13 +98,13 @@ public class AttemptQuiz {
         String selectedQuizTitle;
         boolean isValidQuizTitle;
         do {
-            System.out.print("Enter the title of the quiz you want to attempt: ");
+            System.out.print("Title >> ");
             selectedQuizTitle = scan.nextLine();
 
             // Check if the entered title exists in the quiz table
             isValidQuizTitle = isQuizTitleValid(selectedQuizTitle);
             if (!isValidQuizTitle) {
-                System.out.println("Quiz title is not valid. Please try again.");
+                ft.error("Quiz title is not valid. Please try again.");
             }
         } while (!isValidQuizTitle);
 
@@ -117,7 +119,8 @@ public class AttemptQuiz {
             attemptSelectedQuiz(quizContent, user);
         }
 
-        System.out.print("Do you want to continue attempt other quiz? [1:Yes || 0:No]");
+        ft.ft("Do you want to continue attempt other quiz? [1:Yes || 0:No]");
+        System.out.println("\nOption >> ");
         int choice = scan.nextInt();
         if (choice == 1) {
             attemptquiz(user);
@@ -180,9 +183,9 @@ public class AttemptQuiz {
             int rowsAffected = pstmt.executeUpdate();
 
             if (rowsAffected > 0) {
-                System.out.println("Points added successfully for user: " + username);
+                ft.message("Points added successfully for user: " + username);
             } else {
-                System.out.println("User not found or points not updated.");
+                ft.error("User not found or points not updated.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
