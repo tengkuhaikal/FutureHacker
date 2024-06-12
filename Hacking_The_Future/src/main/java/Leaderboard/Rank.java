@@ -8,7 +8,7 @@ import static Account.AccountSettings.pass;
 import static Account.MySQLConfiguration.url;
 import Account.User;
 import UI.Ui;
-import UI.ft;
+import UI.formatText;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -55,7 +55,7 @@ public class Rank {
 
         // Prompt message to choose index for friend request
         Scanner scanner = new Scanner(System.in);
-        ft.ft("Request friend? [0:Main Menu]");
+        formatText.formatTitle("Request friend? [0:Main Menu]");
         System.out.println("\nFriend's Index >> ");
         int index = scanner.nextInt();
         if (index == 0) {
@@ -65,7 +65,7 @@ public class Rank {
         if (index >= 0 && index <= usernames.size()) {
             String selectedUsername = usernames.get(index - 1);
             // Now you have the selected username, you can proceed to send the friend request
-            ft.message("You selected user: " + selectedUsername);
+            formatText.message("You selected user: " + selectedUsername);
             // Call a method to send friend request using selectedUsername
             boolean success = sendRequest(user, selectedUsername);
             if (!success) {
@@ -75,10 +75,10 @@ public class Rank {
             Ui starter = new Ui();
             starter.mainmenu(user);
         } else {
-            ft.error("Invalid index. Please enter a valid index.");
+            formatText.error("Invalid index. Please enter a valid index.");
         }
 
-        ft.ft("Continue sending requests? [1:Yes || 0:Main Menu]");
+        formatText.formatTitle("Continue sending requests? [1:Yes || 0:Main Menu]");
         System.out.println("\nOption >> ");
         int i = scanner.nextInt();
         if (i == 1) {
@@ -92,7 +92,7 @@ public class Rank {
 
     public static boolean sendRequest(User user, String req) {
         if (user.getUsername().equals(req)) {
-            ft.error("You selected yourself. Please try again!");
+            formatText.error("You selected yourself. Please try again!");
             return false;
         }
  
@@ -110,13 +110,13 @@ public class Rank {
                 if (rs.next()) {
                     String status = rs.getString("status");
                     if ("Accepted".equals(status)) {
-                        ft.message(req + " is already your friend.");
+                        formatText.message(req + " is already your friend.");
                         return false;
                     } else if ("Pending".equals(status)) {
-                        ft.message(req + " has already sent you a friend request or you have a pending request.");
+                        formatText.message(req + " has already sent you a friend request or you have a pending request.");
                         return false;
                     } else if ("Rejected".equals(status)) {
-                        ft.message(req + " has previously rejected your friend request.");
+                        formatText.message(req + " has previously rejected your friend request.");
                         return false;
                     }
                 }
@@ -136,7 +136,7 @@ public class Rank {
             friendRequestStmt.setString(3, "Pending");
             friendRequestStmt.executeUpdate();
 
-            ft.message("Friend request sent from " + user.getUsername() + " to " + req);
+            formatText.message("Friend request sent from " + user.getUsername() + " to " + req);
             return true; // Request sent successfully
         } catch (SQLException ex) {
             ex.printStackTrace();
