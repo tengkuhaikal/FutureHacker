@@ -39,7 +39,7 @@ public class Ui {
     DiscussionPage dp = new DiscussionPage();
 
     public void mainmenu(User user) {
-        System.out.println("\n\n-----------Main Menu-------------");
+        ft.ft("Main Menu");
 
         int choice;
         //Access Manager
@@ -52,9 +52,9 @@ public class Ui {
                 System.out.println("4.Manage Friend Request");
                 System.out.println("5.Attempt Quiz");
                 System.out.println("6.View and Register Events"); 
-                System.out.println("7. View Discussion Page");
+                System.out.println("7.View Discussion Page");
                 System.out.println("8.Log Out");
-                System.out.print("Option: ");
+                System.out.print("\nOption >> ");
                 choice = scan.nextInt();
                 scan.nextLine();
                 switch (choice) {
@@ -85,9 +85,9 @@ public class Ui {
                 System.out.println("2.Account Settings");
                 System.out.println("3.View and Book Trips"); //Done
                 System.out.println("4.View Events");
-                System.out.println("5. View Discussion Page");
+                System.out.println("5.View Discussion Page");
                 System.out.println("6.Log Out");
-                System.out.print("Option: ");
+                System.out.print("\nOption >> ");
                 choice = scan.nextInt();
                 scan.nextLine();
                 switch (choice) {
@@ -116,9 +116,9 @@ public class Ui {
                 System.out.println("4.View Events");
                 System.out.println("5.Create Event");
                 System.out.println("6.View Parent Child Relationship"); //Additional actually but would be better to view all at once
-                System.out.println("7. View Discussion Page");
+                System.out.println("7.View Discussion Page");
                 System.out.println("8.Log Out");
-                System.out.print("Option: ");
+                System.out.print("\nOption >> ");
 
                 choice = scan.nextInt();
                 scan.nextLine();
