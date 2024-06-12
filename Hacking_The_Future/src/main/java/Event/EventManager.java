@@ -5,7 +5,7 @@ import static Account.MySQLConfiguration.url;
 import Account.User;
 import static Event.CreateEvent.createEvent;
 import UI.Ui;
-import UI.ft;
+import UI.formatText;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -46,15 +46,15 @@ public class EventManager {
     public void addEvent(String title, String description, String date, String time) {
         Event newEvent = new Event(title, description, date, time);
         events.add(newEvent);
-        ft.message("New event created: " + title);
+        formatText.message("New event created: " + title);
     }
 
     public void joinEvent(Event event, User user) {
         // Add points for joining an event using User's setCurrentPoints method
         int newPoints = user.getCurrentPoints() + 5;
         user.setCurrentPoints(newPoints);
-        ft.message(user.getUsername() + " has joined the event: " + event.getTitle());
-        ft.message(user.getUsername() + "'s current points: " + user.getCurrentPoints());
+        formatText.message(user.getUsername() + " has joined the event: " + event.getTitle());
+        formatText.message(user.getUsername() + "'s current points: " + user.getCurrentPoints());
     }
 
     public void displayLiveAndUpcomingEvents(User user) {
@@ -76,14 +76,14 @@ public class EventManager {
         upcomingEvents.sort((e1, e2) -> e1.getDate().compareTo(e2.getDate()));
         // Display live events
         if (!liveEvents.isEmpty()) {
-            ft.ft("Live Events");
+            formatText.formatTitle("Live Events");
             for (int i = 0; i < liveEvents.size(); i++) {
                 Event event = liveEvents.get(i);
                 System.out.println((i + 1) + ". " + event.getTitle() + " - " + event.getDescription() + " on " + event.getDate());
             }
             //Only young students can choose
             if (user.getRole().equals("Young_Students")) {
-                ft.ft("Join event?");
+                formatText.formatTitle("Join event?");
                 System.out.println("\nOption >> ");
                 int selectedLiveNumber = sc.nextInt();
                 if (selectedLiveNumber > 0 && selectedLiveNumber <= liveEvents.size()) {
@@ -91,22 +91,22 @@ public class EventManager {
                     //  joinEvent(selectedLiveEvent, user);
                     saveEventChoice(user.getUsername(), user.getParent(), selectedLiveEvent.getTitle(), java.sql.Date.valueOf(selectedLiveEvent.getDate()), java.sql.Time.valueOf(selectedLiveEvent.getTime()), user.getCurrentPoints());
                 } else if (selectedLiveNumber != 0) {
-                    ft.error("\nInvalid selection for live events.");
+                    formatText.error("\nInvalid selection for live events.");
                 }
             }
         } else {
-            ft.error("No live events today");
+            formatText.error("No live events today");
         }
 
         // Display the closest 3 upcoming events
-        ft.ft("Closest 3 Upcoming Events");
+        formatText.formatTitle("Closest 3 Upcoming Events");
         for (int i = 0; i < Math.min(3, upcomingEvents.size()); i++) {
             Event event = upcomingEvents.get(i);
             System.out.println((i + 1) + ". " + event.getTitle() + " - " + event.getDescription() + " on " + event.getDate() + " at " + event.getTime());
         }
         //Only young students can choose
         if (user.getRole().equals("Young_Students")) {
-            ft.ft("Join event?");
+            formatText.formatTitle("Join event?");
             System.out.println("\nOption >> ");
             int selectedUpcomingNumber = sc.nextInt();
             sc.nextLine();
@@ -116,7 +116,7 @@ public class EventManager {
                 saveEventChoice(user.getUsername(), user.getParent(), selectedUpcomingEvent.getTitle(), java.sql.Date.valueOf(selectedUpcomingEvent.getDate()), java.sql.Time.valueOf(selectedUpcomingEvent.getTime()), user.getCurrentPoints());
 
             } else if (selectedUpcomingNumber != 0) {
-                ft.error("\nInvalid selection for upcoming events.");
+                formatText.error("\nInvalid selection for upcoming events.");
             }
         }
 
@@ -125,7 +125,7 @@ public class EventManager {
             starter.mainmenu(user);
         }
 
-        ft.ft("Do you want to join more? [1:Yes || 0:No]");
+        formatText.formatTitle("Do you want to join more? [1:Yes || 0:No]");
         System.out.println("\nOption >> ");
         int choice;
         choice = sc.nextInt();
@@ -154,7 +154,7 @@ public class EventManager {
             int sameEventCount = sameEventResult.getInt(1);
 
             if (sameEventCount > 0) {
-                ft.message("The event has already been booked by the user.");
+                formatText.message("The event has already been booked by the user.");
                 return;
             }
 
@@ -166,7 +166,7 @@ public class EventManager {
             int dateClashCount = dateClashResult.getInt(1);
 
             if (dateClashCount > 0) {
-                ft.error("The user has already booked another event on the same date.");
+                formatText.error("The user has already booked another event on the same date.");
                 return;
             }
 
@@ -178,7 +178,7 @@ public class EventManager {
             int parentBookingClashCount = parentBookingClashResult.getInt(1);
 
             if (parentBookingClashCount > 0) {
-                ft.error("The user has already booked another event on the same date in parent bookings.");
+                formatText.error("The user has already booked another event on the same date in parent bookings.");
                 return;
             }
 
@@ -194,11 +194,11 @@ public class EventManager {
             insertStatement.setTime(5, eventTime);
 
             insertStatement.executeUpdate();
-            ft.message("Event registered successfully.");
+            formatText.message("Event registered successfully.");
             addFivePoints(childUsername);
         } catch (SQLException e) {
             e.printStackTrace();
-            ft.error("Failed to register event choice.");
+            formatText.error("Failed to register event choice.");
         }
     }
 
@@ -211,9 +211,9 @@ public class EventManager {
             int rowsAffected = pstmt.executeUpdate();
 
             if (rowsAffected > 0) {
-                ft.message("Points added successfully for user: " + username);
+                formatText.message("Points added successfully for user: " + username);
             } else {
-                ft.error("User not found or points not updated.");
+                formatText.error("User not found or points not updated.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
