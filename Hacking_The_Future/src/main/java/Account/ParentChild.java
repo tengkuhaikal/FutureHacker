@@ -8,7 +8,7 @@ import static Account.AccountSettings.getChildren;
 import static Account.AccountSettings.updateChildren;
 import static Account.AccountSettings.updateParent;
 import UI.Ui;
-import UI.ft;
+import UI.formatText;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -38,7 +38,7 @@ public class ParentChild {
 
             user.setParent(newparent);
         } else {
-            ft.error("Your detail failed to be updated");
+            formatText.error("Your detail failed to be updated");
         }
     }
 
@@ -48,7 +48,7 @@ public class ParentChild {
         int quantity = sc.nextInt();
         sc.nextLine(); // consume newline
         if (quantity == 0) {
-            ft.message("You entered zero, no children will be added.");
+            formatText.message("You entered zero, no children will be added.");
             return; // Exit the method early
         }
 
@@ -60,12 +60,12 @@ public class ParentChild {
         // Copy existing children to a new list
         if (existingChildren != null && !existingChildren.isEmpty()) {
             existingChildrenCopy.addAll(existingChildren);
-            ft.ft("Existing children");
+            formatText.formatTitle("Existing children");
             for (int i = 0; i < existingChildren.size(); i++) {
                 System.out.println((i + 1) + ". " + existingChildren.get(i));
             }
         } else {
-            ft.error("No existing children found");
+            formatText.error("No existing children found");
         }
 
         System.out.println("Type your children usernames below:");
@@ -78,7 +78,7 @@ public class ParentChild {
         // Update children in the database and set parent for new children
         boolean success = updateChildren(user.getUsername(), newChildren, existingChildrenCopy);
         if (success) {
-            ft.message("Your Children list has been updated.");
+            formatText.message("Your Children list has been updated.");
             for (String childUsername : newChildren) {
                 updateParent(childUsername, user.getUsername());
             }
@@ -88,7 +88,7 @@ public class ParentChild {
             combinedList.addAll(newChildren);
             user.setChildren(combinedList);
         } else {
-            ft.error("Failed to update your children list. Please try again");
+            formatText.error("Failed to update your children list. Please try again");
         }
     }
 
@@ -97,9 +97,9 @@ public class ParentChild {
         boolean success = AccountSettings.populateParentChildFromFile(filePath);
 
         if (success) {
-            ft.message("Data populated successfully.");
+            formatText.message("Data populated successfully.");
         } else {
-            ft.error("Failed to populate data");
+            formatText.error("Failed to populate data");
         }
         System.out.println("Current Working Directory: " + System.getProperty("user.dir"));
     }
