@@ -39,7 +39,7 @@ public class Ui {
     DiscussionPage dp = new DiscussionPage();
 
     public void mainmenu(User user) {
-        ft.ft("Main Menu");
+        formatText.formatTitle("Main Menu");
 
         int choice;
         //Access Manager
