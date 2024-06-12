@@ -5,7 +5,7 @@
 package Account;
 
 import java.util.Scanner;
-
+import UI.ft;
 /**
  *
  * @author Afiq Zafry
@@ -15,16 +15,15 @@ public class FirstPage {
     Scanner scan = new Scanner(System.in);
 
     public int ui() {
-        System.out.println("\n\n----------------------------------------------");
-        System.out.println("Welcome to Hacking The Future !");
-        System.out.println("----------------------------------------------\n");
+        ft.ft("Welcome to Hacking the Future!");
 
         System.out.println("1.Register an account");
         System.out.println("2.Login to your account");
         System.out.println("3.Exit");
-        System.out.print("Option: ");
+        System.out.print("\nOption >> ");
         int userInput = scan.nextInt();
         scan.nextLine();
+        System.out.println("");
         return userInput;
     }
 
@@ -41,7 +40,7 @@ public class FirstPage {
                 return l.lgin();
             }
             case 3 -> {
-                System.out.println("Have a nice day! Goodbye!");
+                ft.ft("Have a nice day. Goodbye!");
                 System.exit(0);
             }
         }
