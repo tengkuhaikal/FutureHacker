@@ -6,6 +6,7 @@ package Booking;
 import Account.FirstPage;
 import Account.User;
 import UI.Ui;
+import UI.ft;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -37,8 +38,8 @@ public class BookingService {
     private List<BookingDestination> bookingDestinations;
    // public static final String filepath = "C:\\_Hasna\\UNIV\\SEM 2\\WIA1002\\Final Project\\MOST FINAL\\WIA1002\\Hacking_The_Future\\src\\main\\java\\Booking\\BookingDestination.txt";
 
-    public static final String filepath = "C:\\Users\\Afiq Zafry\\OneDrive - Universiti Malaya\\Documents\\NetBeansProjects\\Hacking_The_Future\\WIA1002\\FutureHacker\\Hacking_The_Future\\src\\main\\java\\FutureHacker\\Hacking_The_Future\\src\\main\\java\\Booking\\BookingDestination.txt";
-    //public static final String filepath = "C:\\Users\\USER\\Desktop\\Hacking The Future Real 1\\FutureHacker\\Hacking_The_Future\\src\\main\\java\\Booking\\BookingDestination.txt";
+    //public static final String filepath = "C:\\Users\\Afiq Zafry\\OneDrive - Universiti Malaya\\Documents\\NetBeansProjects\\Hacking_The_Future\\WIA1002\\FutureHacker\\Hacking_The_Future\\src\\main\\java\\FutureHacker\\Hacking_The_Future\\src\\main\\java\\Booking\\BookingDestination.txt";
+    public static final String filepath = "C:\\Users\\USER\\Desktop\\Hacking The Future Real 1\\FutureHacker\\Hacking_The_Future\\src\\main\\java\\Booking\\BookingDestination.txt";
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private static final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
     BookingDestination book;
@@ -66,7 +67,7 @@ private List<BookingDestination> loadBookingDestinations() {
             
             String[] parts = coordinate.split(",");
             if (parts.length != 2) {
-                System.out.println("Invalid coordinate format: " + coordinate);
+                ft.error("Invalid coordinate format: " + coordinate);
                 continue;
             }
             
@@ -75,7 +76,7 @@ private List<BookingDestination> loadBookingDestinations() {
                 double y = Double.parseDouble(parts[1].trim());
                 destinations.add(new BookingDestination(destination, x, y));
             } catch (NumberFormatException e) {
-                System.out.println("Invalid coordinate values: " + coordinate);
+                ft.error("Invalid coordinate values: " + coordinate);
             }
             
             // Read the empty line after the coordinate
@@ -101,11 +102,11 @@ private List<BookingDestination> loadBookingDestinations() {
         return;
     }
     
-    System.out.println("Booking Page \n=========================================================================");
+    ft.ft("Bookings");
     int number = 1;
     for (BookingDestination destination : sortedBooking) {
         if (destination == null) {
-            System.out.println("Skipping null destination.");
+            ft.error("Skipping null destination.");
             continue;
         }
         
@@ -160,7 +161,7 @@ private List<BookingDestination> loadBookingDestinations() {
     public void createBooking(User user) {
         ArrayList<String> childrenNames = user.getChildren();
         if (childrenNames == null || childrenNames.isEmpty()) {
-            System.out.println("You have no children registered. You cannot make a booking.");
+            ft.message("You have no children registered. You cannot make a booking.");
             return;
         }
 
@@ -181,7 +182,7 @@ private List<BookingDestination> loadBookingDestinations() {
             // Display available dates for booking
             displayAvailableDatesForBooking(user, selectedDestination.getDestination());
 
-        System.out.print("Do you want to add more bookings? (yes: 1, No: etc): ");
+        System.out.print("Do you want to add more bookings? [1:Yes || 0:No] ");
         int choice = sc.nextInt();
         if (choice == 1) {
             createBooking(user);
@@ -244,8 +245,8 @@ private List<BookingDestination> loadBookingDestinations() {
         }
 
         if (!availableDates.isEmpty()) {
-            System.out.println("=========================================================================");
-            System.out.println("Selected booking for: " + destinationName);
+            //System.out.println("=========================================================================");
+            ft.ft("Selected booking for: " + destinationName);
             System.out.println("Available Time Slots:");
             for (int i = 0; i < availableDates.size(); i++) {
                 System.out.println("[" + (i + 1) + "] " + availableDates.get(i));
@@ -266,15 +267,15 @@ private List<BookingDestination> loadBookingDestinations() {
                 // Add the booking to the database (assuming addBooking method exists)
                 boolean success = addBooking(booking, user);
                 if (success) {
-                    System.out.println("Booking successfully added.");
+                    ft.message("Booking successfully added.");
         } else {
-                    System.out.println("Failed to add booking.");
+                    ft.error("Failed to add booking.");
                 }
             } else {
-                System.out.println("Invalid date selection.");
+                ft.error("Invalid date selection.");
             }
         } else {
-            System.out.println("No available dates for booking within the next week.");
+            ft.error("No available dates for booking within the next week.");
         }
     } catch (SQLException e) {
         e.printStackTrace();
