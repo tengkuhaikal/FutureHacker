@@ -8,6 +8,7 @@ import static Account.MySQLConfiguration.pass;
 import static Account.MySQLConfiguration.url;
 import Account.User;
 import UI.Ui;
+import UI.ft;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -25,16 +26,16 @@ public class NewQuiz {
 
     public void CreateQuiz(User user) {
 
-        System.out.println("\n\n------Creating new quiz------");
+        ft.ft("New Quiz");
         System.out.println("Educator: " + user.getUsername());
-        System.out.print("Quiz Title: ");
+        System.out.print("Quiz Title >> ");
         title = scan.nextLine();
-        System.out.print("Quiz Description: ");
+        System.out.print("Quiz Description >> ");
         desc = scan.nextLine();
         System.out.println("Themes:\n1.Science\n2.Technology\n3.Engineering\n4.Mathematics");
         boolean valid = true;
         do {
-            System.out.print("Quiz Theme: ");
+            System.out.print("\nTheme >> ");
             int choice = scan.nextInt();
             switch (choice) {
                 case 1:
@@ -60,10 +61,10 @@ public class NewQuiz {
         } while (valid);
         scan.nextLine(); // Consume newline left by nextInt()
 
-        System.out.print("Quiz Linkt: ");
+        System.out.print("Quiz Link >> ");
         content = scan.nextLine();
 
-        Quiziz quiz = new Quiziz(title, desc, theme, content);
+        Quizizz quiz = new Quizizz(title, desc, theme, content);
         // Insert quiz into the database
         try (Connection conn = DriverManager.getConnection(url, "root", pass)) {
             String insertQuery = "INSERT INTO quiz (title, description, theme, Content, username) VALUES (?, ?, ?, ?, ?)";
@@ -74,7 +75,7 @@ public class NewQuiz {
                 pstmt.setString(4, content);
                 pstmt.setString(5, user.getUsername()); // Insert educator's username
                 pstmt.executeUpdate();
-                System.out.println("Quiz created successfully.\n\n");
+                ft.message("Quiz created successfully");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -82,7 +83,8 @@ public class NewQuiz {
             e.printStackTrace();
         }
 
-        System.out.print("Do you want to still continue create Quiz? [1:Yes || 0:No] :");
+        ft.ft("Continue to create quiz? [1:Yes || 0:No] :");
+        System.out.println("\nOption >> ");
         int choice = scan.nextInt();
         if (choice == 1) {
             CreateQuiz(user);
