@@ -9,6 +9,7 @@ import static Account.MySQLConfiguration.url;
 import Account.User;
 import static Event.Filepath.filepath;
 import UI.Ui;
+import UI.ft;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileReader;
@@ -31,23 +32,21 @@ import java.util.Scanner;
  * @author Afiq Zafry
  */
 public class CreateEvent {
+
     private static final Scanner scan = new Scanner(System.in);
     private static EventManager em = new EventManager();
 
-    
     public static void createEvent(User user) {
-        System.out.println("\n\n------Creating new event------");
+        ft.ft("Create new event");
         System.out.println("Educator: " + user.getUsername());
 
         System.out.print("Event Title: ");
         String eventTitle = scan.nextLine();
-        
+
         System.out.print("Event Description: ");
         String eventDescription = scan.nextLine();
         System.out.print("Event Venue: ");
-        String eventVenue=scan.nextLine();
-       
-        
+        String eventVenue = scan.nextLine();
 
         Date eventDate = null;
         Time eventTime = null;
@@ -60,25 +59,23 @@ public class CreateEvent {
                 System.out.print("Event Date (YYYY-MM-DD): ");
                 String dateInput = scan.nextLine();
 
-
                 eventDate = new Date(dateFormat.parse(dateInput).getTime());
-                
+
                 System.out.print("Event Time (HH:MM:SS): ");
                 String timeInput = scan.nextLine();
-                em.addEvent(eventTitle, eventDescription,dateInput,timeInput);
+                em.addEvent(eventTitle, eventDescription, dateInput, timeInput);
                 eventTime = new Time(timeFormat.parse(timeInput).getTime());
-                
+
                 validInput = true; // If parsing is successful, exit loop
             } catch (ParseException e) {
-                System.out.println("Invalid date or time format. Please try again.");
+                ft.error("Invalid date or time format. Please try again.");
             }
         }
-        
+
         // Insert the new event into the database
         String insertEventQuery = "INSERT INTO event (title, description, venue, date, time, educator) VALUES (?, ?, ?, ?, ?, ?)";
-        
-        try (Connection conn = DriverManager.getConnection(url, "root", pass);
-             PreparedStatement pstmt = conn.prepareStatement(insertEventQuery)) {
+
+        try (Connection conn = DriverManager.getConnection(url, "root", pass); PreparedStatement pstmt = conn.prepareStatement(insertEventQuery)) {
 
             pstmt.setString(1, eventTitle);
             pstmt.setString(2, eventDescription);
@@ -88,40 +85,25 @@ public class CreateEvent {
             pstmt.setString(6, user.getUsername());
 
             pstmt.executeUpdate();
-            System.out.println("Event created successfully!");
+            ft.message("Event created successfully!");
 
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Failed to create event.");
+            ft.error("Failed to create event.");
         }
-        
-        System.out.println("Do you want to continue creating event > (yes:1 / No:etc)");
-        int choice=scan.nextInt();
-        if(choice==1){
+
+        ft.ft("Continue to create event? > [1:Yes || 0:No]");
+        int choice = scan.nextInt();
+        if (choice == 1) {
             System.out.println("\n\n");
             createEvent(user);
-        }else{
-             Ui starter = new Ui();
-             starter.mainmenu(user);
+        } else {
+            Ui starter = new Ui();
+            starter.mainmenu(user);
         }
-            
-        
+
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
 //    public static ArrayList<HashMap<String, String>> readLocationsFromFile(String filename) {
 //        ArrayList<HashMap<String, String>> locations = new ArrayList<>();
 //
@@ -153,7 +135,6 @@ public class CreateEvent {
 //
 //        return locations;
 //    }
-    
 //    public static ArrayList<HashMap<String, Double []>> readLocationsFromFile(String filename) {
 //        ArrayList<HashMap<String, Double[]>> locations = new ArrayList<>();
 //
@@ -200,7 +181,6 @@ public class CreateEvent {
 //
 //        return locations;
 //    }
-    
     public static ArrayList<HashMap<String, Double[]>> readLocationsFromFile(String filename) {
         ArrayList<HashMap<String, Double[]>> locations = new ArrayList<>();
 
@@ -245,8 +225,8 @@ public class CreateEvent {
 
         return locations;
     }
-    
-     public static boolean locationExists(ArrayList<HashMap<String, Double[]>> locations, String locationName) {
+
+    public static boolean locationExists(ArrayList<HashMap<String, Double[]>> locations, String locationName) {
         for (HashMap<String, Double[]> location : locations) {
             if (location.containsKey(locationName)) {
                 return true;
@@ -254,32 +234,30 @@ public class CreateEvent {
         }
         return false;
     }
-    
-    
+
     public static String enterlocation() {
         ArrayList<HashMap<String, Double[]>> locations = readLocationsFromFile(filepath);
-        
-       for (HashMap<String, Double[]> location : locations) {
-        for (String key : location.keySet()) {
-            System.out.println("Location: " + key);
-            Double[] coordinates = location.get(key);
-            System.out.println("[" + coordinates[0] + "" + coordinates[1]+"]");
+
+        for (HashMap<String, Double[]> location : locations) {
+            for (String key : location.keySet()) {
+                System.out.println("Location: " + key);
+                Double[] coordinates = location.get(key);
+                System.out.println("[" + coordinates[0] + "" + coordinates[1] + "]");
+            }
         }
-    }
-       String locationName=null;
+        String locationName = null;
         Scanner scanner = new Scanner(System.in);
-        boolean valid=true;
+        boolean valid = true;
         while (valid) {
             System.out.print("Event Venue: ");
-             locationName = scanner.nextLine();
+            locationName = scanner.nextLine();
 
             if (locationExists(locations, locationName)) {
                 break;
-                
-                
+
             } else {
-                System.out.println("Location not found. Please try again.");
-                valid=true;
+                ft.error("Location not found. Please try again.");
+                valid = true;
             }
         }
         return locationName;
