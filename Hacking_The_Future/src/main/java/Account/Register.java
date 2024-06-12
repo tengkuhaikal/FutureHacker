@@ -11,7 +11,7 @@ package Account;
 import static Account.MySQLConfiguration.pass;
 import static Geoloaction.GeoLocation.getrealLocation;
 import UI.Ui;
-import UI.ft;
+import UI.formatText;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -36,7 +36,7 @@ public class Register extends User {
     }
 
     public static User registernewuser() {
-        ft.ft("Register");
+        formatText.formatTitle("Register");
         java.util.ArrayList<String> data = new ArrayList<>();
         System.out.print("Email: ");
         String input = scan.nextLine();
@@ -76,7 +76,7 @@ public class Register extends User {
                     validChoice = true;
                     break;
                 default:
-                    ft.error("Invalid choice. Please try again.");
+                    formatText.error("Invalid choice. Please try again.");
                     validChoice = false;
                     // Set validChoice to false to repeat the loop
                     break;
@@ -104,7 +104,7 @@ public class Register extends User {
             //check if email is already exist
             while (result.next()) {
                 if (result.getString(2).equals(data.get(0))) {
-                    ft.error("Email already exist");
+                    formatText.error("Email already exist");
                     return null;
                 }
 
@@ -116,7 +116,7 @@ public class Register extends User {
                 checkStatement2.setString(1, data.get(1));
                 try (ResultSet result2 = checkStatement2.executeQuery()) {
                     if (result2.next()) { // Ensure there's a row in the result set
-                        ft.error("Username already exists");
+                        formatText.error("Username already exists");
                         return null;
                     }
                 }
@@ -139,13 +139,13 @@ public class Register extends User {
             // Execute the query
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected > 0) {
-                ft.message("You have successfully registered");
+                formatText.message("You have successfully registered");
 
                 Login l = new Login();
                 return l.lgin();
 
             } else {
-                ft.error("Failed to register.");
+                formatText.error("Failed to register.");
                 return null;
             }
         } catch (ClassNotFoundException ex) {
