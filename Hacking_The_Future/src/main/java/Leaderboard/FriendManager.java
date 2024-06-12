@@ -247,7 +247,10 @@ public class FriendManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        if (pendingUsernames.isEmpty()){
+            System.out.println("No friend request sent by others\n");
+            managerequest(user);
+        }
         // Prompt user to choose an index
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the index of the user to process the friend request: ");
