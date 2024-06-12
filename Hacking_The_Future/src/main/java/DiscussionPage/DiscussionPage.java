@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DiscussionPage;
+
 import Account.FirstPage;
 import Account.User;
 import UI.Ui;
@@ -11,12 +12,14 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+
 /**
  *
  * @author Hasna
  */
 
 public class DiscussionPage {
+
     static String url = "jdbc:mysql://localhost:3306/datastructure";
     public static String pass = "root";
     Scanner scanner = new Scanner(System.in);
@@ -60,8 +63,7 @@ public class DiscussionPage {
         String message = scanner.nextLine();
 
         String query = "INSERT INTO discussion_posts (role, username, message) VALUES (?, ?, ?)";
-        try (Connection conn = DriverManager.getConnection(url, "root", pass);
-             PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection conn = DriverManager.getConnection(url, "root", pass); PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
             pstmt.setString(1, role);
             pstmt.setString(2, username);
@@ -91,8 +93,7 @@ public class DiscussionPage {
         String reply = scanner.nextLine();
 
         String query = "INSERT INTO discussion_posts (role, username, message, post_id) VALUES (?, ?, ?, ?)";
-        try (Connection conn = DriverManager.getConnection(url, "root", pass);
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+        try (Connection conn = DriverManager.getConnection(url, "root", pass); PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setString(1, role);
             pstmt.setString(2, username);
@@ -116,8 +117,7 @@ public class DiscussionPage {
         scanner.nextLine();  // Consume newline
 
         String query = "UPDATE discussion_posts SET likes = likes + 1 WHERE id = ?";
-        try (Connection conn = DriverManager.getConnection(url, "root", pass);
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+        try (Connection conn = DriverManager.getConnection(url, "root", pass); PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setInt(1, postId);
 
@@ -138,8 +138,7 @@ public class DiscussionPage {
         scanner.nextLine();  // Consume newline
 
         String query = "DELETE FROM discussion_posts WHERE id = ? AND role = ? AND username = ?";
-        try (Connection conn = DriverManager.getConnection(url, "root", pass);
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+        try (Connection conn = DriverManager.getConnection(url, "root", pass); PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setInt(1, postId);
             pstmt.setString(2, role);
@@ -199,10 +198,10 @@ public class DiscussionPage {
             }
         }
     }
-    
+
     public static void main(String[] args) {
         DiscussionPage dp = new DiscussionPage();
-                Ui starter = new Ui();
+        Ui starter = new Ui();
         FirstPage fp = new FirstPage();
         User user = fp.welcome();
         dp.interactInDiscussion(user);
