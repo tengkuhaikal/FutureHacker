@@ -423,16 +423,53 @@ public class AccountSettings {
         }
     }
 
-    public static boolean viewParentChildRelationships() {
-        String query = "SELECT username, children FROM user WHERE role = 'Parents'";
+//    public static boolean viewParentChildRelationships() {
+//        String query = "SELECT username, children FROM user WHERE role = 'Parents'";
+//
+//        try (Connection connect = DriverManager.getConnection(url, "root", pass); PreparedStatement statement = connect.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
+//
+//            ft.ft("Parent-Child Relationship");
+//
+//            while (resultSet.next()) {
+//                String parentUsername = resultSet.getString("username");
+//                String children = resultSet.getString("children");
+//
+//                if (children != null && !children.isEmpty()) {
+//                    System.out.println("Parent: " + parentUsername);
+//                    String[] childrenArray = children.split(",");
+//                    for (String child : childrenArray) {
+//                        System.out.println("  - Child: " + child.trim());
+//                    }
+//                } else {
+//                    System.out.println("Parent: " + parentUsername + " has no children.");
+//                }
+//            }
+//
+//            return true;
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
 
-        try (Connection connect = DriverManager.getConnection(url, "root", pass); PreparedStatement statement = connect.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
+public static boolean viewParentChildRelationships() {
+    String query = "SELECT username, children FROM user WHERE role = 'Parents'";
+    HashSet<String> printedParents = new HashSet<>();
 
-            ft.ft("Parent-Child Relationship");
+    try (Connection connect = DriverManager.getConnection(url, "root", pass);
+         PreparedStatement statement = connect.prepareStatement(query);
+         ResultSet resultSet = statement.executeQuery()) {
 
-            while (resultSet.next()) {
-                String parentUsername = resultSet.getString("username");
-                String children = resultSet.getString("children");
+        ft.ft("Parent-Child Relationship");
+
+        while (resultSet.next()) {
+            String parentUsername = resultSet.getString("username");
+            String children = resultSet.getString("children");
+
+            // Check if the parent has already been printed
+            if (!printedParents.contains(parentUsername)) {
+                printedParents.add(parentUsername);
 
                 if (children != null && !children.isEmpty()) {
                     System.out.println("Parent: " + parentUsername);
@@ -444,13 +481,15 @@ public class AccountSettings {
                     System.out.println("Parent: " + parentUsername + " has no children.");
                 }
             }
-
-            return true;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
         }
+
+        return true;
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
     }
+}
+
 
 }
