@@ -8,7 +8,7 @@ import static Account.MySQLConfiguration.pass;
 import static Account.MySQLConfiguration.url;
 import Account.User;
 import UI.Ui;
-import UI.ft;
+import UI.formatText;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -26,7 +26,7 @@ public class NewQuiz {
 
     public void CreateQuiz(User user) {
 
-        ft.ft("New Quiz");
+        formatText.formatTitle("New Quiz");
         System.out.println("Educator: " + user.getUsername());
         System.out.print("Quiz Title >> ");
         title = scan.nextLine();
@@ -75,7 +75,7 @@ public class NewQuiz {
                 pstmt.setString(4, content);
                 pstmt.setString(5, user.getUsername()); // Insert educator's username
                 pstmt.executeUpdate();
-                ft.message("Quiz created successfully");
+                formatText.message("Quiz created successfully");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -83,7 +83,7 @@ public class NewQuiz {
             e.printStackTrace();
         }
 
-        ft.ft("Continue to create quiz? [1:Yes || 0:No] :");
+        formatText.formatTitle("Continue to create quiz? [1:Yes || 0:No] :");
         System.out.println("\nOption >> ");
         int choice = scan.nextInt();
         if (choice == 1) {
