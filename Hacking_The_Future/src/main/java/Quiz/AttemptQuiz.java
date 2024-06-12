@@ -10,7 +10,7 @@ import static Account.MySQLConfiguration.pass;
 import static Account.MySQLConfiguration.url;
 import Account.User;
 import UI.Ui;
-import UI.ft;
+import UI.formatText;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -27,8 +27,8 @@ public class AttemptQuiz {
     Scanner scan = new Scanner(System.in);
 
     public void attemptquiz(User user) {
-        ft.ft("Quiz");
-        ft.ft("Choose your preference");
+        formatText.formatTitle("Quiz");
+        formatText.formatTitle("Choose your preference");
         System.out.println("\n1.Science\n2.Technology\n3.Engineering\n4.Mathmethics\n5.All themes");
         String theme = null;
 
@@ -84,7 +84,7 @@ public class AttemptQuiz {
                 while (rs.next()) {
                     String title = rs.getString("title");
                     String description = rs.getString("description");
-                    ft.ft("Title: " + title);
+                    formatText.formatTitle("Title: " + title);
                     System.out.println("Description: " + description);
                     System.out.println();
                 }
@@ -104,7 +104,7 @@ public class AttemptQuiz {
             // Check if the entered title exists in the quiz table
             isValidQuizTitle = isQuizTitleValid(selectedQuizTitle);
             if (!isValidQuizTitle) {
-                ft.error("Quiz title is not valid. Please try again.");
+                formatText.error("Quiz title is not valid. Please try again.");
             }
         } while (!isValidQuizTitle);
 
@@ -119,7 +119,7 @@ public class AttemptQuiz {
             attemptSelectedQuiz(quizContent, user);
         }
 
-        ft.ft("Do you want to continue attempt other quiz? [1:Yes || 0:No]");
+        formatText.formatTitle("Do you want to continue attempt other quiz? [1:Yes || 0:No]");
         System.out.println("\nOption >> ");
         int choice = scan.nextInt();
         if (choice == 1) {
@@ -183,9 +183,9 @@ public class AttemptQuiz {
             int rowsAffected = pstmt.executeUpdate();
 
             if (rowsAffected > 0) {
-                ft.message("Points added successfully for user: " + username);
+                formatText.message("Points added successfully for user: " + username);
             } else {
-                ft.error("User not found or points not updated.");
+                formatText.error("User not found or points not updated.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
