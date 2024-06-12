@@ -4,6 +4,7 @@ package Geoloaction;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+import UI.ft;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -28,7 +29,7 @@ public class GeoLocation {
                     Double[] location = {lat, lon};
                     return location;
                 } else {
-                    System.out.println("Failed to get location: " + jsonObject.getString("message"));
+                    ft.error("Failed to get location: " + jsonObject.getString("message"));
                 }
             }
         } catch (Exception e) {
