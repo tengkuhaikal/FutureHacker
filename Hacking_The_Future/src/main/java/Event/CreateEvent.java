@@ -9,7 +9,7 @@ import static Account.MySQLConfiguration.url;
 import Account.User;
 import static Event.Filepath.filepath;
 import UI.Ui;
-import UI.ft;
+import UI.formatText;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileReader;
@@ -37,7 +37,7 @@ public class CreateEvent {
     private static EventManager em = new EventManager();
 
     public static void createEvent(User user) {
-        ft.ft("Create new event");
+        formatText.formatTitle("Create new event");
         System.out.println("Educator: " + user.getUsername());
 
         System.out.print("Event Title: ");
@@ -68,7 +68,7 @@ public class CreateEvent {
 
                 validInput = true; // If parsing is successful, exit loop
             } catch (ParseException e) {
-                ft.error("Invalid date or time format. Please try again.");
+                formatText.error("Invalid date or time format. Please try again.");
             }
         }
 
@@ -85,14 +85,14 @@ public class CreateEvent {
             pstmt.setString(6, user.getUsername());
 
             pstmt.executeUpdate();
-            ft.message("Event created successfully!");
+            formatText.message("Event created successfully!");
 
         } catch (SQLException e) {
             e.printStackTrace();
-            ft.error("Failed to create event.");
+            formatText.error("Failed to create event.");
         }
 
-        ft.ft("Continue to create event? > [1:Yes || 0:No]");
+        formatText.formatTitle("Continue to create event? > [1:Yes || 0:No]");
         int choice = scan.nextInt();
         if (choice == 1) {
             System.out.println("\n\n");
@@ -256,7 +256,7 @@ public class CreateEvent {
                 break;
 
             } else {
-                ft.error("Location not found. Please try again.");
+                formatText.error("Location not found. Please try again.");
                 valid = true;
             }
         }
