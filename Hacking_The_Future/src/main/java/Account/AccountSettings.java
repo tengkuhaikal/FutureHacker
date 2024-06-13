@@ -423,16 +423,23 @@ public class AccountSettings {
         }
     }
 
-//    public static boolean viewParentChildRelationships() {
-//        String query = "SELECT username, children FROM user WHERE role = 'Parents'";
+//public static boolean viewParentChildRelationships() {
+//    String query = "SELECT username, children FROM user WHERE role = 'Parents'";
+//    HashSet<String> printedParents = new HashSet<>();
 //
-//        try (Connection connect = DriverManager.getConnection(url, "root", pass); PreparedStatement statement = connect.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
+//    try (Connection connect = DriverManager.getConnection(url, "root", pass);
+//         PreparedStatement statement = connect.prepareStatement(query);
+//         ResultSet resultSet = statement.executeQuery()) {
 //
-//            ft.ft("Parent-Child Relationship");
+//        formatText.formatTitle("Parent-Child Relationship");
 //
-//            while (resultSet.next()) {
-//                String parentUsername = resultSet.getString("username");
-//                String children = resultSet.getString("children");
+//        while (resultSet.next()) {
+//            String parentUsername = resultSet.getString("username");
+//            String children = resultSet.getString("children");
+//
+//            // Check if the parent has already been printed
+//            if (!printedParents.contains(parentUsername)) {
+//                printedParents.add(parentUsername);
 //
 //                if (children != null && !children.isEmpty()) {
 //                    System.out.println("Parent: " + parentUsername);
@@ -444,14 +451,15 @@ public class AccountSettings {
 //                    System.out.println("Parent: " + parentUsername + " has no children.");
 //                }
 //            }
-//
-//            return true;
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return false;
 //        }
+//
+//        return true;
+//
+//    } catch (SQLException e) {
+//        e.printStackTrace();
+//        return false;
 //    }
+//}
 
 public static boolean viewParentChildRelationships() {
     String query = "SELECT username, children FROM user WHERE role = 'Parents'";
@@ -471,9 +479,10 @@ public static boolean viewParentChildRelationships() {
             if (!printedParents.contains(parentUsername)) {
                 printedParents.add(parentUsername);
 
-                if (children != null && !children.isEmpty()) {
+                if (children != null && !children.trim().isEmpty()) {
                     System.out.println("Parent: " + parentUsername);
-                    String[] childrenArray = children.split(",");
+                    // Split by comma or space, using regex
+                    String[] childrenArray = children.split("[,\\s]+");
                     for (String child : childrenArray) {
                         System.out.println("  - Child: " + child.trim());
                     }
@@ -490,6 +499,7 @@ public static boolean viewParentChildRelationships() {
         return false;
     }
 }
+
 
 
 }
